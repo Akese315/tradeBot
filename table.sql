@@ -6,5 +6,10 @@ CREATE TABLE stocks(
     changePrice FLOAT,
     highPriceDay FLOAT,
     lowPriceDay FLOAT,
-    MA FLOAT
+    sma FLOAT,
+    ema FLOAT,
+    osc FLOAT,
+    osc_ema FLOAT
 );
+
+CREATE DATABASE TRADEBOT;

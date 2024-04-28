@@ -8,107 +8,9 @@ import json
 import threading
 from typing import List
 
-url = "https://finnhub.io/api/v1/quote?symbol=NVDA"
-apiKey = "cm6m4apr01qg94pu6mpgcm6m4apr01qg94pu6mq0"
-headers = {
-	"X-Finnhub-Token" : apiKey
-}
-cursor = None
-conn = None
-INSERT_STOCK = "INSERT INTO stocks (currentPrice, percentChange, changePrice, highPriceDay, lowPriceDay, MA) VALUES ( %s, %s, %s, %s, %s, %s)"
-MOYENNE_N = 100
-MAXPOINTSGRAPH = 4000
-SmaArray = []
-SmaX = []
-PriceArray=[]
-time_points = []
-
-
-try:
-    conn = mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password="myDBAkese315",
-        database="TRADEBOT"
-    )
-except Exception as e:
-    print(e)
-
-cursor = conn.cursor()
-
-def sumInverse(array,n_end):
-    somme =0
-    for i in range(len(array)-n_end,len(array)):
-        somme += array[i]
-    return somme
-
-def addToMoyenneArray(value):
-    SmaArray.append(value)
-
-def moyenne_mobile():
-    if len(PriceArray)%MOYENNE_N != 0:
-        return None
-    return sumInverse(PriceArray, MOYENNE_N)/MOYENNE_N
-    
-
-
-def decode(response):
-    return {
-        "time" : response["t"],
-        "currentPrice" : response["c"],
-        "percentChange": response["dp"],
-        "change" : response["d"],
-        "highPriceDay" : response["h"],
-        "lowPriceDay" : response["l"]
-        }
-    
-def insertInDatabase(response, MA):
-    cursor.execute(INSERT_STOCK,(response["currentPrice"],response["percentChange"],
-                                 response["change"],response["highPriceDay"],response["lowPriceDay"], MA))
-    conn.commit()
-
-def sendRequest():
-    response = requests.get(url, headers=headers)
-    
-    if response.status_code != 200:
-        print(response.status_code)
-    else:
-        print(response.json())
-        return response.json()
-
-def updateGraphePrice():
-
-    if(len(time_points) > MAXPOINTSGRAPH):
-        time_points.pop(0)
-    if(len(PriceArray)> MAXPOINTSGRAPH):
-        PriceArray.pop(0)    
-    plt.plot(time_points,PriceArray,'o-' ,color='green')
-   
-def updateSMAGraphe():
-    plt.plot(SmaX,SmaArray,'o-', color='red')
-
 def initRequests():
     time_started  = datetime.timestamp(datetime.now())
-    plt.title('Graphique en temps réel')
-    plt.xlabel('Index')
-    plt.ylabel('Valeur')
-    while(True):
-        plt.clf()
-        response= sendRequest()
-        response_formated = decode(response)
-        PriceArray.append(response_formated["currentPrice"])
-        time_points.append(response_formated["time"] - time_started)
-        MA = moyenne_mobile()
-        if MA != None:
-            SmaX.append(response_formated["time"] - time_started)
-            print(SmaX)
-            addToMoyenneArray(MA) 
-            print(SmaArray)
-        updateSMAGraphe()      
-        insertInDatabase(response_formated,MA)
-        updateGraphePrice()
-        plt.show(block=False)
-        plt.pause(1)
+    
 
 class Quote:
 
@@ -120,11 +22,11 @@ class Quote:
         self.percentChange = percentChange
         self.currentPrice = currentPrice
         self.time = time
+
 class Dot:
     def __init__(self,time,value) -> None:
         self.time = time
         self.value = value
-
 
 class DataScrapper:
 
@@ -142,14 +44,15 @@ class DataScrapper:
             "X-Finnhub-Token" : self.apiKey
         }
 
-    def getQuotes(self):
+    def getQuote(self):
         url = self.BASE_URL + self.URL_QUOTE + self.symbol
         response = requests.get(url, headers=self.headers)
         
         if response.status_code != 200:
             print(response.status_code)
         else:
-            return json.loads(response.json())
+            decoded_response = response.json()
+            return Quote(decoded_response["o"],decoded_response["pc"],decoded_response["h"],decoded_response["l"],decoded_response["dp"],decoded_response["t"],decoded_response["c"])
         
     def isMarketOpen(self):
         url = self.BASE_URL + self.URL_STATUS
@@ -169,222 +72,193 @@ class DataScrapper:
 class DataAnalyser():
     
     def __init__(self) -> None:
-        self.quoteBuffer :List[Quote] = []
+        self.quoteBuffer : List[Quote] = []
         self.movingAverage :List[Dot] = []
         self.movingAverageExponential : List[Dot] = []
         self.oscillateurStochastiqueBuffer : List[Dot] = []
-        self.highPriceDay
-        self.lowPriceDay
+        self.oscillateurStochastiqueSMABuffer : List[Dot] = []
+        self.oscillateurStochastiqueEMABuffer : List[Dot] = []
+        self.highPriceDay = -1
+        self.lowPriceDay =-1
 
+        self.MIN_POINTS_SMA = 40
+        self.MIN_POINTS_D_PERCENT_SMA = 40
+        self.ALPHA = 2/(self.MIN_POINTS_SMA+1)
+
+        #Example of use
+        #data  = [Dot(quote.time, quote.currentPrice) for quote in self.quoteBuffer]
+        #self.setSMA(data,self.movingAverage,self.MIN_POINTS_SMA, self.MIN_POINTS_SMA)
+        #self.setEMA(data,self.movingAverage,self.movingAverageExponential)
+
+        #data2 = self.oscillateurStochastiqueBuffer
+        #self.setSMA(data2,self.oscillateurStochastiqueSMABuffer,self.MIN_POINTS_D_PERCENT_SMA, self.MIN_POINTS_D_PERCENT_SMA)
+        #self.setEMA(data2,self.oscillateurStochastiqueSMABuffer,self.oscillateurStochastiqueEMABuffer)
+
+    def getQuoteLen(self):
+        return len(self.quoteBuffer)
+    
+    def getSMALen(self):
+        return len(self.movingAverage)
+    
+    def getEMALen(self):  
+        return len(self.movingAverageExponential)
+    
+    def getOscillateurStochastiqueLen(self):
+        return len(self.oscillateurStochastiqueBuffer)
+    
+    def getOscillateurStochastiqueEMALen(self):
+        return len(self.oscillateurStochastiqueEMABuffer)
+    
+    def getQuote(self, k:int):
+        return self.quoteBuffer[k]
+
+    def getSMA(self, k:int):
+        return self.movingAverage[k]
+
+    def getEMA(self, k:int):
+        return self.movingAverageExponential[k]
+    
+    def getOscillateurStochastique(self, k:int):
+        return self.oscillateurStochastiqueBuffer[k]
+    
+    def getOscillateurStochastiqueEMA(self, k:int):
+        return self.oscillateurStochastiqueEMABuffer[k]
+    
     def addQuote(self, quote: Quote):
         self.quoteBuffer.append(quote)
+        if self.highPriceDay == -1 or quote.highPriceDay > self.highPriceDay:
+            self.highPriceDay = quote.highPriceDay
+        if self.lowPriceDay == -1 or quote.lowPriceDay < self.lowPriceDay:
+            self.lowPriceDay = quote.lowPriceDay
     
     def setOscillateurStochastique(self):   
-        dot = Dot(
-            self.quoteBuffer[len(self.quoteBuffer)-1].time,(self.quoteBuffer[len(self.quoteBuffer)-1].currentPrice - self.lowPriceDay)/(self.highPriceDay-self.lowPriceDay))
-        self.oscillateurStochastiqueBuffer.append(dot)
 
-    def setMovingAverage(self,n) -> None:
-        somme = 0
-        if len(self.movingAverage) < 40:
+        K_percent = (self.quoteBuffer[len(self.quoteBuffer)-1].currentPrice - self.lowPriceDay)/(self.highPriceDay-self.lowPriceDay)
+        DOT  = Dot(self.quoteBuffer[len(self.quoteBuffer)-1].time,K_percent)
+        self.oscillateurStochastiqueBuffer.append(DOT)
+
+
+    def setSMA(self,data:List[Dot], sma:List[Dot], min_points, k) -> None:
+        somme_k = 0
+        AVAILABLE_POINTS = len(data)
+        POINTS_AVAILABLE_FROM_K_POINTS = AVAILABLE_POINTS - k
+        if POINTS_AVAILABLE_FROM_K_POINTS  < min_points:
             return
-        for i in range(len(self.quoteBuffer)-n, len(self.quoteBuffer)):
-            somme+=self.quoteBuffer[i].currentPrice
-        dot = Dot(self.quoteBuffer[len(self.quoteBuffer)-1].time,somme/n)
-        self.movingAverage.append(dot)
+        #somme en partant du k eme element
+        for i in range(POINTS_AVAILABLE_FROM_K_POINTS, AVAILABLE_POINTS):
+            somme_k+=data[i].value
+        LAST_QUOTE_TIME = data[AVAILABLE_POINTS-1].time
+        DOT = Dot(LAST_QUOTE_TIME,somme_k/k) # dot(time, SMA_k)
+        sma.append(DOT)
+    
         
 
-    def setMovingAverageExponnential(self, n, alpha) -> None:
-        if len(self.movingAverageExponential) ==0:
-            dot = Dot(self.quoteBuffer[0].time,self.quoteBuffer[0].currentPrice)
-            self.movingAverageExponential.append(dot)
-        currentEMA = alpha*self.quoteBuffer[len(self.quoteBuffer)-1].currentPrice+(1-alpha)*self.movingAverageExponential[len(self.quoteBuffer)-2].value
-        dot = Dot(self.quoteBuffer[len(self.quoteBuffer)-1].time, currentEMA)
-        self.movingAverageExponential.append(dot)    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    def getMovingAverage():
-        return
-
-    def getMovingAverageExponnential():
-        return
-
-
-class BotSymbol:
-
-    symbol : str
-    dataScrapper : DataScrapper
-
-    def __init__(self, symbol : str) -> None:
-        self.symbol = symbol
-        self.dataScrapper = DataScrapper(self.symbol,40000)
-
-
+    def setEMA(self,data:List[Dot], sma:List[Dot],ema:List[Dot],alpha=None) -> None:
+        #initialisation de la premiere valeur
+        if len(ema) ==0:
+            if len(sma) < 2:
+                return
+            ema.append(sma[0])
+            ema.append(sma[1])
+            return
+            #on calque les 2 premieres valeurs de la SMA sur la EMA
+        
+        
+        if alpha == None:
+            alpha = self.ALPHA
+            #permet de prendre par defaut self.ALPHA si alpha n'est pas renseigné
+
+        AVAILABLE_POINTS = len(data)
+        EMA_LEN = len(ema)
+        PREVIOUS_EMA = ema[EMA_LEN-2].value
+        CURRENT_PRICE = data[len(data)-1].value
+        LAST_QUOTE_TIME = data[AVAILABLE_POINTS-1].time
+        EMA = (1-alpha) * PREVIOUS_EMA + alpha * CURRENT_PRICE
+        DOT = Dot(LAST_QUOTE_TIME, EMA)
+        ema.append(DOT)    
+
+    def setStandard(self):
+        data = [Dot(quote.time, quote.currentPrice) for quote in self.quoteBuffer]
+        self.setSMA(data,self.movingAverage,self.MIN_POINTS_SMA, self.MIN_POINTS_SMA)
+        self.setEMA(data,self.movingAverage,self.movingAverageExponential)
+
+    def setOscillateurStochastique(self):
+        data = self.oscillateurStochastiqueBuffer
+        self.setSMA(data,self.oscillateurStochastiqueSMABuffer,self.MIN_POINTS_D_PERCENT_SMA, self.MIN_POINTS_D_PERCENT_SMA)
+        self.setEMA(data,self.oscillateurStochastiqueSMABuffer,self.oscillateurStochastiqueEMABuffer)
+
+class Bot:
+    def __init__(self, symbol : str, cursor) -> None:
+        self.dataAnalyser = DataAnalyser()
+        self.dataScrapper = DataScrapper(symbol,40000)
+        self.botSymbol = symbol
+        self.running = False
+        self.cursor = cursor
+        self.INSERT_STOCK = "INSERT INTO stocks (currentPrice, percentChange, changePrice, highPriceDay, lowPriceDay, SMA,EMA,OSC,OSC_EMA) VALUES ( %s, %s, %s, %s, %s, %s,%s,%s,%s)"
+
+
+    def update(self):
+        quote : Quote = self.dataScrapper.getQuote()
+        self.dataAnalyser.addQuote(quote)
+        self.dataAnalyser.setStandard()
+        self.dataAnalyser.setOscillateurStochastique()
+    
+    def getDatas(self):
+        PRICE = [Dot(quote.time, quote.currentPrice) for quote in self.dataAnalyser.quoteBuffer]
+        SMA = self.dataAnalyser.movingAverage
+        EMA = self.dataAnalyser.movingAverageExponential
+        OSC = self.dataAnalyser.oscillateurStochastiqueBuffer
+        OSC_EMA = self.dataAnalyser.oscillateurStochastiqueEMABuffer
+        return {"price":PRICE, "sma":SMA, "ema":EMA, "osc":OSC, "osc_ema":OSC_EMA}
+
+    def insertInDatabase(self):
+        SMA = self.dataAnalyser.getSMA(self.dataAnalyser.getSMALen()-1)
+        EMA = self.dataAnalyser.getEMA(self.dataAnalyser.getEMALen()-1)
+        OSC = self.dataAnalyser.getOscillateurStochastique(self.dataAnalyser.getOscillateurStochastiqueLen()-1)
+        OSC_EMA = self.dataAnalyser.getOscillateurStochastiqueEMA(self.dataAnalyser.getOscillateurStochastiqueEMALen()-1)
+        QUOTE = self.dataAnalyser.getQuote(self.dataAnalyser.getQuoteLen()-1)
+        self.cursor.execute(self.INSERT_STOCK,(QUOTE.currentPrice,QUOTE.percentChange,QUOTE.currentPrice-QUOTE.previousClosePrice,QUOTE.highPriceDay,QUOTE.lowPriceDay,SMA, EMA, OSC, OSC_EMA))
     
 
-initRequests()
+cursor = None
+conn = None
+    
+#connection to the database
+try:
+    conn = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="myDBAkese315",
+        database="TRADEBOT"
+    )
+except Exception as e:
+    print(e)
 
+#global cursor
+cursor = conn.cursor()
 
+NVIDIA_BOT = Bot("NVDA",cursor)
+plt.title('Graphique en temps réel')
+plt.xlabel('Index')
+plt.ylabel('Valeur')
+        
+
+while(True):
+    data_analyzed = NVIDIA_BOT.update()
+    conn.commit()
+    plt.clf()
+    datas = NVIDIA_BOT.getDatas()
+    price_time = [dot.time for dot in datas["price"]]
+    price_value = [dot.value for dot in datas["price"]]
+
+    SmaArray = [dot.value for dot in datas["sma"]]
+    SmaArrayTime = [dot.time for dot in datas["sma"]]
+    EmaArray = [dot.value for dot in datas["ema"]]
+    EmaArrayTime = [dot.time for dot in datas["ema"]]
+
+    plt.plot(price_time,price_value,'o-', color='blue')
+    plt.plot(SmaArrayTime,SmaArray,'o-', color='red')
+    plt.plot(EmaArrayTime,EmaArray,'o-', color='green')
+    print("requested")
+    plt.show(block=False)
+    plt.pause(1)
