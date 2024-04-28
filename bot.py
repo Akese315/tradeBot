@@ -8,8 +8,7 @@ import json
 import threading
 from typing import List
 
-def initRequests():
-    time_started  = datetime.timestamp(datetime.now())
+
     
 
 class Quote:
