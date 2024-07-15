@@ -32,8 +32,10 @@ except Exception as e:
 cursor = conn.cursor()
 
 def getMaxMinData(period:int, symbol:str, current_date:str) -> tuple[float,float]:
-    date_period = date.fromisoformat(current_date) - timedelta(days=period)
+    print(current_date, type(current_date))
+    date_period = datetime.strptime(current_date,'%Y-%m-%d %H:%M:%S') - timedelta(days=period)
     SQL_SELECT = "SELECT closePrice FROM training_data_hour WHERE time > '"+date_period.strftime("%Y-%m-%d")+"'AND time <='"+current_date+"' AND symbol='"+symbol+"';"
+    print(SQL_SELECT)
     cursor.execute(SQL_SELECT)
     rows = cursor.fetchall()
     minPrice = float(min(rows)[0])
@@ -43,8 +45,8 @@ def getMaxMinData(period:int, symbol:str, current_date:str) -> tuple[float,float
 
     return (minPrice, maxPrice)
 
-def getTrainingData(symbol:str) -> List:
-    SQL_SELECT = "SELECT closePrice, openPrice, lowPrice, highPrice FROM training_data_hour WHERE symbol='"+symbol+"' ORDER BY time ASC;"
+def getLocalTrainingData(symbol:str) -> List:
+    SQL_SELECT = "SELECT time, closePrice, openPrice, lowPrice, highPrice FROM training_data_hour WHERE symbol='"+symbol+"' ORDER BY time ASC;"
     cursor.execute(SQL_SELECT)
     rows = cursor.fetchall()
     return rows

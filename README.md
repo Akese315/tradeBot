@@ -17,4 +17,10 @@ Bot :
 python3 bot.py	start --symbol <str> --nogui (optional) --server (optionnal)
 ```
 
-> By deault the bot start with GUI
+> By default the bot start with GUI
+
+## Database :
+
+You need to create a database with the exact same features.
+
+See the database.sql

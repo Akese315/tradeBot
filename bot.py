@@ -12,6 +12,7 @@ import threading
 from typing import List
 from dotenv import load_dotenv
 import dataManager as dm
+import AI as ai
 load_dotenv()
 
 
@@ -132,6 +133,9 @@ class DataAnalyser():
     def getOscillateurStochastiqueLen(self):
         return len(self.oscillateurStochastiqueBuffer)
     
+    def getOscillateurStochastiqueSMALen(self):
+        return len(self.oscillateurStochastiqueSMABuffer)
+    
     def getOscillateurStochastiqueEMALen(self):
         return len(self.oscillateurStochastiqueEMABuffer)
     
@@ -147,6 +151,9 @@ class DataAnalyser():
     def getOscillateurStochastique(self, k:int):
         return self.oscillateurStochastiqueBuffer[k]
     
+    def getOscillateurStochastiqueSMA(self, k:int):
+        return self.oscillateurStochastiqueSMABuffer[k]
+    
     def getOscillateurStochastiqueEMA(self, k:int):
         return self.oscillateurStochastiqueEMABuffer[k]
     
@@ -155,6 +162,7 @@ class DataAnalyser():
     
     def setStochastique(self, period:int):   
         current_date = self.quoteBuffer[len(self.quoteBuffer)-1].time
+        print("current date", current_date)
         minPrice, maxPrice = dm.getMaxMinData(period=period, symbol=self.symbol, current_date=current_date)
         if len(self.quoteBuffer) > 0:
             K_percent = 100* (self.quoteBuffer[len(self.quoteBuffer)-1].closePrice - minPrice)/(maxPrice-minPrice)
@@ -294,7 +302,55 @@ while(True):
 '''
 def startGui(symbol:str):
     bot = Bot(symbol,cursor)
+
+def trainAI(symbol:str):
+    data = dm.getLocalTrainingData(symbol)
+    data_array = np.array(data, dtype=object)
+    quotes = []
+
+    for i in range(len(data_array)):
+        quote = Quote(data_array[i][2],data_array[i][1],data_array[i][4],data_array[i][3],data_array[i][0].strftime("%Y-%m-%d %H:%M:%S"))
+        quotes.append(quote)
+
+    dataAnalyser = DataAnalyser(symbol)
     
+    PERIOD = 14 #en jours
+    data = []
+    target = []
+    for k in range(len(quotes)-1):
+
+        
+
+        quote = quotes[k]
+
+        if datetime.strptime(quotes[0].time,'%Y-%m-%d %H:%M:%S') >= datetime.strptime(quote.time,'%Y-%m-%d %H:%M:%S') - timedelta(days=PERIOD):
+            continue
+
+
+        nextQuote = quotes[k+1]
+        dataAnalyser.addQuote(quote)
+        dataAnalyser.setStochastique(PERIOD)
+        dataAnalyser.setStandard()
+        dataAnalyser.setOscillateurStochastique()
+
+        
+
+        os = dataAnalyser.getOscillateurStochastique(k)
+        osEMA = dataAnalyser.getOscillateurStochastiqueEMA(k)
+        osSMA = dataAnalyser.getOscillateurStochastiqueSMA(k)
+        ema = dataAnalyser.getEMA(k)
+        sma = dataAnalyser.getSMA(k)
+        closePrice = quote.closePrice
+        openPrice = quote.openPrice
+        highPrice = quote.highPrice
+        lowPrice = quote.lowPrice
+        data.append(ai.Input(openPrice,highPrice,lowPrice,closePrice,sma,ema,osSMA,osEMA,os))
+        target.append(nextQuote.closePrice, nextQuote.highPrice, nextQuote.lowPrice)
+    TrainingDataset = ai.TrainingDataset(data=data, target=target)
+    print("Training dataset length", len(TrainingDataset))
+    
+
+
 
 
 def main():
@@ -304,6 +360,9 @@ def main():
     parser_start.add_argument("--nogui", action='store_true', help="Execute la commande sans intefarce graphique")
     parser_start.add_argument("--server",action='store_true', help="Execute la commande en appliquant un server")
     parser_start.add_argument("--symbol",type=str, help="selectionne le symbole", required=True)
+
+    parser_train = subparsers.add_parser('train', help='Exécute la commande train')
+    parser_train.add_argument("--symbol",type=str, help="selectionne le symbole", required=True)
 
     args = parser.parse_args()
 
@@ -317,6 +376,9 @@ def main():
         if not args.nogui and not args.server:
             print("Exécution par défaut avec l'interface graphique")
             # Ajoute ici le code pour exécuter avec GUI par défaut
+    if args.commande == "train":
+        print("Exécution de l'entrainement de l'IA")
+        trainAI(args.symbol)
 
 if __name__ == "__main__":
     main()

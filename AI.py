@@ -3,6 +3,35 @@ import torch.nn as nn
 import torch.optim as optim
 from torch.nn import LSTM
 from torch.nn import Linear
+from torch.utils.data import Dataset, DataLoader
+
+class TrainingDataset(Dataset):
+    def __init__(self, data, target):
+        self.data = data
+        self.target = target
+
+    def __len__(self):
+        return len(self.data)
+
+    def __getitem__(self, idx):
+        return self.data[idx], self.target[idx]
+    
+class Input():
+    def __init__(self, openPrice, high, low, closePrice, sma, ema, osSMA, osEMA, os):
+        self.open = openPrice
+        self.high = high
+        self.low = low
+        self.close = closePrice
+        self.sma = sma
+        self.ema = ema
+        self.osSMA = osSMA
+        self.osEMA = osEMA
+        self.os = os
+
+class Target():
+    def __init__(self, closePrice, high, low):
+        self.close = closePrice
+    
 
 class tradingModel(nn.Module):
     def __init__(self):
@@ -29,6 +58,6 @@ device = (
 )
 print(f"Using {device} device")
 
-model = tradingModel()
-criterion = nn.MSELoss()
-optimizer = optim.Adam(model.parameters(), lr=0.001)
+#model = tradingModel()
+#criterion = nn.MSELoss()
+#optimizer = optim.Adam(model.parameters(), lr=0.001)
