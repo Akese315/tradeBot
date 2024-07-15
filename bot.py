@@ -11,6 +11,7 @@ import sys
 import threading
 from typing import List
 from dotenv import load_dotenv
+import dataManager as dm
 load_dotenv()
 
 
@@ -97,7 +98,8 @@ class DataScrapper:
 
 class DataAnalyser():
     
-    def __init__(self) -> None:
+    def __init__(self, symbol:str) -> None:
+        self.symbol = symbol
         self.quoteBuffer : List[Quote] = []
         self.movingAverage :List[Dot] = []
         self.movingAverageExponential : List[Dot] = []
@@ -151,9 +153,11 @@ class DataAnalyser():
     def addQuote(self, quote: Quote):
         self.quoteBuffer.append(quote)
     
-    def setStochastique(self):   
+    def setStochastique(self, period:int):   
+        current_date = self.quoteBuffer[len(self.quoteBuffer)-1].time
+        minPrice, maxPrice = dm.getMaxMinData(period=period, symbol=self.symbol, current_date=current_date)
         if len(self.quoteBuffer) > 0:
-            K_percent = 100* (self.quoteBuffer[len(self.quoteBuffer)-1].closePrice - self.lowPriceDay)/(self.highPriceDay-self.lowPriceDay)
+            K_percent = 100* (self.quoteBuffer[len(self.quoteBuffer)-1].closePrice - minPrice)/(maxPrice-minPrice)
             DOT  = Dot(self.quoteBuffer[len(self.quoteBuffer)-1].time,K_percent)
             self.oscillateurStochastiqueBuffer.append(DOT)
 
@@ -200,7 +204,7 @@ class DataAnalyser():
         ema.append(DOT)    
 
     def setStandard(self):
-        data = [Dot(quote.time, quote.currentPrice) for quote in self.quoteBuffer]
+        data = [Dot(quote.time, quote.closePrice) for quote in self.quoteBuffer]
         self.setSMA(data,self.movingAverage,self.MIN_POINTS_SMA, self.MIN_POINTS_SMA)
         self.setEMA(data,self.movingAverage,self.movingAverageExponential)
 

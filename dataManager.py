@@ -6,7 +6,7 @@ import requests
 import mysql.connector
 import os
 from time import sleep
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 load_dotenv()
 
 ALPHA_VENTAGE_KEY = os.getenv('ALPHA_VENTAGE_KEY_2')
@@ -31,19 +31,19 @@ except Exception as e:
 
 cursor = conn.cursor()
 
-def getMaxMinData(period:int, symbol:str):
-    now = datetime.now()
-    date_period = now - timedelta(days=period)
-    SQL_SELECT = "SELECT closePrice FROM training_data_hour WHERE time > '"+date_period.strftime("%Y-%m-%d")+"';"
+def getMaxMinData(period:int, symbol:str, current_date:str) -> tuple[float,float]:
+    date_period = date.fromisoformat(current_date) - timedelta(days=period)
+    SQL_SELECT = "SELECT closePrice FROM training_data_hour WHERE time > '"+date_period.strftime("%Y-%m-%d")+"'AND time <='"+current_date+"' AND symbol='"+symbol+"';"
     cursor.execute(SQL_SELECT)
     rows = cursor.fetchall()
-
-    minPrice = min(rows)
-    maxPrice = max(rows)
+    minPrice = float(min(rows)[0])
+    maxPrice = float(max(rows)[0])
     
     print("Lowest and highest price in a period of",period,"days are :",minPrice,"and",maxPrice)
 
-def getTrainingData(symbol:str):
+    return (minPrice, maxPrice)
+
+def getTrainingData(symbol:str) -> List:
     SQL_SELECT = "SELECT closePrice, openPrice, lowPrice, highPrice FROM training_data_hour WHERE symbol='"+symbol+"' ORDER BY time ASC;"
     cursor.execute(SQL_SELECT)
     rows = cursor.fetchall()
@@ -131,5 +131,5 @@ def main():
         harvestYear(args.year, args.symbol, args.interval)
 
 if __name__ == "__main__":
-    getMaxMinData(60,"NVDA")
+    getMaxMinData(60,"NVDA", "2024-03-15")
     main()
