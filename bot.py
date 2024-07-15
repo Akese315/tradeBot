@@ -1,25 +1,45 @@
 import requests
 import mysql.connector
 import time
+import os
 from datetime import datetime
 import matplotlib.pyplot as plt
 import numpy as np
 import json
+import argparse
+import sys
 import threading
 from typing import List
+from dotenv import load_dotenv
+load_dotenv()
 
 
+ALPHA_VENTAGE_KEY = os.getenv('ALPHA_VENTAGE_KEY_1')
+cursor = None
+conn = None
     
+#connection to the database
+try:
+    conn = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="myDBAkese315",
+        database="TRADEBOT"
+    )
+except Exception as e:
+    print(e)
+
+#global cursor
+cursor = conn.cursor()
+
 
 class Quote:
 
-    def __init__(self,openPriceDay, previousClosePrice, highPriceDay, lowPriceDay, percentChange,time,currentPrice) -> None:
-        self.openPriceDay = openPriceDay
-        self.previousClosePrice = previousClosePrice
-        self.highPriceDay = highPriceDay
-        self.lowPriceDay = lowPriceDay
-        self.percentChange = percentChange
-        self.currentPrice = currentPrice
+    def __init__(self,openPriceDay, closePrice, highPrice, lowPrice,time) -> None:
+        self.openPrice = openPriceDay
+        self.closePrice = closePrice
+        self.highPrice = highPrice
+        self.lowPrice = lowPrice
         self.time = time
 
 class Dot:
@@ -33,6 +53,7 @@ class DataScrapper:
     URL_QUOTE = "/quote?symbol="
     URL_RECOMMENDATION = "/stock/recommendation?symbol="
     URL_STATUS = "/stock/market-status?exchange=US"
+    URL_LOOKUP = "/search?q="
 
     def __init__(self, symbol : str, max_candle: int ) -> None:
         self.symbol = symbol
@@ -51,13 +72,19 @@ class DataScrapper:
             print(response.status_code)
         else:
             decoded_response = response.json()
-            return Quote(decoded_response["o"],decoded_response["pc"],decoded_response["h"],decoded_response["l"],decoded_response["dp"],decoded_response["t"],decoded_response["c"])
+            return Quote(decoded_response["o"],decoded_response["pc"],decoded_response["h"],decoded_response["l"],decoded_response["t"])
         
     def isMarketOpen(self):
         url = self.BASE_URL + self.URL_STATUS
         response = requests.get(url, headers=self.headers)
         formatted_response = response.json()
         return formatted_response["isOpen"]
+
+    def exists(self):
+        url = self.BASE_URL + self.URL_LOOKUP+self.symbol
+        response = requests.get(url,headers=self.headers)
+        formatted_response = response.json()
+        return formatted_response['count']
     
     def getRecommendation(self):
         url = self.BASE_URL + self.URL_RECOMMENDATION
@@ -77,11 +104,9 @@ class DataAnalyser():
         self.oscillateurStochastiqueBuffer : List[Dot] = []
         self.oscillateurStochastiqueSMABuffer : List[Dot] = []
         self.oscillateurStochastiqueEMABuffer : List[Dot] = []
-        self.highPriceDay = -1
-        self.lowPriceDay =-1
 
-        self.MIN_POINTS_SMA = 40
-        self.MIN_POINTS_D_PERCENT_SMA = 40
+        self.MIN_POINTS_SMA = 20
+        self.MIN_POINTS_D_PERCENT_SMA = 20
         self.ALPHA = 2/(self.MIN_POINTS_SMA+1)
 
         #Example of use
@@ -125,29 +150,27 @@ class DataAnalyser():
     
     def addQuote(self, quote: Quote):
         self.quoteBuffer.append(quote)
-        if self.highPriceDay == -1 or quote.highPriceDay > self.highPriceDay:
-            self.highPriceDay = quote.highPriceDay
-        if self.lowPriceDay == -1 or quote.lowPriceDay < self.lowPriceDay:
-            self.lowPriceDay = quote.lowPriceDay
     
-    def setOscillateurStochastique(self):   
-
-        K_percent = (self.quoteBuffer[len(self.quoteBuffer)-1].currentPrice - self.lowPriceDay)/(self.highPriceDay-self.lowPriceDay)
-        DOT  = Dot(self.quoteBuffer[len(self.quoteBuffer)-1].time,K_percent)
-        self.oscillateurStochastiqueBuffer.append(DOT)
+    def setStochastique(self):   
+        if len(self.quoteBuffer) > 0:
+            K_percent = 100* (self.quoteBuffer[len(self.quoteBuffer)-1].closePrice - self.lowPriceDay)/(self.highPriceDay-self.lowPriceDay)
+            DOT  = Dot(self.quoteBuffer[len(self.quoteBuffer)-1].time,K_percent)
+            self.oscillateurStochastiqueBuffer.append(DOT)
 
 
     def setSMA(self,data:List[Dot], sma:List[Dot], min_points, k) -> None:
         somme_k = 0
         AVAILABLE_POINTS = len(data)
+        print("available points", AVAILABLE_POINTS)
         POINTS_AVAILABLE_FROM_K_POINTS = AVAILABLE_POINTS - k
         if POINTS_AVAILABLE_FROM_K_POINTS  < min_points:
             return
         #somme en partant du k eme element
         for i in range(POINTS_AVAILABLE_FROM_K_POINTS, AVAILABLE_POINTS):
-            somme_k+=data[i].value
+            somme_k+=data[i].value 
         LAST_QUOTE_TIME = data[AVAILABLE_POINTS-1].time
         DOT = Dot(LAST_QUOTE_TIME,somme_k/k) # dot(time, SMA_k)
+        print("sma value", DOT.value)
         sma.append(DOT)
     
         
@@ -190,19 +213,34 @@ class Bot:
     def __init__(self, symbol : str, cursor) -> None:
         self.dataAnalyser = DataAnalyser()
         self.dataScrapper = DataScrapper(symbol,40000)
+        self.symbolExists = False
+        if self.dataScrapper.exists() > 0:
+            self.symbolExists = True
         self.botSymbol = symbol
         self.running = False
+        self.isOpen =  True
         self.cursor = cursor
-        self.INSERT_STOCK = "INSERT INTO stocks (currentPrice, percentChange, changePrice, highPriceDay, lowPriceDay, SMA,EMA,OSC,OSC_EMA) VALUES ( %s, %s, %s, %s, %s, %s,%s,%s,%s)"
+        self.INSERT_STOCK = "INSERT INTO stocks (symbol, currentPrice, percentChange, changePrice, highPriceDay, lowPriceDay, SMA,EMA,OSC,OSC_EMA) VALUES (%s, %s, %s, %s, %s, %s, %s,%s,%s,%s)"
 
 
     def update(self):
+        if not self.symbolExists:
+            return
+        isMarketOpen = self.dataScrapper.isMarketOpen()
+        if isMarketOpen is False:
+            if self.isOpen is True:
+                self.isOpen = False
+                print(self.botSymbol + " market is closed")
+            return
         quote : Quote = self.dataScrapper.getQuote()
         self.dataAnalyser.addQuote(quote)
+        self.dataAnalyser.setStochastique()
         self.dataAnalyser.setStandard()
         self.dataAnalyser.setOscillateurStochastique()
     
     def getDatas(self):
+        if not self.symbolExists:
+            return
         PRICE = [Dot(quote.time, quote.currentPrice) for quote in self.dataAnalyser.quoteBuffer]
         SMA = self.dataAnalyser.movingAverage
         EMA = self.dataAnalyser.movingAverageExponential
@@ -211,53 +249,70 @@ class Bot:
         return {"price":PRICE, "sma":SMA, "ema":EMA, "osc":OSC, "osc_ema":OSC_EMA}
 
     def insertInDatabase(self):
+        if not self.symbolExists:
+            return
         SMA = self.dataAnalyser.getSMA(self.dataAnalyser.getSMALen()-1)
         EMA = self.dataAnalyser.getEMA(self.dataAnalyser.getEMALen()-1)
         OSC = self.dataAnalyser.getOscillateurStochastique(self.dataAnalyser.getOscillateurStochastiqueLen()-1)
         OSC_EMA = self.dataAnalyser.getOscillateurStochastiqueEMA(self.dataAnalyser.getOscillateurStochastiqueEMALen()-1)
         QUOTE = self.dataAnalyser.getQuote(self.dataAnalyser.getQuoteLen()-1)
-        self.cursor.execute(self.INSERT_STOCK,(QUOTE.currentPrice,QUOTE.percentChange,QUOTE.currentPrice-QUOTE.previousClosePrice,QUOTE.highPriceDay,QUOTE.lowPriceDay,SMA, EMA, OSC, OSC_EMA))
-    
+        self.cursor.execute(self.INSERT_STOCK,(self.botSymbol, QUOTE.currentPrice,QUOTE.percentChange,QUOTE.currentPrice-QUOTE.previousClosePrice,QUOTE.highPriceDay,QUOTE.lowPriceDay,SMA, EMA, OSC, OSC_EMA))
 
-cursor = None
-conn = None
-    
-#connection to the database
-try:
-    conn = mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password="myDBAkese315",
-        database="TRADEBOT"
-    )
-except Exception as e:
-    print(e)
 
-#global cursor
-cursor = conn.cursor()
-
+cursor.close()
+conn.close()
+'''
 NVIDIA_BOT = Bot("NVDA",cursor)
+BITCOIN_BOT = Bot("BTCUSD",cursor)
+ETH_BOT = Bot("ETHUSD",cursor)
 plt.title('Graphique en temps réel')
 plt.xlabel('Index')
 plt.ylabel('Valeur')
-        
 
 while(True):
+    
     data_analyzed = NVIDIA_BOT.update()
     conn.commit()
     plt.clf()
     datas = NVIDIA_BOT.getDatas()
     price_time = [dot.time for dot in datas["price"]]
     price_value = [dot.value for dot in datas["price"]]
-
     SmaArray = [dot.value for dot in datas["sma"]]
     SmaArrayTime = [dot.time for dot in datas["sma"]]
     EmaArray = [dot.value for dot in datas["ema"]]
     EmaArrayTime = [dot.time for dot in datas["ema"]]
 
-    plt.plot(price_time,price_value,'o-', color='blue')
-    plt.plot(SmaArrayTime,SmaArray,'o-', color='red')
-    plt.plot(EmaArrayTime,EmaArray,'o-', color='green')
-    print("requested")
+    plt.plot(price_time,price_value,'-', color='blue')
+    plt.plot(SmaArrayTime,SmaArray,'-', color='red')
+    plt.plot(EmaArrayTime,EmaArray,'-', color='green')
     plt.show(block=False)
-    plt.pause(1)
+    plt.pause(10)
+'''
+def startGui(symbol:str):
+    bot = Bot(symbol,cursor)
+    
+
+
+def main():
+    parser = argparse.ArgumentParser(description="Mon Trading Bot")
+    subparsers = parser.add_subparsers(dest='commande', required=True)
+    parser_start = subparsers.add_parser('start', help='Exécute la commande start')
+    parser_start.add_argument("--nogui", action='store_true', help="Execute la commande sans intefarce graphique")
+    parser_start.add_argument("--server",action='store_true', help="Execute la commande en appliquant un server")
+    parser_start.add_argument("--symbol",type=str, help="selectionne le symbole", required=True)
+
+    args = parser.parse_args()
+
+    if args.commande == "start":
+        if args.nogui:
+            print("Exécution sans interface graphique")
+            #a faire
+        if args.server:
+            print(f"Exécution avec le serveur: {args.server}")
+            # Ajoute ici le code pour exécuter avec le serveur
+        if not args.nogui and not args.server:
+            print("Exécution par défaut avec l'interface graphique")
+            # Ajoute ici le code pour exécuter avec GUI par défaut
+
+if __name__ == "__main__":
+    main()

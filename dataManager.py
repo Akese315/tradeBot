@@ -1,0 +1,135 @@
+import argparse
+import sys
+from typing import List
+from dotenv import load_dotenv
+import requests
+import mysql.connector
+import os
+from time import sleep
+from datetime import datetime, timedelta
+load_dotenv()
+
+ALPHA_VENTAGE_KEY = os.getenv('ALPHA_VENTAGE_KEY_2')
+PASSWORD = os.getenv('PSW')
+HOST = os.getenv('HOST')
+USR = os.getenv('USR')
+DATABASE = os.getenv('DATABASE')
+
+
+SQL_INSERT = "INSERT INTO training_data_hour (time, symbol, highPrice,lowPrice,closePrice,openPrice) VALUES (%s, %s, %s, %s, %s, %s)"
+
+cursor = None
+conn = None
+    
+#connection to the database
+try:
+    print("Connecting to the database : ",USR,'@',HOST,"to", DATABASE,"with :", PASSWORD)
+    conn = mysql.connector.connect(host=HOST,user=USR,password=PASSWORD,database=DATABASE)
+    
+except Exception as e:
+    print(e)
+
+cursor = conn.cursor()
+
+def getMaxMinData(period:int, symbol:str):
+    now = datetime.now()
+    date_period = now - timedelta(days=period)
+    SQL_SELECT = "SELECT closePrice FROM training_data_hour WHERE time > '"+date_period.strftime("%Y-%m-%d")+"';"
+    cursor.execute(SQL_SELECT)
+    rows = cursor.fetchall()
+
+    minPrice = min(rows)
+    maxPrice = max(rows)
+    
+    print("Lowest and highest price in a period of",period,"days are :",minPrice,"and",maxPrice)
+
+def getTrainingData(symbol:str):
+    SQL_SELECT = "SELECT closePrice, openPrice, lowPrice, highPrice FROM training_data_hour WHERE symbol='"+symbol+"' ORDER BY time ASC;"
+    cursor.execute(SQL_SELECT)
+    rows = cursor.fetchall()
+    return rows
+
+def cleanTrainingData(symbol:str, year:str):
+    SQL_DELETE = "DELETE FROM training_data_hour WHERE symbol='"+symbol+"';"
+    if year is not None:
+        SQL_DELETE = "DELETE FROM training_data_hour WHERE symbol='"+symbol+"'AND YEAR(time)="+year+";"
+    print(SQL_DELETE)
+    try:
+        cursor.execute(SQL_DELETE)
+        conn.commit()
+        print("successfully delete",symbol)
+    except Exception as e:
+            print(e)
+    
+
+def getTrainingData(month:str,symbol:str,interval:str):
+    url = 'https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY'
+    url+='&symbol='+symbol
+    url+='&interval='+interval
+    url+='&month='+month
+    url+='&apikey='+ALPHA_VENTAGE_KEY
+    url+='&outputsize=full'
+    response = requests.get(url)
+    json_parsed_response = response.json()
+    metadata = json_parsed_response["Meta Data"]
+    print(metadata)
+    data = json_parsed_response["Time Series (60min)"]
+    items = list(data.items())
+    reversed_items = items[::-1]
+    reversed_data = dict(reversed_items)
+    for timestamp, values in reversed_data.items():
+        open_price = values["1. open"]
+        high_price = values["2. high"]
+        low_price = values["3. low"]
+        close_price = values["4. close"]
+        try:
+            cursor.execute(SQL_INSERT,(timestamp,symbol,high_price,low_price,close_price,open_price))
+            conn.commit()
+        except Exception as e:
+            print(e)
+
+def harvestYear(year:str,symbol:str,interval="60min"):
+    if interval is None:
+        interval = "60min"
+
+    now = datetime.now()
+    max_month = 12
+    if year == str(now.year):
+        max_month = now.month
+    for i in range(1,max_month+1):   
+        date = year
+        if i < 10:
+            date += "-0"+str(i)
+        else:
+            date += "-"+str(i)
+        getTrainingData(month=date,symbol=symbol, interval=interval)
+        sleep(15)
+
+
+
+
+def main():
+    parser = argparse.ArgumentParser(description="Mon Data Manager")
+    subparsers = parser.add_subparsers(dest='commande', required=True)
+
+    parser_delete = subparsers.add_parser('delete', help='Exécute la commande delete')
+    parser_delete.add_argument("--symbol",type=str,required=True, help="Indiquer le symbole à supprimer")
+    parser_delete.add_argument("--year",type=str,required=False,help="Indiquer l'annee à ajouter")
+
+    parser_harvest = subparsers.add_parser('harvestYear', help='Exécute la commande harvestYear')
+    parser_harvest.add_argument("--symbol",type=str,required=True,help="Indiquer le symbole à ajouter")
+    parser_harvest.add_argument("--year",type=str,required=True,help="Indiquer l'annee à ajouter")
+    parser_harvest.add_argument("--interval",type=str,required=False,help="Indiquer l'interval de temps (1min, 5min, 15min, 30min, 60min)")
+
+    
+
+    args = parser.parse_args()
+
+    if args.commande == 'delete':
+        cleanTrainingData(args.symbol, args.year)
+    elif args.commande == 'harvestYear':
+        harvestYear(args.year, args.symbol, args.interval)
+
+if __name__ == "__main__":
+    getMaxMinData(60,"NVDA")
+    main()
