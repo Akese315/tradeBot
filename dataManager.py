@@ -32,16 +32,16 @@ except Exception as e:
 cursor = conn.cursor()
 
 def getMaxMinData(period:int, symbol:str, current_date:str) -> tuple[float,float]:
-    print(current_date, type(current_date))
+    #print(current_date, type(current_date))
     date_period = datetime.strptime(current_date,'%Y-%m-%d %H:%M:%S') - timedelta(days=period)
     SQL_SELECT = "SELECT closePrice FROM training_data_hour WHERE time > '"+date_period.strftime("%Y-%m-%d")+"'AND time <='"+current_date+"' AND symbol='"+symbol+"';"
-    print(SQL_SELECT)
+    #print(SQL_SELECT)
     cursor.execute(SQL_SELECT)
     rows = cursor.fetchall()
     minPrice = float(min(rows)[0])
     maxPrice = float(max(rows)[0])
     
-    print("Lowest and highest price in a period of",period,"days are :",minPrice,"and",maxPrice)
+    #print("Lowest and highest price in a period of",period,"days are :",minPrice,"and",maxPrice)
 
     return (minPrice, maxPrice)
 
@@ -133,5 +133,5 @@ def main():
         harvestYear(args.year, args.symbol, args.interval)
 
 if __name__ == "__main__":
-    getMaxMinData(60,"NVDA", "2024-03-15")
+    #getMaxMinData(60,"NVDA", "2024-03-15")
     main()

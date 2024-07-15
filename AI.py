@@ -17,7 +17,7 @@ class TrainingDataset(Dataset):
         return self.data[idx], self.target[idx]
     
 class Input():
-    def __init__(self, openPrice, high, low, closePrice, sma, ema, osSMA, osEMA, os):
+    def __init__(self, openPrice, high, low, closePrice, sma, ema, osSMA, os):
         self.open = openPrice
         self.high = high
         self.low = low
@@ -25,7 +25,6 @@ class Input():
         self.sma = sma
         self.ema = ema
         self.osSMA = osSMA
-        self.osEMA = osEMA
         self.os = os
 
 class Target():
