@@ -6,17 +6,17 @@ import requests
 import mysql.connector
 import os
 from time import sleep
+import pandas as pd
 from datetime import datetime, timedelta, date
 load_dotenv()
 
-ALPHA_VENTAGE_KEY = os.getenv('ALPHA_VENTAGE_KEY_2')
+ALPHA_VENTAGE_KEY = os.getenv('ALPHA_VENTAGE_KEY_1')
 PASSWORD = os.getenv('PSW')
 HOST = os.getenv('HOST')
 USR = os.getenv('USR')
 DATABASE = os.getenv('DATABASE')
 
 
-SQL_INSERT = "INSERT INTO training_data_hour (time, symbol, highPrice,lowPrice,closePrice,openPrice) VALUES (%s, %s, %s, %s, %s, %s)"
 
 cursor = None
 conn = None
@@ -64,13 +64,14 @@ def cleanTrainingData(symbol:str, year:str):
             print(e)
     
 
-def getTrainingData(month:str,symbol:str,interval:str):
+def getTrainingData(month:str,symbol:str,interval:str, csv=False):
     url = 'https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY'
     url+='&symbol='+symbol
     url+='&interval='+interval
     url+='&month='+month
     url+='&apikey='+ALPHA_VENTAGE_KEY
     url+='&outputsize=full'
+    dataframe = None
     response = requests.get(url)
     json_parsed_response = response.json()
     metadata = json_parsed_response["Meta Data"]
@@ -79,18 +80,41 @@ def getTrainingData(month:str,symbol:str,interval:str):
     items = list(data.items())
     reversed_items = items[::-1]
     reversed_data = dict(reversed_items)
+
+    if csv:
+        dataframe = pd.DataFrame(columns=['time', 'symbol', 'highPrice',"lowPrice","closePrice","openPrice","volume"])
+        
+
     for timestamp, values in reversed_data.items():
         open_price = values["1. open"]
         high_price = values["2. high"]
         low_price = values["3. low"]
         close_price = values["4. close"]
+        volume = values["5. volume"]
+        if csv:
+            row = {
+                'time': timestamp,
+                'symbol': symbol,
+                'highPrice': high_price,
+                'lowPrice': low_price,
+                'closePrice': close_price,
+                'openPrice': open_price,
+                'volume': volume
+            }
+            row_dataframe = pd.DataFrame([row])
+            dataframe = pd.concat([dataframe, row_dataframe], ignore_index=True)
         try:
-            cursor.execute(SQL_INSERT,(timestamp,symbol,high_price,low_price,close_price,open_price))
+            SQL_INSERT = "INSERT INTO training_data_hour (time, symbol, highPrice,lowPrice,closePrice,openPrice,volume) VALUES (%s, %s, %s, %s, %s, %s, %s);"
+            cursor.execute(SQL_INSERT,(timestamp,symbol,high_price,low_price,close_price,open_price,volume))
             conn.commit()
         except Exception as e:
             print(e)
+    if csv:
+        file = open("./dataframe/"+symbol+"_"+month+".csv",mode="w", newline='')
+        dataframe.to_csv(file, index=False)
+        file.close()
 
-def harvestYear(year:str,symbol:str,interval="60min"):
+def harvestYear(year:str,symbol:str,interval="60min", csv=False):
     if interval is None:
         interval = "60min"
 
@@ -104,7 +128,7 @@ def harvestYear(year:str,symbol:str,interval="60min"):
             date += "-0"+str(i)
         else:
             date += "-"+str(i)
-        getTrainingData(month=date,symbol=symbol, interval=interval)
+        getTrainingData(month=date,symbol=symbol, interval=interval,csv=csv)
         sleep(15)
 
 
@@ -122,7 +146,7 @@ def main():
     parser_harvest.add_argument("--symbol",type=str,required=True,help="Indiquer le symbole à ajouter")
     parser_harvest.add_argument("--year",type=str,required=True,help="Indiquer l'annee à ajouter")
     parser_harvest.add_argument("--interval",type=str,required=False,help="Indiquer l'interval de temps (1min, 5min, 15min, 30min, 60min)")
-
+    parser_harvest.add_argument("--csv",action='store_true',required=False,help="Indiquer si un fichier csv doit être généré")
     
 
     args = parser.parse_args()
@@ -130,7 +154,10 @@ def main():
     if args.commande == 'delete':
         cleanTrainingData(args.symbol, args.year)
     elif args.commande == 'harvestYear':
-        harvestYear(args.year, args.symbol, args.interval)
+        if args.csv:
+            harvestYear(args.year,args.symbol, args.interval, True)
+        else:
+            harvestYear(args.year, args.symbol, args.interval)
 
 if __name__ == "__main__":
     #getMaxMinData(60,"NVDA", "2024-03-15")

@@ -8,10 +8,12 @@ import numpy as np
 import json
 import argparse
 import sys
+import torch
 import threading
 from typing import List
 from dotenv import load_dotenv
 import dataManager as dm
+import pandas as pd
 import AI as ai
 load_dotenv()
 
@@ -331,26 +333,27 @@ def trainAI(symbol:str):
         if dataAnalyser.getOscillateurStochastiqueLen() >= D_PERIOD: #on attend d'avoir au moins 3 jours de données pour commencer à calculer la moyenne mobile de l'oscillateur stochastique
             dataAnalyser.setSMAStochastique(D_PERIOD)
             #print("set SMA oscillateur stochastique")
-        else:
-            continue
-        if k+1 < SMA_EMA_PERIOD:
+        if dataAnalyser.getOscillateurStochastiqueSMALen() < D_PERIOD or k+1 < SMA_EMA_PERIOD:
             continue
         
-        os = dataAnalyser.getOscillateurStochastique(dataAnalyser.getOscillateurStochastiqueLen()-1)
-        osSMA = dataAnalyser.getOscillateurStochastiqueSMA(dataAnalyser.getOscillateurStochastiqueSMALen()-1)
-        ema = dataAnalyser.getEMA(dataAnalyser.getEMALen()-1)
-        sma = dataAnalyser.getSMA(dataAnalyser.getSMALen()-1)
+        os = dataAnalyser.getOscillateurStochastique(dataAnalyser.getOscillateurStochastiqueLen()-1).value
+        osSMA = dataAnalyser.getOscillateurStochastiqueSMA(dataAnalyser.getOscillateurStochastiqueSMALen()-1).value
+        ema = dataAnalyser.getEMA(dataAnalyser.getEMALen()-1).value
+        sma = dataAnalyser.getSMA(dataAnalyser.getSMALen()-1).value
         closePrice = quote.closePrice
         openPrice = quote.openPrice
         highPrice = quote.highPrice
         lowPrice = quote.lowPrice
-        data.append(ai.Input(openPrice,highPrice,lowPrice,closePrice,sma,ema,osSMA,os))
-        target.append(ai.Target(nextQuote.closePrice, nextQuote.highPrice, nextQuote.lowPrice))
-        print(f"\tProgress: {int((k+1)/len(quotes)*100)}%", end="\r")
+        data.append(torch.tensor([openPrice,highPrice,lowPrice,closePrice,sma,ema,osSMA,os]))
+        target.append(torch.tensor([nextQuote.closePrice, nextQuote.highPrice, nextQuote.lowPrice]))
+        print(f"\tCreating dataset progress: {int((k+1)/len(quotes)*100)}%", end="\r")
 
     TrainingDataset = ai.TrainingDataset(data=data, target=target)
     ending_time = datetime.now()
     print("Training dataset length", len(TrainingDataset), "in ", str(ending_time-beginning_time))
+    ai.trainModel(TrainingDataset)
+    ending_time_training = datetime.now()
+    print("Training time in ", str(ending_time_training-ending_time))
 
 def main():
     parser = argparse.ArgumentParser(description="Mon Trading Bot")

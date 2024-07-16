@@ -8,13 +8,14 @@ Data Manager :
 
 ```bash
 python3 dataManager 	delete --symbol <str> --year (optional) <str>
-			harvestYear --symbol <str> --year <str> --interval <str> (1min, 5min, 15min, 30min, 60min) 
+			harvestYear --symbol <str> --year <str> --csv --interval <str> (1min, 5min, 15min, 30min, 60min) 
 ```
 
 Bot :
 
 ```bash
 python3 bot.py	start --symbol <str> --nogui (optional) --server (optionnal)
+		train --symbol <str>
 ```
 
 > By default the bot start with GUI

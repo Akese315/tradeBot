@@ -9,6 +9,7 @@ CREATE TABLE stocks(
     changePrice FLOAT,
     highPriceDay FLOAT,
     lowPriceDay FLOAT,
+    volume FLOAT,
     sma FLOAT,
     ema FLOAT,
     osc FLOAT,
@@ -22,6 +23,7 @@ CREATE TABLE training_data_hour(
     highPrice FLOAT,
     lowPrice FLOAT,
     closePrice FLOAT,
-    openPrice FLOAT
+    openPrice FLOAT,
+    volume FLOAT
 );
 
