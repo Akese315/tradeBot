@@ -6,26 +6,30 @@ from torch.nn import Linear
 from torch.utils.data import Dataset, DataLoader, Subset, TensorDataset
 
 class TrainingDataset(Dataset):
-    def __init__(self, data, target):
+    def __init__(self, data, target,batch_size):
         self.data = data
         self.target = target
+        self.batch_size = batch_size
 
     def __len__(self):
         return len(self.data)
 
     def __getitem__(self, idx):
-        return self.data[idx], self.target[idx]
+        x = self.data[idx]
+        y = self.target[idx]
+
+        return torch.tensor(x, dtype=torch.float32), torch.tensor(y, dtype=torch.float32)
 
     
 
 class tradingModel(nn.Module):
     def __init__(self):
         super().__init__()
-        self.hidden_size = 100
+        self.hidden_size = 256
         self.num_layers = 2
-        self.input_size = 8
+        self.input_size = 9
         self.lstm = LSTM(self.input_size,self.hidden_size,self.num_layers,dropout=0.2, batch_first=True)
-        self.linear = Linear(50,3)
+        self.linear = Linear(self.hidden_size,3)
         
     
     def forward(self,x):
@@ -80,34 +84,39 @@ def trainModel(dataset:TrainingDataset):
     val_dataset = Subset(dataset, val_indices)
     test_dataset = Subset(dataset, test_indices)
 
-    #train_loader = DataLoader(train_dataset, batch_size=24, shuffle=False)
+    train_loader = DataLoader(train_dataset, batch_size=1, shuffle=False)
     val_loader = DataLoader(val_dataset, batch_size=32, shuffle=False)
     test_loader = DataLoader(test_dataset, batch_size=32, shuffle=False)
 
     
 
-    num_epochs = 10
+    num_epochs = 1500
     model.train(True)
-    train_loader = create_batches(train_dataset, 24, 1)
     for epoch in range(num_epochs):
         
         running_loss = 0.
-        for i, data in enumerate(train_loader):
-            inputs, target = data
+        for i, batch in enumerate(train_loader):
+            print(batch[0].shape)
+            input("pause")
+            inputs, target = batch
             inputs = inputs.unsqueeze(1).to(device)
-            print(inputs.shape)
+            #print(inputs.shape)
             target = target.to(device)
             
             output = model(inputs)
+            if epoch == 100:
+                input("pause")
+                print(output) 
+                print(target)
             loss = loss_fn(output, target)
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
 
             running_loss += loss.item()
-            if i % 100 == 99:
-                print(f"Epoch {epoch + 1}, iter {i + 1}: {running_loss / 100}")
-                running_loss = 0.
+            
+        print(f"Epoch {epoch + 1}, iter {i + 1}: {running_loss / 100}")
+        running_loss = 0.
 
         print(f"epoch {epoch + 1} done")
     answer = input("do you want to save the model ? (Yes/No)" )

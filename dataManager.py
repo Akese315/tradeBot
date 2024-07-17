@@ -46,7 +46,7 @@ def getMaxMinData(period:int, symbol:str, current_date:str) -> tuple[float,float
     return (minPrice, maxPrice)
 
 def getLocalTrainingData(symbol:str) -> List:
-    SQL_SELECT = "SELECT time, closePrice, openPrice, lowPrice, highPrice FROM training_data_hour WHERE symbol='"+symbol+"' ORDER BY time ASC;"
+    SQL_SELECT = "SELECT time, closePrice, openPrice, lowPrice, highPrice, volume FROM training_data_hour WHERE symbol='"+symbol+"' ORDER BY time ASC;"
     cursor.execute(SQL_SELECT)
     rows = cursor.fetchall()
     return rows

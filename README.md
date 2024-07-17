@@ -25,3 +25,11 @@ python3 bot.py	start --symbol <str> --nogui (optional) --server (optionnal)
 You need to create a database with the exact same features.
 
 See the database.sql
+
+## Dataframe
+
+Please create a dataframe folder
+
+## Model
+
+Please create a model folder

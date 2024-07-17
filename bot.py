@@ -39,12 +39,13 @@ cursor = conn.cursor()
 
 class Quote:
 
-    def __init__(self,openPriceDay, closePrice, highPrice, lowPrice,time) -> None:
+    def __init__(self,openPriceDay, closePrice, highPrice, lowPrice,time, volume) -> None:
         self.openPrice = openPriceDay
         self.closePrice = closePrice
         self.highPrice = highPrice
         self.lowPrice = lowPrice
         self.time = time
+        self.volume = volume
 
 class Dot:
     def __init__(self,time,value) -> None:
@@ -166,9 +167,13 @@ class DataAnalyser():
         current_date = self.quoteBuffer[len(self.quoteBuffer)-1].time
         minPrice, maxPrice = dm.getMaxMinData(period=period, symbol=self.symbol, current_date=current_date)
         if len(self.quoteBuffer) > 0:
-            K_percent = 100* (self.quoteBuffer[len(self.quoteBuffer)-1].closePrice - minPrice)/(maxPrice-minPrice)
-            DOT  = Dot(self.quoteBuffer[len(self.quoteBuffer)-1].time,K_percent)
-            self.oscillateurStochastiqueBuffer.append(DOT)
+            try:
+                K_percent = 100* (self.quoteBuffer[len(self.quoteBuffer)-1].closePrice - minPrice)/(maxPrice-minPrice)
+                DOT  = Dot(self.quoteBuffer[len(self.quoteBuffer)-1].time,K_percent)
+                self.oscillateurStochastiqueBuffer.append(DOT)
+            except:
+                print("Error in setStochastique")
+                print("minPrice",minPrice,"maxPrice",maxPrice, "date",current_date)
 
 
     def setSMA(self,data:List[Dot], sma:List[Dot], K) -> None:
@@ -299,7 +304,7 @@ def startGui(symbol:str):
 def arrayToQuote(array:List):
     quotes = []
     for i in range(len(array)):
-        quote = Quote(array[i][2],array[i][1],array[i][4],array[i][3],array[i][0].strftime("%Y-%m-%d %H:%M:%S"))
+        quote = Quote(array[i][2],array[i][1],array[i][4],array[i][3],array[i][0].strftime("%Y-%m-%d %H:%M:%S"),array[i][5])
         quotes.append(quote)
     return quotes
 
@@ -344,11 +349,12 @@ def trainAI(symbol:str):
         openPrice = quote.openPrice
         highPrice = quote.highPrice
         lowPrice = quote.lowPrice
-        data.append(torch.tensor([openPrice,highPrice,lowPrice,closePrice,sma,ema,osSMA,os]))
+        volume = quote.volume
+        data.append(torch.tensor([openPrice,highPrice,lowPrice,closePrice,sma,ema,osSMA,os,volume]))
         target.append(torch.tensor([nextQuote.closePrice, nextQuote.highPrice, nextQuote.lowPrice]))
         print(f"\tCreating dataset progress: {int((k+1)/len(quotes)*100)}%", end="\r")
 
-    TrainingDataset = ai.TrainingDataset(data=data, target=target)
+    TrainingDataset = ai.TrainingDataset(data=data, target=target, batch_size=24)
     ending_time = datetime.now()
     print("Training dataset length", len(TrainingDataset), "in ", str(ending_time-beginning_time))
     ai.trainModel(TrainingDataset)
