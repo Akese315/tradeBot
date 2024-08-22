@@ -33,3 +33,6 @@ Please create a dataframe folder
 ## Model
 
 Please create a model folder
+
+version 1 is 300 hidden size
+version 2 and 3 are 600 hidden size

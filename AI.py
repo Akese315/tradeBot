@@ -2,56 +2,81 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 from torch.nn import LSTM
+import matplotlib.pyplot as plt
 from torch.nn import Linear
-from torch.utils.data import Dataset, DataLoader, Subset, TensorDataset
+from sklearn.preprocessing import StandardScaler
+import numpy as np
+from torch.utils.data import Dataset, DataLoader, Subset, TensorDataset, SequentialSampler
 
-class TrainingDataset(Dataset):
-    def __init__(self, data, target,batch_size):
-        self.data = data
-        self.target = target
-        self.batch_size = batch_size
-
-    def __len__(self):
-        return len(self.data)
-
-    def __getitem__(self, idx):
-        x = self.data[idx]
-        y = self.target[idx]
-
-        return torch.tensor(x, dtype=torch.float32), torch.tensor(y, dtype=torch.float32)
 
     
-
-class tradingModel(nn.Module):
-    def __init__(self):
-        super().__init__()
-        self.hidden_size = 256
-        self.num_layers = 2
-        self.input_size = 9
-        self.lstm = LSTM(self.input_size,self.hidden_size,self.num_layers,dropout=0.2, batch_first=True)
-        self.linear = Linear(self.hidden_size,3)
-        
-    
-    def forward(self,x):
-        h0 = torch.zeros(self.num_layers, x.size(0), self.hidden_size).to(x.device)
-        c0 = torch.zeros(self.num_layers, x.size(0), self.hidden_size).to(x.device)
-
-        output, _ = self.lstm(x,(h0,c0))
-        #print(output)
-        output = self.linear(output[:, -1, :]).squeeze(-1)
-        return output
-    
-def create_batches(data, batch_size, shift):
-    batches = []
-    total_size = len(data)
-    indices = torch.arange(total_size)
+def create_batches(data:BasicDataset, batch_size, shift):
+    targetBatches = []
+    inputBatches = []
+    inputs = data.getData()
+    target = data.getTarget()
     for start in range(0, len(data) - batch_size + 1, shift):
-        batch = Subset(data, indices[start:start+batch_size])
-        batches.append(batch)
-    return batches
+        inputBatch = inputs[start:start+batch_size]
+        targetBatch=target[start:start+batch_size]
+        targetBatches.append(targetBatch)
+        inputBatches.append(inputBatch)
+    return inputBatches,targetBatches
+
+def testModel(testingDataset, validatingDataset,name):
+    device = (
+        "cuda"
+        if torch.cuda.is_available()
+        else "mps"
+        if torch.backends.mps.is_available()
+        else "cpu"
+    )
+    model = tradingModel()
+    loss_fn = nn.MSELoss()
+    model.load_state_dict(torch.load("./model/version_1.pth"))
+    model.eval()
+
+    test_loss =0.0
+    val_loss = 0.0
+
+    output_plot = []
+    target_plot = []
+
+    for i, data in enumerate(testingDataset):
+        inputs, labels = data
+        inputs = inputs.to(torch.float32)
+        labels = labels.to(torch.float32)
+        inputs = inputs.unsqueeze(1).to(device)
+        labels = labels.to(device)
+        output = model(inputs)
+        output_plot.append(output[-1][0].detach().numpy())
+        target_plot.append(labels[-1][0].detach().numpy())
+        loss = loss_fn(output, labels)
+        test_loss += loss.item()
+
+    for i, data in enumerate(validatingDataset):
+        inputs, labels = data
+        inputs = inputs.to(torch.float32)
+        labels = labels.to(torch.float32)
+        inputs = inputs.unsqueeze(1).to(device)
+        labels = labels.to(device)
+        output = model(inputs)
+        
+        loss = loss_fn(output, labels)
+        val_loss += loss.item()
+    
 
 
-def trainModel(dataset:TrainingDataset):
+    print("loss for test : ", (test_loss/len(testingDataset)))
+    print("loss for val : ", (val_loss/len(testingDataset)))
+
+    time = np.arange(0, len(output_plot))
+
+    plt.plot(time,output_plot,'-', color='blue')
+    plt.plot(time,target_plot,'-', color='red')
+    plt.show()
+
+
+def trainModel(dataset:GeneralDataset):
     device = (
         "cuda"
         if torch.cuda.is_available()
@@ -65,50 +90,45 @@ def trainModel(dataset:TrainingDataset):
     model = tradingModel().to(device)
     loss_fn = nn.MSELoss()
     optimizer = optim.Adam(model.parameters(),lr=0.001)
-
-    train_ratio = 0.7
-    val_ratio = 0.2
-    test_ratio = 0.1
-
-    # Calculer les tailles des ensembles
-    total_size = len(dataset)
-    train_size = int(train_ratio * total_size)
-    val_size = int(val_ratio * total_size)
-
-    indices = torch.arange(total_size)
-    train_indices = indices[:train_size]
-    val_indices = indices[train_size:train_size + val_size]
-    test_indices = indices[train_size + val_size:]
-
-    train_dataset = Subset(dataset, train_indices)
-    val_dataset = Subset(dataset, val_indices)
-    test_dataset = Subset(dataset, test_indices)
-
-    train_loader = DataLoader(train_dataset, batch_size=1, shuffle=False)
-    val_loader = DataLoader(val_dataset, batch_size=32, shuffle=False)
-    test_loader = DataLoader(test_dataset, batch_size=32, shuffle=False)
+    scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, 'min')
 
     
 
-    num_epochs = 1500
+    train_dataset = dataset.getTrainDataset()
+    test_dataset = dataset.getTestDataset()
+    val_dataset = dataset.getValidationDataset()
+
+    train_loader = create_batches(train_dataset,32,1)
+    test_loader = create_batches(test_dataset,32,1)
+    val_loader = create_batches(val_dataset,32,1)
+
+    '''train_loader = DataLoader(train_dataset, batch_size=32, shuffle=False, sampler=SequentialSampler(train_dataset))
+    val_loader = DataLoader(val_dataset, batch_size=32, shuffle=False, sampler=SequentialSampler(val_dataset))
+    test_loader = DataLoader(test_dataset, batch_size=32, shuffle=False, sampler=SequentialSampler(test_dataset))
+
+'''
+
+    num_epochs = 15
     model.train(True)
     for epoch in range(num_epochs):
-        
         running_loss = 0.
-        for i, batch in enumerate(train_loader):
-            print(batch[0].shape)
-            input("pause")
-            inputs, target = batch
-            inputs = inputs.unsqueeze(1).to(device)
-            #print(inputs.shape)
-            target = target.to(device)
+        for i in range(len(train_loader[0])):
             
+            inputs = train_loader[0][i]
+            labels = train_loader[1][i]
+
+            inputs = inputs.to(torch.float32)
+            labels = labels.to(torch.float32)
+
+            inputs = inputs.unsqueeze(1).to(device)
+            labels = labels.to(device)
             output = model(inputs)
-            if epoch == 100:
-                input("pause")
-                print(output) 
-                print(target)
-            loss = loss_fn(output, target)
+            if epoch == 14 and (i == 3 or i ==4):
+                print(inputs)
+                print(output)
+                print(labels)
+            
+            loss = loss_fn(output, labels)
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
@@ -116,21 +136,11 @@ def trainModel(dataset:TrainingDataset):
             running_loss += loss.item()
             
         print(f"Epoch {epoch + 1}, iter {i + 1}: {running_loss / 100}")
-        running_loss = 0.
-
+        scheduler.step(running_loss)
         print(f"epoch {epoch + 1} done")
     answer = input("do you want to save the model ? (Yes/No)" )
     if answer == "Yes":
         torch.save(model.state_dict(), "./model/version_1.pth")
     else:
         print("Model not saved, fin du programme")
-
-
-
-donnee = torch.arange(2000)
-donnee = create_batches(donnee, 24, 1)
-data = donnee[0]
-print(data)
-data = donnee[1]
-print(data)
-
+    testModel(test_loader, val_loader, "./model/version_1.pth")
