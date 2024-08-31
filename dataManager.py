@@ -94,8 +94,10 @@ def getTrainingData(month:str,symbol:str,interval:str, csv=False):
     url+='&apikey='+ALPHA_VENTAGE_KEY
     url+='&outputsize=full'
     dataframe = None
+    print(url)
     response = requests.get(url)
     json_parsed_response = response.json()
+    print(json_parsed_response)
     metadata = json_parsed_response["Meta Data"]
     print(metadata)
     data = json_parsed_response["Time Series (60min)"]
@@ -156,43 +158,71 @@ def harvestYear(year:str,symbol:str,interval="60min", csv=False):
 def analyse(symbol:str,start:str,end:str, sma_period):
     dataAnalyser = DataAnalyser(symbol=symbol)
     combined_df = training_data_from_csv(symbol,start,end)
-    dataframe = pd.DataFrame(columns=['time', 'symbol', 'highPrice',"lowPrice","closePrice","openPrice","volume"])
+    dataframe = pd.DataFrame(columns=['time', 'symbol', 'highPrice','deltaHighPrice',"lowPrice","deltaLowPrice","closePrice","deltaClosePrice","openPrice","volume",'sma','deltaSMA','ema','deltaEMA','rsi','adx','oscillateurStochastique','oscillateurStochastiqueSMA'])
     D_PERIOD = 18
+    SMA_PERIOD = sma_period
+    is_first = True
     for index, row in combined_df.iterrows():
         
         quote = Quote(row["openPrice"],row["closePrice"],row["highPrice"],row["lowPrice"],datetime.strptime(row["time"],"%Y-%m-%d %H:%M:%S"),row["volume"])
         dataAnalyser.addQuote(quote)
-        if index+1 < sma_period:
-            continue
-        dataAnalyser.calculate_Standard(sma_period)
-        dataAnalyser.calculate_Stochastique(sma_period)
+        dataAnalyser.calculate_Standard(SMA_PERIOD)
+        dataAnalyser.calculate_Stochastique(SMA_PERIOD)
         dataAnalyser.calculated_RSI(14)
+        dataAnalyser.calculate_SMAStochastique(D_PERIOD)
+        dataAnalyser.calculate_ADX(SMA_PERIOD)
+
         sma = dataAnalyser.getSMA(-1)
         ema = dataAnalyser.getEMA(-1)
         rsi = dataAnalyser.getRSI(-1)
         os = dataAnalyser.getOscillateurStochastique(-1)
-        if dataAnalyser.getOscillateurStochastiqueLen() < D_PERIOD: #on attend d'avoir au moins 3 jours de données pour commencer à calculer la moyenne mobile de l'oscillateur stochastique
-           continue
-        dataAnalyser.calculate_SMAStochastique(D_PERIOD)
         sma_os = dataAnalyser.getOscillateurStochastiqueSMA(-1)
-        
+        adx = dataAnalyser.getADX(-1)
+
+        test = [sma, ema, rsi, os, sma_os,adx] 
+        if None in test:
+            continue
+        #if is_first:
+            #is_first = False
+            #continue
+        #can omit this condition cause we know that there will be a previous quote
+
+        previous_quote = dataAnalyser.getQuote(-2)
+        previous_sma = dataAnalyser.getSMA(-2)
+        previous_close_price = previous_quote.closePrice
+        lowPrice_difference_ratio = dataAnalyser.calculate_growth_ratio(quote.lowPrice, previous_quote.lowPrice)
+        highPrice_difference_ratio = dataAnalyser.calculate_growth_ratio(quote.highPrice, previous_quote.highPrice)
+        closePrice_difference_ratio = dataAnalyser.calculate_growth_ratio(quote.closePrice, previous_close_price)
+        sma_difference_ratio = dataAnalyser.calculate_growth_ratio(sma.value, previous_sma.value)
+        ema_difference_ratio = dataAnalyser.calculate_growth_ratio(ema.value, previous_sma.value)
         row = {
                 'time': quote.time,
                 'symbol': symbol,
                 'highPrice': quote.highPrice,
+                'deltaHighPrice': highPrice_difference_ratio,
                 'lowPrice': quote.lowPrice,
+                'deltaLowPrice': lowPrice_difference_ratio,
                 'closePrice': quote.closePrice,
+                'deltaClosePrice': closePrice_difference_ratio,
                 'openPrice': quote.openPrice,
                 'volume': quote.volume,
                 'sma': sma.value,
+                'deltaSMA': sma_difference_ratio,
                 'ema': ema.value,
+                'deltaEMA': ema_difference_ratio,
                 'rsi':rsi.value,
+                'adx':adx.value,
                 'oscillateurStochastique': os.value,
                 'oscillateurStochastiqueSMA': sma_os.value
             }  
+        
+        previous_quote = quote
+        
+
         row_dataframe = pd.DataFrame([row])
         dataframe = pd.concat([dataframe, row_dataframe], ignore_index=True)
-        print(f"\tCreating dataset progress: {int((index+1)/combined_df.size*100)}%", end="\r")
+        if index % 300 == 0:
+            print(f"\tCreating dataset progress: {int((index+1)/len(combined_df)*100)}%", end="\r")
     file = open("./analysed_dataframe/"+symbol+"_"+start+"-"+end+".csv",mode="w", newline='')
     dataframe.to_csv(file, index=False)
     file.close()
@@ -227,7 +257,6 @@ def main():
         else:
             harvestYear(args.year, args.symbol, args.interval)
     elif args.commande == 'analyses':
-        analyse(args.symbol,args.start,args.end, 32)
+        analyse(args.symbol,args.start,args.end, 16)
 if __name__ == "__main__":
-    #getMaxMinData(60,"NVDA", "2024-03-15")
     main()

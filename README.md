@@ -36,3 +36,15 @@ Please create a model folder
 
 version 1 is 300 hidden size
 version 2 and 3 are 600 hidden size
+
+version 7 is 600 hidden size with 8 inputs
+
+version 7 is 600 hidden size with 8 inputs
+
+version 13 is 600 siwe with 7 inputs
+
+version 14 is 300 hidden size with 7 inputs
+
+version 15 is 500 hidden size with 7 inputs
+
+version 16 and 17, 600 hidden size with 7 inputs

@@ -11,8 +11,8 @@ class LSTM_Dataset(Dataset):
     self.labels = labels
     self.time_series_len = time_series_len
     shifted_input, shifted_target = self.shift_data()
-    self.inputs = torch.tensor(np.array(shifted_input))
-    self.labels = torch.tensor(np.array(shifted_target))
+    self.inputs = torch.stack(shifted_input)
+    self.labels = torch.stack(shifted_target)
     print(self.inputs.shape)
     print(self.labels.shape)
 
@@ -87,13 +87,14 @@ class GeneralDataset(Dataset):
         return BasicDataset(valData, valTaget)
 
 class TradingModel(nn.Module):
-    def __init__(self, input_size, hidden_size, dropout):
+    def __init__(self, input_size,output_size, hidden_size, dropout):
         super().__init__()
         self.hidden_size = hidden_size
         self.num_layers = 3
+        self.output_size = output_size
         self.input_size = input_size
         self.lstm = LSTM(self.input_size,self.hidden_size,self.num_layers,dropout=dropout, batch_first=True)
-        self.linear = Linear(self.hidden_size,3)
+        self.linear = Linear(self.hidden_size,self.output_size)
         
     
     def forward(self,x):
@@ -101,7 +102,6 @@ class TradingModel(nn.Module):
         c0 = torch.zeros(self.num_layers, x.size(0), self.hidden_size).to(x.device)
 
         output, _ = self.lstm(x,(h0,c0))
-        #print(output)
         output = self.linear(output[:, -1, :]).squeeze(-1)
         return output
     
