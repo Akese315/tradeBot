@@ -1,0 +1,459 @@
+Profil   : Or au comptant XAU/USD
+Base     : 4h
+Contexte : 1d, 1w
+Mode     : rolling — 8 plis
+
+Fichier : XAU_4h_data.csv
+32960 bougies, de 2004-06-11 04:00:00 à 2026-01-30 20:00:00
+	Construction du dataset : 1 %
+	Construction du dataset : 3 %
+	Construction du dataset : 4 %
+	Construction du dataset : 6 %
+	Construction du dataset : 7 %
+	Construction du dataset : 9 %
+	Construction du dataset : 10 %
+	Construction du dataset : 12 %
+	Construction du dataset : 13 %
+	Construction du dataset : 15 %
+	Construction du dataset : 16 %
+	Construction du dataset : 18 %
+	Construction du dataset : 19 %
+	Construction du dataset : 21 %
+	Construction du dataset : 22 %
+	Construction du dataset : 24 %
+	Construction du dataset : 25 %
+	Construction du dataset : 27 %
+	Construction du dataset : 28 %
+	Construction du dataset : 30 %
+	Construction du dataset : 31 %
+	Construction du dataset : 33 %
+	Construction du dataset : 34 %
+	Construction du dataset : 36 %
+	Construction du dataset : 37 %
+	Construction du dataset : 39 %
+	Construction du dataset : 40 %
+	Construction du dataset : 42 %
+	Construction du dataset : 43 %
+	Construction du dataset : 45 %
+	Construction du dataset : 47 %
+	Construction du dataset : 48 %
+	Construction du dataset : 50 %
+	Construction du dataset : 51 %
+	Construction du dataset : 53 %
+	Construction du dataset : 54 %
+	Construction du dataset : 56 %
+	Construction du dataset : 57 %
+	Construction du dataset : 59 %
+	Construction du dataset : 60 %
+	Construction du dataset : 62 %
+	Construction du dataset : 63 %
+	Construction du dataset : 65 %
+	Construction du dataset : 66 %
+	Construction du dataset : 68 %
+	Construction du dataset : 69 %
+	Construction du dataset : 71 %
+	Construction du dataset : 72 %
+	Construction du dataset : 74 %
+	Construction du dataset : 75 %
+	Construction du dataset : 77 %
+	Construction du dataset : 78 %
+	Construction du dataset : 80 %
+	Construction du dataset : 81 %
+	Construction du dataset : 83 %
+	Construction du dataset : 84 %
+	Construction du dataset : 86 %
+	Construction du dataset : 87 %
+	Construction du dataset : 89 %
+	Construction du dataset : 91 %
+	Construction du dataset : 92 %
+	Construction du dataset : 94 %
+	Construction du dataset : 95 %
+	Construction du dataset : 97 %
+	Construction du dataset : 98 %
+	Construction du dataset : 100 % — 32792 lignes exploitables
+Fichier : XAU_1d_data.csv
+  convention de date détectée : mois/jour
+Fichier : XAU_1w_data.csv
+  convention de date détectée : mois/jour
+  contrôle anti-fuite : OK
+32187 lignes, 21 features
+
+PLAN DE VALIDATION
+ pli             train            val           test
+--------------------------------------------------------
+   1  2004-12→2012-08  →2013-06  →2015-01  (2414 lignes)
+   2  2006-08→2014-03  →2015-01  →2016-08  (2414 lignes)
+   3  2008-03→2015-10  →2016-08  →2018-02  (2414 lignes)
+   4  2009-10→2017-05  →2018-02  →2019-09  (2414 lignes)
+   5  2011-05→2018-12  →2019-09  →2021-04  (2414 lignes)
+   6  2012-11→2020-07  →2021-04  →2022-11  (2414 lignes)
+   7  2014-06→2022-01  →2022-11  →2024-05  (2414 lignes)
+   8  2016-01→2023-08  →2024-05  →2026-01  (2415 lignes)
+
+========================================================================
+PLI 1/8 — test 2013-06→2015-01 (11667 lignes d'entraînement)
+========================================================================
+Périphérique utilisé : mps | graine 0
+Époque   1 | train 0.47411 | val 0.45638 | direction val 49.8%
+Époque   2 | train 0.45433 | val 0.46083 | direction val 49.5%
+Époque   3 | train 0.45366 | val 0.45664 | direction val 47.8%
+Époque   4 | train 0.45222 | val 0.45656 | direction val 49.5%
+Époque   5 | train 0.45400 | val 0.47640 | direction val 50.5%
+Époque   6 | train 0.45183 | val 0.45662 | direction val 47.8%
+Époque   7 | train 0.45071 | val 0.46341 | direction val 50.3%
+Époque   8 | train 0.45004 | val 0.45755 | direction val 49.6%
+Arrêt anticipé : 7 époques sans progrès.
+
+===== RAPPORT =====
+Loss test           : 0.44741
+Loss baseline (0)   : 0.44665
+Précision direction : 50.44%  (50 % = hasard)
+⚠️ Le modèle ne bat PAS la prédiction nulle : il n'apporte aucune information exploitable en l'état.
+Run consigné dans /Users/topaz/Documents/GitHub/TradeBot/tradeBot/gold/historique_runs.txt
+
+========================================================================
+PLI 2/8 — test 2015-01→2016-08 (11667 lignes d'entraînement)
+========================================================================
+Périphérique utilisé : mps | graine 0
+Époque   1 | train 0.47405 | val 0.45584 | direction val 48.9%
+Époque   2 | train 0.45758 | val 0.45050 | direction val 48.9%
+Époque   3 | train 0.45628 | val 0.44543 | direction val 51.1%
+Époque   4 | train 0.45549 | val 0.44822 | direction val 48.9%
+Époque   5 | train 0.45446 | val 0.47148 | direction val 48.9%
+Époque   6 | train 0.45426 | val 0.44870 | direction val 48.9%
+Époque   7 | train 0.45308 | val 0.44669 | direction val 51.0%
+Époque   8 | train 0.45294 | val 0.45237 | direction val 48.9%
+Époque   9 | train 0.45188 | val 0.44786 | direction val 49.2%
+Époque  10 | train 0.45161 | val 0.44544 | direction val 51.5%
+Arrêt anticipé : 7 époques sans progrès.
+
+===== RAPPORT =====
+Loss test           : 0.45775
+Loss baseline (0)   : 0.45775
+Précision direction : 50.91%  (50 % = hasard)
+⚠️ Le modèle ne bat PAS la prédiction nulle : il n'apporte aucune information exploitable en l'état.
+Run consigné dans /Users/topaz/Documents/GitHub/TradeBot/tradeBot/gold/historique_runs.txt
+
+========================================================================
+PLI 3/8 — test 2016-08→2018-02 (11667 lignes d'entraînement)
+========================================================================
+Périphérique utilisé : mps | graine 0
+Époque   1 | train 0.47040 | val 0.46390 | direction val 51.8%
+Époque   2 | train 0.45490 | val 0.46332 | direction val 51.8%
+Époque   3 | train 0.45177 | val 0.46397 | direction val 51.8%
+Époque   4 | train 0.45172 | val 0.46352 | direction val 51.8%
+Époque   5 | train 0.45434 | val 0.46403 | direction val 51.4%
+Époque   6 | train 0.45333 | val 0.46917 | direction val 51.8%
+Époque   7 | train 0.45096 | val 0.46310 | direction val 52.1%
+Époque   8 | train 0.45135 | val 0.46734 | direction val 47.9%
+Époque   9 | train 0.44991 | val 0.46551 | direction val 49.2%
+Époque  10 | train 0.45133 | val 0.46318 | direction val 52.7%
+Époque  11 | train 0.45014 | val 0.46447 | direction val 51.8%
+Époque  12 | train 0.44975 | val 0.46324 | direction val 52.8%
+Époque  13 | train 0.45019 | val 0.46313 | direction val 52.6%
+Époque  14 | train 0.44868 | val 0.46331 | direction val 53.7%
+Arrêt anticipé : 7 époques sans progrès.
+
+===== RAPPORT =====
+Loss test           : 0.45540
+Loss baseline (0)   : 0.45388
+Précision direction : 49.13%  (50 % = hasard)
+⚠️ Le modèle ne bat PAS la prédiction nulle : il n'apporte aucune information exploitable en l'état.
+Run consigné dans /Users/topaz/Documents/GitHub/TradeBot/tradeBot/gold/historique_runs.txt
+
+========================================================================
+PLI 4/8 — test 2018-02→2019-09 (11667 lignes d'entraînement)
+========================================================================
+Périphérique utilisé : mps | graine 0
+Époque   1 | train 0.47732 | val 0.45503 | direction val 48.4%
+Époque   2 | train 0.45908 | val 0.45456 | direction val 51.2%
+Époque   3 | train 0.45573 | val 0.45367 | direction val 51.2%
+Époque   4 | train 0.45569 | val 0.45302 | direction val 51.0%
+Époque   5 | train 0.45452 | val 0.45372 | direction val 50.1%
+Époque   6 | train 0.45509 | val 0.45592 | direction val 51.2%
+Époque   7 | train 0.45722 | val 0.45399 | direction val 48.4%
+Époque   8 | train 0.45427 | val 0.45410 | direction val 51.2%
+Époque   9 | train 0.45278 | val 0.45568 | direction val 48.6%
+Époque  10 | train 0.45369 | val 0.45457 | direction val 46.9%
+Époque  11 | train 0.45116 | val 0.45587 | direction val 47.8%
+Arrêt anticipé : 7 époques sans progrès.
+
+===== RAPPORT =====
+Loss test           : 0.46280
+Loss baseline (0)   : 0.46257
+Précision direction : 50.36%  (50 % = hasard)
+⚠️ Le modèle ne bat PAS la prédiction nulle : il n'apporte aucune information exploitable en l'état.
+Run consigné dans /Users/topaz/Documents/GitHub/TradeBot/tradeBot/gold/historique_runs.txt
+
+========================================================================
+PLI 5/8 — test 2019-09→2021-04 (11667 lignes d'entraînement)
+========================================================================
+Périphérique utilisé : mps | graine 0
+Époque   1 | train 0.47431 | val 0.46829 | direction val 48.4%
+Époque   2 | train 0.45936 | val 0.46865 | direction val 51.3%
+Époque   3 | train 0.45857 | val 0.47268 | direction val 51.3%
+Époque   4 | train 0.45917 | val 0.46871 | direction val 48.6%
+Époque   5 | train 0.45769 | val 0.46713 | direction val 51.3%
+Époque   6 | train 0.45730 | val 0.46704 | direction val 51.3%
+Époque   7 | train 0.45586 | val 0.46723 | direction val 51.3%
+Époque   8 | train 0.45587 | val 0.46794 | direction val 51.3%
+Époque   9 | train 0.45750 | val 0.46863 | direction val 49.7%
+Époque  10 | train 0.45598 | val 0.46901 | direction val 49.2%
+Époque  11 | train 0.45485 | val 0.46801 | direction val 49.1%
+Époque  12 | train 0.45475 | val 0.46745 | direction val 50.0%
+Époque  13 | train 0.45449 | val 0.46771 | direction val 51.4%
+Arrêt anticipé : 7 époques sans progrès.
+
+===== RAPPORT =====
+Loss test           : 0.45936
+Loss baseline (0)   : 0.46051
+Précision direction : 52.13%  (50 % = hasard)
+Run consigné dans /Users/topaz/Documents/GitHub/TradeBot/tradeBot/gold/historique_runs.txt
+
+========================================================================
+PLI 6/8 — test 2021-04→2022-11 (11667 lignes d'entraînement)
+========================================================================
+Périphérique utilisé : mps | graine 0
+Époque   1 | train 0.48318 | val 0.46664 | direction val 49.9%
+Époque   2 | train 0.46290 | val 0.46766 | direction val 50.4%
+Époque   3 | train 0.46028 | val 0.46743 | direction val 49.7%
+Époque   4 | train 0.46037 | val 0.46662 | direction val 50.3%
+Époque   5 | train 0.45969 | val 0.46631 | direction val 50.7%
+Époque   6 | train 0.46053 | val 0.46675 | direction val 50.5%
+Époque   7 | train 0.45792 | val 0.46753 | direction val 49.6%
+Époque   8 | train 0.45963 | val 0.47032 | direction val 50.4%
+Époque   9 | train 0.45855 | val 0.46769 | direction val 48.6%
+Époque  10 | train 0.45812 | val 0.46889 | direction val 49.1%
+Époque  11 | train 0.45732 | val 0.46812 | direction val 48.7%
+Époque  12 | train 0.45672 | val 0.47011 | direction val 49.1%
+Arrêt anticipé : 7 époques sans progrès.
+
+===== RAPPORT =====
+Loss test           : 0.45725
+Loss baseline (0)   : 0.45715
+Précision direction : 51.50%  (50 % = hasard)
+⚠️ Le modèle ne bat PAS la prédiction nulle : il n'apporte aucune information exploitable en l'état.
+Run consigné dans /Users/topaz/Documents/GitHub/TradeBot/tradeBot/gold/historique_runs.txt
+
+========================================================================
+PLI 7/8 — test 2022-11→2024-05 (11667 lignes d'entraînement)
+========================================================================
+Périphérique utilisé : mps | graine 0
+Époque   1 | train 0.48036 | val 0.47266 | direction val 49.1%
+Époque   2 | train 0.46239 | val 0.47208 | direction val 49.1%
+Époque   3 | train 0.45886 | val 0.47267 | direction val 49.1%
+Époque   4 | train 0.46290 | val 0.47577 | direction val 49.1%
+Époque   5 | train 0.45853 | val 0.46953 | direction val 49.1%
+Époque   6 | train 0.45853 | val 0.46968 | direction val 50.0%
+Époque   7 | train 0.45915 | val 0.46932 | direction val 51.6%
+Époque   8 | train 0.45953 | val 0.46895 | direction val 51.0%
+Époque   9 | train 0.45800 | val 0.47028 | direction val 51.7%
+Époque  10 | train 0.45707 | val 0.47147 | direction val 49.1%
+Époque  11 | train 0.45784 | val 0.46899 | direction val 51.7%
+Époque  12 | train 0.45776 | val 0.46943 | direction val 51.5%
+Époque  13 | train 0.45784 | val 0.47090 | direction val 49.1%
+Époque  14 | train 0.45626 | val 0.47179 | direction val 51.6%
+Époque  15 | train 0.45522 | val 0.47277 | direction val 50.3%
+Arrêt anticipé : 7 époques sans progrès.
+
+===== RAPPORT =====
+Loss test           : 0.45125
+Loss baseline (0)   : 0.45088
+Précision direction : 51.50%  (50 % = hasard)
+⚠️ Le modèle ne bat PAS la prédiction nulle : il n'apporte aucune information exploitable en l'état.
+Run consigné dans /Users/topaz/Documents/GitHub/TradeBot/tradeBot/gold/historique_runs.txt
+
+========================================================================
+PLI 8/8 — test 2024-05→2026-01 (11667 lignes d'entraînement)
+========================================================================
+Périphérique utilisé : mps | graine 0
+Époque   1 | train 0.48369 | val 0.46137 | direction val 52.2%
+Époque   2 | train 0.46267 | val 0.46056 | direction val 52.8%
+Époque   3 | train 0.45930 | val 0.46144 | direction val 49.2%
+Époque   4 | train 0.45996 | val 0.46500 | direction val 52.2%
+Époque   5 | train 0.45988 | val 0.46836 | direction val 47.8%
+Époque   6 | train 0.45954 | val 0.46170 | direction val 52.2%
+Époque   7 | train 0.45781 | val 0.46406 | direction val 52.2%
+Époque   8 | train 0.45630 | val 0.46086 | direction val 52.0%
+Époque   9 | train 0.45701 | val 0.46106 | direction val 53.1%
+Arrêt anticipé : 7 époques sans progrès.
+
+===== RAPPORT =====
+Loss test           : 0.48039
+Loss baseline (0)   : 0.48337
+Précision direction : 54.48%  (50 % = hasard)
+Run consigné dans /Users/topaz/Documents/GitHub/TradeBot/tradeBot/gold/historique_runs.txt
+
+
+========================================================================
+WALK-FORWARD — résultats par pli
+========================================================================
+ pli       période test       test   baseline      écart  direction
+------------------------------------------------------------------------
+   1    2013-06→2015-01    0.44741    0.44665    0.00076    50.44%
+   2    2015-01→2016-08    0.45775    0.45775    0.00001    50.91%
+   3    2016-08→2018-02    0.45540    0.45388    0.00152    49.13%
+   4    2018-02→2019-09    0.46280    0.46257    0.00023    50.36%
+   5    2019-09→2021-04    0.45936    0.46051   -0.00115    52.13% *
+   6    2021-04→2022-11    0.45725    0.45715    0.00010    51.50%
+   7    2022-11→2024-05    0.45125    0.45088    0.00037    51.50%
+   8    2024-05→2026-01    0.48039    0.48337   -0.00298    54.48% *
+========================================================================
+  Plis battant la baseline   : 2/8   (p = 0.965 sous H0)
+  Plis avec direction > 50 % : 7/8
+  Écart moyen                : -0.000143  (± 0.001370)
+  Direction pondérée         : 51.31%  sur 18937 échantillons
+  Direction min / max        : 49.13% / 54.48%
+  z de la direction          : 3.60
+------------------------------------------------------------------------
+  VERDICT : signal plausible mais irrégulier.
+  Un des deux critères passe, pas l'autre. Regardez la colonne
+  direction pli par pli : l'avantage est-il concentré sur
+  quelques périodes ?
+========================================================================
+
+À REGARDER : la dispersion entre plis. Un modèle exploitable est
+régulier. Un modèle à 58 % sur deux plis et 45 % sur six autres a
+la même moyenne qu'un modèle à 51 % partout, mais il est
+inutilisable — vous ne saurez jamais dans quel régime vous êtes.
+
+====================================================================================
+ANALYSE PAR RÉGIME — realized_vol
+====================================================================================
+
+--- Découpage par realized_vol (5 tranches) ---
+ tranche              plage       n  direction       z   mouv.moy  espérance       net
+------------------------------------------------------------------------------------
+       1      0.0010–0.0022    3788    50.26%    0.32     0.190%     0.001%   -0.019%
+       2      0.0022–0.0027    3787    50.07%    0.08     0.214%     0.000%   -0.020%
+       3      0.0027–0.0033    3787    51.65%    2.03     0.230%     0.008%   -0.012%
+       4      0.0033–0.0041    3787    52.20%    2.71     0.267%     0.012%   -0.008%
+       5      0.0041–0.0309    3788    52.35%    2.89     0.347%     0.016%   -0.004%
+------------------------------------------------------------------------------------
+  * = espérance nette positive après 0.020 % de coûts
+  Avec 5 tranches, le seuil de significativité passe
+  de 1,96 à environ 2.58. Une tranche en dessous de
+  ce z n'est pas un résultat, c'est une tranche chanceuse.
+
+--- Stabilité par tranche, à travers les plis ---
+ tranche   plis   >50%    moyenne  écart-type      min      max
+--------------------------------------------------------------
+       1      8   4/8     50.26%      2.38%  45.78%  53.38%
+       2      8   5/8     51.03%      2.18%  48.20%  55.18%
+       3      8   7/8     51.47%      2.04%  48.84%  55.49%
+       4      8   8/8     52.01%      1.76%  50.11%  55.39%
+       5      8   6/8     51.77%      2.53%  47.47%  54.64%
+--------------------------------------------------------------
+  Une tranche exploitable est au-dessus de 50 % sur la plupart des
+  plis, avec un écart-type modeste. Une moyenne élevée portée par
+  un seul pli ne vaut rien : vous ne pouvez pas savoir à l'avance
+  si vous êtes dans ce pli-là.
+
+====================================================================================
+VERDICT : aucun régime ne franchit les trois critères
+(significativité ajustée, rentabilité après coûts, stabilité
+entre plis).
+
+  Ce n'est pas un échec de méthode : c'est l'information que
+  le filtrage par régime ne sauve pas cette configuration.
+  Le signal directionnel existe, mais il reste sous les coûts.
+====================================================================================
+
+====================================================================================
+ANALYSE PAR RÉGIME — adx
+====================================================================================
+
+--- Découpage par adx (5 tranches) ---
+ tranche              plage       n  direction       z   mouv.moy  espérance       net
+------------------------------------------------------------------------------------
+       1      0.0351–0.0787    3788    51.95%    2.40     0.220%     0.009%   -0.011%
+       2      0.0787–0.0992    3787    51.18%    1.45     0.234%     0.006%   -0.014%
+       3      0.0992–0.1177    3787    50.86%    1.06     0.248%     0.004%   -0.016%
+       4      0.1177–0.1542    3787    51.91%    2.36     0.261%     0.010%   -0.010%
+       5      0.1542–0.2841    3788    50.63%    0.78     0.285%     0.004%   -0.016%
+------------------------------------------------------------------------------------
+  * = espérance nette positive après 0.020 % de coûts
+  Avec 5 tranches, le seuil de significativité passe
+  de 1,96 à environ 2.58. Une tranche en dessous de
+  ce z n'est pas un résultat, c'est une tranche chanceuse.
+
+--- Stabilité par tranche, à travers les plis ---
+ tranche   plis   >50%    moyenne  écart-type      min      max
+--------------------------------------------------------------
+       1      8   4/8     50.95%      2.64%  46.84%  54.85%
+       2      8   5/8     51.98%      3.12%  49.05%  58.14%
+       3      8   6/8     50.94%      2.67%  45.45%  54.33%
+       4      8   5/8     51.45%      2.80%  47.36%  56.03%
+       5      8   5/8     51.21%      3.08%  45.99%  55.06%
+--------------------------------------------------------------
+  Une tranche exploitable est au-dessus de 50 % sur la plupart des
+  plis, avec un écart-type modeste. Une moyenne élevée portée par
+  un seul pli ne vaut rien : vous ne pouvez pas savoir à l'avance
+  si vous êtes dans ce pli-là.
+
+====================================================================================
+VERDICT : aucun régime ne franchit les trois critères
+(significativité ajustée, rentabilité après coûts, stabilité
+entre plis).
+
+  Ce n'est pas un échec de méthode : c'est l'information que
+  le filtrage par régime ne sauve pas cette configuration.
+  Le signal directionnel existe, mais il reste sous les coûts.
+====================================================================================
+
+================================================================================
+ANALYSE PAR CONFIANCE DU MODÈLE
+================================================================================
+
+--- Découpage par CONFIANCE du modèle (cumulé) ---
+  Chaque ligne = les X % de prédictions les plus affirmatives.
+  % gardé     seuil       n  direction       z   mouv.moy  espérance       net
+--------------------------------------------------------------------------------
+      10%     0.071    1893    52.98%    2.60     0.330%     0.020%   -0.000%
+      20%     0.056    3787    53.13%    3.85     0.301%     0.019%   -0.001%
+      30%     0.046    5681    52.17%    3.28     0.285%     0.012%   -0.008%
+      40%     0.040    7574    52.09%    3.63     0.273%     0.011%   -0.009%
+      50%     0.033    9468    51.80%    3.49     0.262%     0.009%   -0.011%
+      60%     0.025   11362    51.79%    3.81     0.258%     0.009%   -0.011%
+      70%     0.019   13255    51.69%    3.88     0.253%     0.009%   -0.011%
+      80%     0.013   15149    51.41%    3.47     0.250%     0.007%   -0.013%
+      90%     0.007   17043    51.43%    3.75     0.249%     0.007%   -0.013%
+     100%     0.000   18937    51.31%    3.60     0.250%     0.007%   -0.013%
+--------------------------------------------------------------------------------
+  * = espérance nette positive après 0.020 % de coûts
+  Les tranches étant cumulatives et emboîtées, elles ne sont pas
+  indépendantes : la correction de Bonferroni y serait trop
+  sévère. Ce qui compte ici est la MONOTONIE — la direction doit
+  croître régulièrement quand on resserre le filtre. Un pic isolé
+  sur une seule tranche est du bruit.
+
+--- Déciles DISJOINTS de confiance (diagnostic) ---
+  Décile 1 = les 10 % les plus affirmatifs, 10 = les plus timides.
+  décile       n  direction       z
+------------------------------------
+       1    1893    52.98%    2.60
+       2    1894    53.27%    2.85
+       3    1894    50.26%    0.23
+       4    1893    51.82%    1.59
+       5    1894    50.63%    0.55
+       6    1894    51.74%    1.52
+       7    1893    51.08%    0.94
+       8    1894    49.47%   -0.46
+       9    1894    51.64%    1.42
+      10    1894    50.16%    0.14
+------------------------------------
+
+================================================================================
+  Décile le MOINS confiant       : 50.16%
+  Décile le PLUS confiant        : 52.98%
+  Gradient                       : 5/9 étapes en hausse (corrélation +0.63)
+  Indice de pic isolé            : 1.64 σ
+--------------------------------------------------------------------------------
+VERDICT : la confiance du modèle n'est pas informative.
+  Ses prédictions fortes ne sont pas plus fiables que ses
+  prédictions timides. C'est cohérent avec un modèle qui
+  capte un signal faible et uniformément réparti.
+
+  Vous avez fait le tour honnête de la question : ce jeu de
+  features ne permet pas de trading directionnel rentable.
+================================================================================

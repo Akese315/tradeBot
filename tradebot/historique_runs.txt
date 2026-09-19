@@ -1,0 +1,2100 @@
+==============================================================================
+RUN : NVDA_csv
+Date : 2026-07-28 19:32:20
+==============================================================================
+  [DONNÉES]
+    symbole                            NVDA
+    source                             data/dataframe
+    bougies_valides                    47377
+    periode                            2010-01-04 07:00:00 -> 2023-12-29 19:00:00
+    lignes_features                    47181
+    fenetres_train                     32979
+    fenetres_val                       7030
+    fenetres_test                      7031
+    correlation_max                    0.041600
+    feature_plus_correlee              log_return
+    part_de_hausses                    49.54%
+  [MODÈLE]
+    sequence_length                    48
+    hidden_size                        256
+    num_layers                         2
+    dropout                            0.200000
+    learning_rate                      0.001000
+    batch_size                         64
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+  [INDICATEURS]
+    sma_period                         140
+    stoch_k_period                     98
+    stoch_d_period                     21
+    rsi_period                         98
+    adx_period                         98
+  [RÉSULTATS]
+    epoques_effectuees                 11
+    meilleure_epoque                   4
+    meilleure_loss_val                 0.307155
+    loss_test                          0.340721
+    loss_baseline_zero                 0.339821
+    bat_la_baseline                    NON
+    precision_directionnelle           50.58%
+  [COURBE]
+      époque      train        val  direction
+           1    0.32137    0.30772     51.2%
+           2    0.31114    0.30776     52.0%
+           3    0.30862    0.30902     51.7%
+           4    0.30776    0.30716     51.7% <-- meilleur
+           5    0.30712    0.31053     51.7%
+           6    0.30618    0.31059     51.6%
+           7    0.30581    0.31043     49.4%
+           8    0.30436    0.30784     52.1%
+           9    0.30227    0.30809     51.8%
+          10    0.30119    0.30769     50.3%
+          11    0.30000    0.30754     51.6%
+
+==============================================================================
+RUN : NVDA_csv
+Date : 2026-07-28 20:15:49
+==============================================================================
+  [DONNÉES]
+    symbole                            NVDA
+    source                             data/dataframe
+    bougies_valides                    47377
+    periode                            2010-01-04 07:00:00 -> 2023-12-29 19:00:00
+    lignes_features                    47181
+    fenetres_train                     32979
+    fenetres_val                       7030
+    fenetres_test                      7031
+    correlation_max                    0.041600
+    feature_plus_correlee              log_return
+    part_de_hausses                    49.54%
+  [MODÈLE]
+    sequence_length                    48
+    hidden_size                        64
+    num_layers                         2
+    dropout                            0.200000
+    learning_rate                      0.001000
+    batch_size                         64
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+  [INDICATEURS]
+    sma_period                         140
+    stoch_k_period                     98
+    stoch_d_period                     21
+    rsi_period                         98
+    adx_period                         98
+  [RÉSULTATS]
+    epoques_effectuees                 15
+    meilleure_epoque                   8
+    meilleure_loss_val                 0.306834
+    loss_test                          0.341460
+    loss_baseline_zero                 0.339821
+    bat_la_baseline                    NON
+    precision_directionnelle           51.30%
+  [COURBE]
+      époque      train        val  direction
+           1    0.31402    0.30831     51.5%
+           2    0.30973    0.30720     51.5%
+           3    0.30861    0.30741     50.6%
+           4    0.30776    0.30731     51.6%
+           5    0.30691    0.30811     51.4%
+           6    0.30615    0.30745     52.6%
+           7    0.30502    0.30714     52.5%
+           8    0.30437    0.30683     52.8% <-- meilleur
+           9    0.30406    0.30769     53.0%
+          10    0.30376    0.30687     53.1%
+          11    0.30321    0.30771     52.6%
+          12    0.30269    0.30828     52.5%
+          13    0.30179    0.30801     52.8%
+          14    0.30073    0.30784     52.6%
+          15    0.30031    0.30795     52.6%
+
+==============================================================================
+RUN : NVDA_csv
+Date : 2026-07-28 22:55:18
+==============================================================================
+  [DONNÉES]
+    symbole                            NVDA
+    source                             data/dataframe
+    bougies_valides                    47377
+    periode                            2010-01-04 07:00:00 -> 2023-12-29 19:00:00
+    lignes_features                    47181
+    fenetres_train                     32979
+    fenetres_val                       7030
+    fenetres_test                      7031
+    correlation_max                    0.041600
+    feature_plus_correlee              log_return
+    part_de_hausses                    49.54%
+  [MODÈLE]
+    sequence_length                    48
+    hidden_size                        64
+    num_layers                         2
+    dropout                            0.200000
+    learning_rate                      0.001000
+    batch_size                         64
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+  [INDICATEURS]
+    sma_period                         140
+    stoch_k_period                     98
+    stoch_d_period                     21
+    rsi_period                         98
+    adx_period                         98
+  [RÉSULTATS]
+    epoques_effectuees                 20
+    meilleure_epoque                   13
+    meilleure_loss_val                 0.442898
+    loss_test                          0.451061
+    loss_baseline_zero                 0.448137
+    bat_la_baseline                    NON
+    precision_directionnelle           50.86%
+  [COURBE]
+      époque      train        val  direction
+           1    0.46809    0.44440     51.6%
+           2    0.46049    0.44420     52.1%
+           3    0.45935    0.44387     51.5%
+           4    0.45796    0.44485     52.0%
+           5    0.45594    0.44396     52.5%
+           6    0.45522    0.44532     52.1%
+           7    0.45497    0.44394     52.6%
+           8    0.45381    0.44393     52.6%
+           9    0.45340    0.44329     52.9%
+          10    0.45305    0.44357     53.1%
+          11    0.45182    0.44438     52.5%
+          12    0.45221    0.44352     53.4%
+          13    0.45169    0.44290     53.4% <-- meilleur
+          14    0.45102    0.44532     52.4%
+          15    0.45022    0.44383     52.5%
+          16    0.45033    0.44392     52.7%
+          17    0.45004    0.44400     53.1%
+          18    0.44777    0.44451     52.1%
+          19    0.44731    0.44423     53.0%
+          20    0.44656    0.44520     52.3%
+
+==============================================================================
+RUN : NVDA_reference
+Date : 2026-07-28 23:28:52
+==============================================================================
+  [DONNÉES]
+    symbole                            NVDA
+    variante                           reference
+    modifications                      aucune
+    lignes_features                    47181
+    fenetres_train                     32979
+  [MODÈLE]
+    sequence_length                    48
+    hidden_size                        256
+    num_layers                         2
+    dropout                            0.200000
+    learning_rate                      0.001000
+    batch_size                         64
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+    weight_decay                       0.000100
+    loss_name                          huber
+    rolling_target_scale               True
+  [INDICATEURS]
+    sma_period                         140
+    stoch_k_period                     98
+    stoch_d_period                     21
+    rsi_period                         98
+    adx_period                         98
+  [RÉSULTATS]
+    epoques_effectuees                 16
+    meilleure_epoque                   9
+    meilleure_loss_val                 0.442528
+    loss_test                          0.451117
+    loss_baseline_zero                 0.448137
+    bat_la_baseline                    NON
+    precision_directionnelle           50.70%
+  [COURBE]
+      époque      train        val  direction
+           1    0.47114    0.45062     51.4%
+           2    0.46147    0.44414     52.0%
+           3    0.46000    0.44468     51.9%
+           4    0.45854    0.44357     52.4%
+           5    0.45702    0.44511     52.0%
+           6    0.45644    0.44438     52.0%
+           7    0.45527    0.44280     52.7%
+           8    0.45403    0.44286     52.1%
+           9    0.45373    0.44253     52.4% <-- meilleur
+          10    0.45292    0.44274     51.3%
+          11    0.45154    0.44318     51.8%
+          12    0.45037    0.44463     51.9%
+          13    0.44906    0.44279     52.0%
+          14    0.44424    0.44610     51.0%
+          15    0.44175    0.44605     52.6%
+          16    0.43942    0.44533     52.4%
+
+==============================================================================
+RUN : NVDA_hidden_512
+Date : 2026-07-28 23:52:31
+==============================================================================
+  [DONNÉES]
+    symbole                            NVDA
+    variante                           hidden_512
+    modifications                      {'hidden_size': 512}
+    lignes_features                    47181
+    fenetres_train                     32979
+  [MODÈLE]
+    sequence_length                    48
+    hidden_size                        512
+    num_layers                         2
+    dropout                            0.200000
+    learning_rate                      0.001000
+    batch_size                         64
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+    weight_decay                       0.000100
+    loss_name                          huber
+    rolling_target_scale               True
+  [INDICATEURS]
+    sma_period                         140
+    stoch_k_period                     98
+    stoch_d_period                     21
+    rsi_period                         98
+    adx_period                         98
+  [RÉSULTATS]
+    epoques_effectuees                 32
+    meilleure_epoque                   25
+    meilleure_loss_val                 0.443548
+    loss_test                          0.449429
+    loss_baseline_zero                 0.448137
+    bat_la_baseline                    NON
+    precision_directionnelle           50.41%
+  [COURBE]
+      époque      train        val  direction
+           1    0.48313    0.44693     51.5%
+           2    0.46631    0.44470     49.7%
+           3    0.46400    0.44519     51.6%
+           4    0.46214    0.45524     47.1%
+           5    0.46822    0.44400     50.8%
+           6    0.46488    0.44435     50.8%
+           7    0.46454    0.44549     47.1%
+           8    0.46395    0.44417     51.6%
+           9    0.46448    0.44387     51.6%
+          10    0.46343    0.44959     51.6%
+          11    0.46344    0.44589     51.6%
+          12    0.46346    0.44410     51.6%
+          13    0.46308    0.44571     51.6%
+          14    0.46148    0.44385     51.6%
+          15    0.46129    0.44435     47.1%
+          16    0.46152    0.44455     47.1%
+          17    0.46165    0.44601     47.1%
+          18    0.46092    0.44382     51.6%
+          19    0.46107    0.44415     51.6%
+          20    0.46110    0.44383     51.6%
+          21    0.46083    0.44417     51.6%
+          22    0.46033    0.44361     51.4%
+          23    0.45949    0.44412     50.3%
+          24    0.45931    0.44417     50.3%
+          25    0.45911    0.44355     51.7% <-- meilleur
+          26    0.45881    0.44403     51.0%
+          27    0.45845    0.44643     48.5%
+          28    0.45781    0.44443     51.9%
+          29    0.45779    0.44430     51.0%
+          30    0.45678    0.44573     50.9%
+          31    0.45622    0.44542     50.9%
+          32    0.45629    0.44413     52.1%
+
+==============================================================================
+RUN : NVDA_hidden_128
+Date : 2026-07-28 23:55:31
+==============================================================================
+  [DONNÉES]
+    symbole                            NVDA
+    variante                           hidden_128
+    modifications                      {'hidden_size': 128}
+    lignes_features                    47181
+    fenetres_train                     32979
+  [MODÈLE]
+    sequence_length                    48
+    hidden_size                        128
+    num_layers                         2
+    dropout                            0.200000
+    learning_rate                      0.001000
+    batch_size                         64
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+    weight_decay                       0.000100
+    loss_name                          huber
+    rolling_target_scale               True
+  [INDICATEURS]
+    sma_period                         140
+    stoch_k_period                     98
+    stoch_d_period                     21
+    rsi_period                         98
+    adx_period                         98
+  [RÉSULTATS]
+    epoques_effectuees                 19
+    meilleure_epoque                   12
+    meilleure_loss_val                 0.443024
+    loss_test                          0.450966
+    loss_baseline_zero                 0.448137
+    bat_la_baseline                    NON
+    precision_directionnelle           49.92%
+  [COURBE]
+      époque      train        val  direction
+           1    0.46928    0.44569     48.7%
+           2    0.46050    0.44370     52.0%
+           3    0.45880    0.44512     51.1%
+           4    0.45721    0.44397     52.4%
+           5    0.45673    0.44488     51.5%
+           6    0.45580    0.44361     52.3%
+           7    0.45492    0.44376     52.3%
+           8    0.45412    0.44366     53.0%
+           9    0.45371    0.44313     53.1%
+          10    0.45289    0.44487     52.3%
+          11    0.45114    0.44559     50.7%
+          12    0.45117    0.44302     52.9% <-- meilleur
+          13    0.44972    0.44339     52.4%
+          14    0.44883    0.44406     52.9%
+          15    0.44746    0.44554     52.4%
+          16    0.44577    0.44610     52.3%
+          17    0.44093    0.44910     51.7%
+          18    0.43750    0.44862     53.0%
+          19    0.43481    0.45113     51.5%
+
+==============================================================================
+RUN : NVDA_hidden_64
+Date : 2026-07-28 23:57:55
+==============================================================================
+  [DONNÉES]
+    symbole                            NVDA
+    variante                           hidden_64
+    modifications                      {'hidden_size': 64}
+    lignes_features                    47181
+    fenetres_train                     32979
+  [MODÈLE]
+    sequence_length                    48
+    hidden_size                        64
+    num_layers                         2
+    dropout                            0.200000
+    learning_rate                      0.001000
+    batch_size                         64
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+    weight_decay                       0.000100
+    loss_name                          huber
+    rolling_target_scale               True
+  [INDICATEURS]
+    sma_period                         140
+    stoch_k_period                     98
+    stoch_d_period                     21
+    rsi_period                         98
+    adx_period                         98
+  [RÉSULTATS]
+    epoques_effectuees                 16
+    meilleure_epoque                   9
+    meilleure_loss_val                 0.443168
+    loss_test                          0.450941
+    loss_baseline_zero                 0.448137
+    bat_la_baseline                    NON
+    precision_directionnelle           50.90%
+  [COURBE]
+      époque      train        val  direction
+           1    0.46551    0.44378     50.8%
+           2    0.46028    0.44714     48.4%
+           3    0.45839    0.44345     51.9%
+           4    0.45740    0.44494     52.2%
+           5    0.45623    0.44426     52.6%
+           6    0.45570    0.44420     51.9%
+           7    0.45533    0.44423     52.5%
+           8    0.45283    0.44427     53.3%
+           9    0.45337    0.44317     52.6% <-- meilleur
+          10    0.45248    0.44371     53.7%
+          11    0.45244    0.44349     53.2%
+          12    0.45175    0.44336     52.6%
+          13    0.45124    0.44452     52.8%
+          14    0.45002    0.44432     52.6%
+          15    0.44977    0.44426     52.8%
+          16    0.44889    0.44413     53.1%
+
+==============================================================================
+RUN : NVDA_hidden_32
+Date : 2026-07-29 00:00:27
+==============================================================================
+  [DONNÉES]
+    symbole                            NVDA
+    variante                           hidden_32
+    modifications                      {'hidden_size': 32}
+    lignes_features                    47181
+    fenetres_train                     32979
+  [MODÈLE]
+    sequence_length                    48
+    hidden_size                        32
+    num_layers                         2
+    dropout                            0.200000
+    learning_rate                      0.001000
+    batch_size                         64
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+    weight_decay                       0.000100
+    loss_name                          huber
+    rolling_target_scale               True
+  [INDICATEURS]
+    sma_period                         140
+    stoch_k_period                     98
+    stoch_d_period                     21
+    rsi_period                         98
+    adx_period                         98
+  [RÉSULTATS]
+    epoques_effectuees                 22
+    meilleure_epoque                   15
+    meilleure_loss_val                 0.443089
+    loss_test                          0.451101
+    loss_baseline_zero                 0.448137
+    bat_la_baseline                    NON
+    precision_directionnelle           51.69%
+  [COURBE]
+      époque      train        val  direction
+           1    0.46606    0.44379     51.1%
+           2    0.46032    0.44378     51.4%
+           3    0.45954    0.44376     51.1%
+           4    0.45810    0.44388     51.9%
+           5    0.45709    0.44505     51.1%
+           6    0.45607    0.44357     52.3%
+           7    0.45582    0.44500     52.5%
+           8    0.45584    0.44399     52.8%
+           9    0.45522    0.44409     52.7%
+          10    0.45512    0.44381     53.1%
+          11    0.45451    0.44356     52.7%
+          12    0.45407    0.44346     52.9%
+          13    0.45409    0.44316     52.8%
+          14    0.45408    0.44369     53.0%
+          15    0.45397    0.44309     52.9% <-- meilleur
+          16    0.45339    0.44364     52.1%
+          17    0.45353    0.44317     53.2%
+          18    0.45337    0.44320     52.7%
+          19    0.45296    0.44344     52.3%
+          20    0.45272    0.44351     53.2%
+          21    0.45287    0.44340     52.2%
+          22    0.45293    0.44341     52.5%
+
+==============================================================================
+RUN : NVDA_hidden_16
+Date : 2026-07-29 00:02:35
+==============================================================================
+  [DONNÉES]
+    symbole                            NVDA
+    variante                           hidden_16
+    modifications                      {'hidden_size': 16}
+    lignes_features                    47181
+    fenetres_train                     32979
+  [MODÈLE]
+    sequence_length                    48
+    hidden_size                        16
+    num_layers                         2
+    dropout                            0.200000
+    learning_rate                      0.001000
+    batch_size                         64
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+    weight_decay                       0.000100
+    loss_name                          huber
+    rolling_target_scale               True
+  [INDICATEURS]
+    sma_period                         140
+    stoch_k_period                     98
+    stoch_d_period                     21
+    rsi_period                         98
+    adx_period                         98
+  [RÉSULTATS]
+    epoques_effectuees                 21
+    meilleure_epoque                   14
+    meilleure_loss_val                 0.442861
+    loss_test                          0.450992
+    loss_baseline_zero                 0.448137
+    bat_la_baseline                    NON
+    precision_directionnelle           51.46%
+  [COURBE]
+      époque      train        val  direction
+           1    0.46584    0.44409     51.4%
+           2    0.46061    0.44341     51.9%
+           3    0.45957    0.44338     52.2%
+           4    0.45884    0.44317     52.6%
+           5    0.45809    0.44364     51.4%
+           6    0.45780    0.44395     52.4%
+           7    0.45773    0.44290     52.3%
+           8    0.45682    0.44302     52.3%
+           9    0.45678    0.44292     52.1%
+          10    0.45595    0.44412     52.7%
+          11    0.45574    0.44337     53.3%
+          12    0.45500    0.44349     53.1%
+          13    0.45499    0.44352     53.1%
+          14    0.45513    0.44286     52.6% <-- meilleur
+          15    0.45438    0.44358     53.3%
+          16    0.45358    0.44306     53.4%
+          17    0.45423    0.44297     52.7%
+          18    0.45413    0.44311     53.4%
+          19    0.45419    0.44315     52.7%
+          20    0.45390    0.44298     53.0%
+          21    0.45373    0.44296     53.1%
+
+==============================================================================
+RUN : NVDA_couches_1
+Date : 2026-07-29 00:05:57
+==============================================================================
+  [DONNÉES]
+    symbole                            NVDA
+    variante                           couches_1
+    modifications                      {'num_layers': 1}
+    lignes_features                    47181
+    fenetres_train                     32979
+  [MODÈLE]
+    sequence_length                    48
+    hidden_size                        256
+    num_layers                         1
+    dropout                            0.200000
+    learning_rate                      0.001000
+    batch_size                         64
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+    weight_decay                       0.000100
+    loss_name                          huber
+    rolling_target_scale               True
+  [INDICATEURS]
+    sma_period                         140
+    stoch_k_period                     98
+    stoch_d_period                     21
+    rsi_period                         98
+    adx_period                         98
+  [RÉSULTATS]
+    epoques_effectuees                 21
+    meilleure_epoque                   14
+    meilleure_loss_val                 0.443339
+    loss_test                          0.449902
+    loss_baseline_zero                 0.448137
+    bat_la_baseline                    NON
+    precision_directionnelle           49.75%
+  [COURBE]
+      époque      train        val  direction
+           1    0.46919    0.44700     47.6%
+           2    0.46196    0.44527     51.1%
+           3    0.46061    0.44518     50.6%
+           4    0.45937    0.45093     47.7%
+           5    0.45907    0.45308     48.4%
+           6    0.45864    0.44757     51.6%
+           7    0.45762    0.44449     51.5%
+           8    0.45723    0.44519     51.3%
+           9    0.45692    0.44416     52.1%
+          10    0.45637    0.44368     51.9%
+          11    0.45593    0.44534     52.2%
+          12    0.45571    0.44479     51.2%
+          13    0.45532    0.44423     52.1%
+          14    0.45489    0.44334     51.9% <-- meilleur
+          15    0.46404    0.44375     52.0%
+          16    0.46156    0.44615     50.5%
+          17    0.46098    0.44559     49.9%
+          18    0.46242    0.44531     47.7%
+          19    0.46162    0.45561     47.3%
+          20    0.46138    0.44384     51.6%
+          21    0.46070    0.44370     51.4%
+
+==============================================================================
+RUN : NVDA_couches_3
+Date : 2026-07-29 00:11:05
+==============================================================================
+  [DONNÉES]
+    symbole                            NVDA
+    variante                           couches_3
+    modifications                      {'num_layers': 3}
+    lignes_features                    47181
+    fenetres_train                     32979
+  [MODÈLE]
+    sequence_length                    48
+    hidden_size                        256
+    num_layers                         3
+    dropout                            0.200000
+    learning_rate                      0.001000
+    batch_size                         64
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+    weight_decay                       0.000100
+    loss_name                          huber
+    rolling_target_scale               True
+  [INDICATEURS]
+    sma_period                         140
+    stoch_k_period                     98
+    stoch_d_period                     21
+    rsi_period                         98
+    adx_period                         98
+  [RÉSULTATS]
+    epoques_effectuees                 14
+    meilleure_epoque                   7
+    meilleure_loss_val                 0.443194
+    loss_test                          0.451341
+    loss_baseline_zero                 0.448137
+    bat_la_baseline                    NON
+    precision_directionnelle           51.43%
+  [COURBE]
+      époque      train        val  direction
+           1    0.47023    0.44395     51.6%
+           2    0.46161    0.45332     51.6%
+           3    0.45985    0.44870     51.6%
+           4    0.45819    0.44533     51.6%
+           5    0.45703    0.44710     49.9%
+           6    0.45490    0.44423     52.4%
+           7    0.45405    0.44319     52.3% <-- meilleur
+           8    0.45298    0.44417     52.4%
+           9    0.45230    0.44362     52.3%
+          10    0.45214    0.44320     52.8%
+          11    0.45059    0.44329     52.0%
+          12    0.44863    0.44424     52.7%
+          13    0.44696    0.44434     52.3%
+          14    0.44505    0.44570     52.3%
+
+==============================================================================
+RUN : NVDA_dropout_00
+Date : 2026-07-29 00:13:23
+==============================================================================
+  [DONNÉES]
+    symbole                            NVDA
+    variante                           dropout_00
+    modifications                      {'dropout': 0.0}
+    lignes_features                    47181
+    fenetres_train                     32979
+  [MODÈLE]
+    sequence_length                    48
+    hidden_size                        256
+    num_layers                         2
+    dropout                            0.000000
+    learning_rate                      0.001000
+    batch_size                         64
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+    weight_decay                       0.000100
+    loss_name                          huber
+    rolling_target_scale               True
+  [INDICATEURS]
+    sma_period                         140
+    stoch_k_period                     98
+    stoch_d_period                     21
+    rsi_period                         98
+    adx_period                         98
+  [RÉSULTATS]
+    epoques_effectuees                 10
+    meilleure_epoque                   3
+    meilleure_loss_val                 0.443365
+    loss_test                          0.450043
+    loss_baseline_zero                 0.448137
+    bat_la_baseline                    NON
+    precision_directionnelle           50.28%
+  [COURBE]
+      époque      train        val  direction
+           1    0.47104    0.44473     51.3%
+           2    0.46016    0.44423     51.5%
+           3    0.45843    0.44337     51.7% <-- meilleur
+           4    0.45722    0.44455     51.2%
+           5    0.46559    0.45569     47.1%
+           6    0.46472    0.44436     47.1%
+           7    0.46344    0.44444     51.6%
+           8    0.46198    0.45022     47.1%
+           9    0.46157    0.44468     51.6%
+          10    0.46152    0.44536     47.1%
+
+==============================================================================
+RUN : NVDA_dropout_01
+Date : 2026-07-29 00:16:26
+==============================================================================
+  [DONNÉES]
+    symbole                            NVDA
+    variante                           dropout_01
+    modifications                      {'dropout': 0.1}
+    lignes_features                    47181
+    fenetres_train                     32979
+  [MODÈLE]
+    sequence_length                    48
+    hidden_size                        256
+    num_layers                         2
+    dropout                            0.100000
+    learning_rate                      0.001000
+    batch_size                         64
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+    weight_decay                       0.000100
+    loss_name                          huber
+    rolling_target_scale               True
+  [INDICATEURS]
+    sma_period                         140
+    stoch_k_period                     98
+    stoch_d_period                     21
+    rsi_period                         98
+    adx_period                         98
+  [RÉSULTATS]
+    epoques_effectuees                 13
+    meilleure_epoque                   6
+    meilleure_loss_val                 0.443158
+    loss_test                          0.449276
+    loss_baseline_zero                 0.448137
+    bat_la_baseline                    NON
+    precision_directionnelle           51.23%
+  [COURBE]
+      époque      train        val  direction
+           1    0.47118    0.45541     47.6%
+           2    0.46203    0.44852     48.6%
+           3    0.45938    0.44512     52.0%
+           4    0.45796    0.44453     50.9%
+           5    0.45687    0.44385     52.0%
+           6    0.45603    0.44316     51.9% <-- meilleur
+           7    0.45524    0.44319     52.4%
+           8    0.45408    0.44344     52.4%
+           9    0.45370    0.44562     52.0%
+          10    0.45285    0.44397     52.1%
+          11    0.44992    0.44567     49.9%
+          12    0.44813    0.44411     52.8%
+          13    0.44708    0.44455     51.6%
+
+==============================================================================
+RUN : NVDA_dropout_03
+Date : 2026-07-29 00:20:09
+==============================================================================
+  [DONNÉES]
+    symbole                            NVDA
+    variante                           dropout_03
+    modifications                      {'dropout': 0.3}
+    lignes_features                    47181
+    fenetres_train                     32979
+  [MODÈLE]
+    sequence_length                    48
+    hidden_size                        256
+    num_layers                         2
+    dropout                            0.300000
+    learning_rate                      0.001000
+    batch_size                         64
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+    weight_decay                       0.000100
+    loss_name                          huber
+    rolling_target_scale               True
+  [INDICATEURS]
+    sma_period                         140
+    stoch_k_period                     98
+    stoch_d_period                     21
+    rsi_period                         98
+    adx_period                         98
+  [RÉSULTATS]
+    epoques_effectuees                 16
+    meilleure_epoque                   9
+    meilleure_loss_val                 0.442222
+    loss_test                          0.449938
+    loss_baseline_zero                 0.448137
+    bat_la_baseline                    NON
+    precision_directionnelle           51.06%
+  [COURBE]
+      époque      train        val  direction
+           1    0.46992    0.44790     47.4%
+           2    0.46189    0.44404     51.6%
+           3    0.46039    0.46137     47.7%
+           4    0.45922    0.44901     51.5%
+           5    0.45819    0.44469     52.5%
+           6    0.45638    0.44294     52.0%
+           7    0.45555    0.44692     47.7%
+           8    0.45522    0.44348     50.9%
+           9    0.45447    0.44222     51.8% <-- meilleur
+          10    0.45361    0.44236     52.4%
+          11    0.45259    0.44240     52.1%
+          12    0.45104    0.44567     50.7%
+          13    0.44985    0.44372     52.6%
+          14    0.44550    0.44360     52.5%
+          15    0.44196    0.44428     52.3%
+          16    0.43940    0.44522     51.0%
+
+==============================================================================
+RUN : NVDA_dropout_05
+Date : 2026-07-29 00:24:34
+==============================================================================
+  [DONNÉES]
+    symbole                            NVDA
+    variante                           dropout_05
+    modifications                      {'dropout': 0.5}
+    lignes_features                    47181
+    fenetres_train                     32979
+  [MODÈLE]
+    sequence_length                    48
+    hidden_size                        256
+    num_layers                         2
+    dropout                            0.500000
+    learning_rate                      0.001000
+    batch_size                         64
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+    weight_decay                       0.000100
+    loss_name                          huber
+    rolling_target_scale               True
+  [INDICATEURS]
+    sma_period                         140
+    stoch_k_period                     98
+    stoch_d_period                     21
+    rsi_period                         98
+    adx_period                         98
+  [RÉSULTATS]
+    epoques_effectuees                 19
+    meilleure_epoque                   12
+    meilleure_loss_val                 0.442208
+    loss_test                          0.453772
+    loss_baseline_zero                 0.448137
+    bat_la_baseline                    NON
+    precision_directionnelle           50.90%
+  [COURBE]
+      époque      train        val  direction
+           1    0.47249    0.44367     51.1%
+           2    0.46277    0.44395     51.6%
+           3    0.46088    0.45320     51.1%
+           4    0.45996    0.44565     52.0%
+           5    0.45830    0.44346     51.7%
+           6    0.45737    0.44386     52.1%
+           7    0.45696    0.44366     52.1%
+           8    0.45556    0.44497     52.0%
+           9    0.45481    0.44459     51.4%
+          10    0.45243    0.44346     51.9%
+          11    0.45158    0.44235     51.8%
+          12    0.45029    0.44221     53.2% <-- meilleur
+          13    0.44865    0.44298     51.6%
+          14    0.44720    0.44324     52.5%
+          15    0.44532    0.44478     52.6%
+          16    0.44374    0.44535     52.6%
+          17    0.43914    0.44555     53.0%
+          18    0.43533    0.44674     52.6%
+          19    0.43185    0.44702     51.6%
+
+==============================================================================
+RUN : NVDA_wd_0
+Date : 2026-07-29 00:29:06
+==============================================================================
+  [DONNÉES]
+    symbole                            NVDA
+    variante                           wd_0
+    modifications                      {'weight_decay': 0.0}
+    lignes_features                    47181
+    fenetres_train                     32979
+  [MODÈLE]
+    sequence_length                    48
+    hidden_size                        256
+    num_layers                         2
+    dropout                            0.200000
+    learning_rate                      0.001000
+    batch_size                         64
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+    weight_decay                       0.000000
+    loss_name                          huber
+    rolling_target_scale               True
+  [INDICATEURS]
+    sma_period                         140
+    stoch_k_period                     98
+    stoch_d_period                     21
+    rsi_period                         98
+    adx_period                         98
+  [RÉSULTATS]
+    epoques_effectuees                 19
+    meilleure_epoque                   12
+    meilleure_loss_val                 0.442693
+    loss_test                          0.451023
+    loss_baseline_zero                 0.448137
+    bat_la_baseline                    NON
+    precision_directionnelle           50.35%
+  [COURBE]
+      époque      train        val  direction
+           1    0.47242    0.45360     51.6%
+           2    0.46197    0.44399     51.2%
+           3    0.45964    0.44490     51.8%
+           4    0.45828    0.44414     52.4%
+           5    0.45721    0.44354     51.8%
+           6    0.45576    0.44309     52.0%
+           7    0.45556    0.44389     52.5%
+           8    0.45516    0.44303     53.0%
+           9    0.45368    0.44315     52.0%
+          10    0.45279    0.44463     51.4%
+          11    0.45191    0.44304     52.3%
+          12    0.45043    0.44269     52.5% <-- meilleur
+          13    0.44841    0.44465     51.3%
+          14    0.44594    0.44340     52.8%
+          15    0.44345    0.44405     52.4%
+          16    0.43887    0.44834     51.5%
+          17    0.43017    0.45029     52.1%
+          18    0.42302    0.45026     51.6%
+          19    0.41606    0.45561     51.0%
+
+==============================================================================
+RUN : NVDA_wd_1e3
+Date : 2026-07-29 00:33:44
+==============================================================================
+  [DONNÉES]
+    symbole                            NVDA
+    variante                           wd_1e3
+    modifications                      {'weight_decay': 0.001}
+    lignes_features                    47181
+    fenetres_train                     32979
+  [MODÈLE]
+    sequence_length                    48
+    hidden_size                        256
+    num_layers                         2
+    dropout                            0.200000
+    learning_rate                      0.001000
+    batch_size                         64
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+    weight_decay                       0.001000
+    loss_name                          huber
+    rolling_target_scale               True
+  [INDICATEURS]
+    sma_period                         140
+    stoch_k_period                     98
+    stoch_d_period                     21
+    rsi_period                         98
+    adx_period                         98
+  [RÉSULTATS]
+    epoques_effectuees                 19
+    meilleure_epoque                   12
+    meilleure_loss_val                 0.442571
+    loss_test                          0.452049
+    loss_baseline_zero                 0.448137
+    bat_la_baseline                    NON
+    precision_directionnelle           50.35%
+  [COURBE]
+      époque      train        val  direction
+           1    0.46973    0.44375     50.5%
+           2    0.46200    0.44335     51.8%
+           3    0.46023    0.45047     51.6%
+           4    0.45827    0.44334     52.1%
+           5    0.45673    0.44401     51.5%
+           6    0.45646    0.44320     51.7%
+           7    0.45551    0.44314     52.5%
+           8    0.45477    0.44579     52.4%
+           9    0.45406    0.44388     52.3%
+          10    0.45299    0.44351     52.2%
+          11    0.45226    0.44369     51.8%
+          12    0.44963    0.44257     52.9% <-- meilleur
+          13    0.44735    0.44338     52.6%
+          14    0.44540    0.44337     52.9%
+          15    0.44330    0.44395     52.3%
+          16    0.44079    0.44656     52.6%
+          17    0.43553    0.44897     51.5%
+          18    0.43169    0.44843     51.9%
+          19    0.42823    0.45125     52.3%
+
+==============================================================================
+RUN : NVDA_wd_1e2
+Date : 2026-07-29 00:36:55
+==============================================================================
+  [DONNÉES]
+    symbole                            NVDA
+    variante                           wd_1e2
+    modifications                      {'weight_decay': 0.01}
+    lignes_features                    47181
+    fenetres_train                     32979
+  [MODÈLE]
+    sequence_length                    48
+    hidden_size                        256
+    num_layers                         2
+    dropout                            0.200000
+    learning_rate                      0.001000
+    batch_size                         64
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+    weight_decay                       0.010000
+    loss_name                          huber
+    rolling_target_scale               True
+  [INDICATEURS]
+    sma_period                         140
+    stoch_k_period                     98
+    stoch_d_period                     21
+    rsi_period                         98
+    adx_period                         98
+  [RÉSULTATS]
+    epoques_effectuees                 13
+    meilleure_epoque                   6
+    meilleure_loss_val                 0.442960
+    loss_test                          0.450614
+    loss_baseline_zero                 0.448137
+    bat_la_baseline                    NON
+    precision_directionnelle           51.17%
+  [COURBE]
+      époque      train        val  direction
+           1    0.47208    0.45404     51.6%
+           2    0.46091    0.44454     51.4%
+           3    0.45904    0.44656     51.8%
+           4    0.45765    0.44757     50.3%
+           5    0.45597    0.44378     51.7%
+           6    0.45618    0.44296     52.5% <-- meilleur
+           7    0.45513    0.44309     52.0%
+           8    0.45459    0.44429     50.3%
+           9    0.45307    0.44678     51.0%
+          10    0.45235    0.44313     52.9%
+          11    0.44939    0.44342     51.7%
+          12    0.44824    0.44424     53.1%
+          13    0.44685    0.44371     52.4%
+
+==============================================================================
+RUN : NVDA_fenetre_12
+Date : 2026-07-29 00:38:49
+==============================================================================
+  [DONNÉES]
+    symbole                            NVDA
+    variante                           fenetre_12
+    modifications                      {'sequence_length': 12}
+    lignes_features                    47181
+    fenetres_train                     33015
+  [MODÈLE]
+    sequence_length                    12
+    hidden_size                        256
+    num_layers                         2
+    dropout                            0.200000
+    learning_rate                      0.001000
+    batch_size                         64
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+    weight_decay                       0.000100
+    loss_name                          huber
+    rolling_target_scale               True
+  [INDICATEURS]
+    sma_period                         140
+    stoch_k_period                     98
+    stoch_d_period                     21
+    rsi_period                         98
+    adx_period                         98
+  [RÉSULTATS]
+    epoques_effectuees                 13
+    meilleure_epoque                   6
+    meilleure_loss_val                 0.442866
+    loss_test                          0.448036
+    loss_baseline_zero                 0.447395
+    bat_la_baseline                    NON
+    precision_directionnelle           51.21%
+  [COURBE]
+      époque      train        val  direction
+           1    0.46954    0.44903     47.4%
+           2    0.46185    0.44481     51.0%
+           3    0.46032    0.45510     49.1%
+           4    0.45906    0.44356     52.2%
+           5    0.45669    0.44513     51.5%
+           6    0.45607    0.44287     52.1% <-- meilleur
+           7    0.45494    0.44398     52.1%
+           8    0.45469    0.45063     48.9%
+           9    0.45328    0.44356     52.2%
+          10    0.45329    0.44318     52.5%
+          11    0.45004    0.44468     52.3%
+          12    0.44846    0.44309     52.7%
+          13    0.44687    0.44420     52.2%
+
+==============================================================================
+RUN : NVDA_fenetre_24
+Date : 2026-07-29 00:41:28
+==============================================================================
+  [DONNÉES]
+    symbole                            NVDA
+    variante                           fenetre_24
+    modifications                      {'sequence_length': 24}
+    lignes_features                    47181
+    fenetres_train                     33003
+  [MODÈLE]
+    sequence_length                    24
+    hidden_size                        256
+    num_layers                         2
+    dropout                            0.200000
+    learning_rate                      0.001000
+    batch_size                         64
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+    weight_decay                       0.000100
+    loss_name                          huber
+    rolling_target_scale               True
+  [INDICATEURS]
+    sma_period                         140
+    stoch_k_period                     98
+    stoch_d_period                     21
+    rsi_period                         98
+    adx_period                         98
+  [RÉSULTATS]
+    epoques_effectuees                 16
+    meilleure_epoque                   9
+    meilleure_loss_val                 0.442873
+    loss_test                          0.450944
+    loss_baseline_zero                 0.447420
+    bat_la_baseline                    NON
+    precision_directionnelle           50.82%
+  [COURBE]
+      époque      train        val  direction
+           1    0.47183    0.44379     51.3%
+           2    0.46125    0.44369     51.6%
+           3    0.46038    0.45061     48.6%
+           4    0.45777    0.45192     51.6%
+           5    0.45677    0.45210     51.7%
+           6    0.45608    0.44419     51.7%
+           7    0.45381    0.44340     51.6%
+           8    0.45313    0.44288     52.2%
+           9    0.45257    0.44287     52.0% <-- meilleur
+          10    0.45131    0.44352     52.4%
+          11    0.45064    0.44421     50.6%
+          12    0.44980    0.44314     52.8%
+          13    0.44620    0.44353     51.7%
+          14    0.44436    0.44437     52.4%
+          15    0.44231    0.44491     52.7%
+          16    0.44041    0.44658     52.0%
+
+==============================================================================
+RUN : NVDA_fenetre_72
+Date : 2026-07-29 00:47:27
+==============================================================================
+  [DONNÉES]
+    symbole                            NVDA
+    variante                           fenetre_72
+    modifications                      {'sequence_length': 72}
+    lignes_features                    47181
+    fenetres_train                     32955
+  [MODÈLE]
+    sequence_length                    72
+    hidden_size                        256
+    num_layers                         2
+    dropout                            0.200000
+    learning_rate                      0.001000
+    batch_size                         64
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+    weight_decay                       0.000100
+    loss_name                          huber
+    rolling_target_scale               True
+  [INDICATEURS]
+    sma_period                         140
+    stoch_k_period                     98
+    stoch_d_period                     21
+    rsi_period                         98
+    adx_period                         98
+  [RÉSULTATS]
+    epoques_effectuees                 17
+    meilleure_epoque                   10
+    meilleure_loss_val                 0.443035
+    loss_test                          0.450927
+    loss_baseline_zero                 0.447457
+    bat_la_baseline                    NON
+    precision_directionnelle           50.93%
+  [COURBE]
+      époque      train        val  direction
+           1    0.47214    0.44370     51.4%
+           2    0.46132    0.44447     51.8%
+           3    0.45975    0.45009     48.3%
+           4    0.45758    0.44361     52.1%
+           5    0.45605    0.44346     52.3%
+           6    0.45618    0.44354     52.0%
+           7    0.45502    0.44419     50.8%
+           8    0.45352    0.44495     51.7%
+           9    0.45273    0.44377     51.9%
+          10    0.45061    0.44304     52.1% <-- meilleur
+          11    0.44954    0.44352     52.5%
+          12    0.44756    0.44480     52.3%
+          13    0.44621    0.44406     52.1%
+          14    0.44465    0.44507     52.4%
+          15    0.44016    0.44612     51.4%
+          16    0.43781    0.44769     51.1%
+          17    0.43517    0.44853     51.2%
+
+==============================================================================
+RUN : NVDA_fenetre_96
+Date : 2026-07-29 00:56:41
+==============================================================================
+  [DONNÉES]
+    symbole                            NVDA
+    variante                           fenetre_96
+    modifications                      {'sequence_length': 96}
+    lignes_features                    47181
+    fenetres_train                     32931
+  [MODÈLE]
+    sequence_length                    96
+    hidden_size                        256
+    num_layers                         2
+    dropout                            0.200000
+    learning_rate                      0.001000
+    batch_size                         64
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+    weight_decay                       0.000100
+    loss_name                          huber
+    rolling_target_scale               True
+  [INDICATEURS]
+    sma_period                         140
+    stoch_k_period                     98
+    stoch_d_period                     21
+    rsi_period                         98
+    adx_period                         98
+  [RÉSULTATS]
+    epoques_effectuees                 20
+    meilleure_epoque                   13
+    meilleure_loss_val                 0.443493
+    loss_test                          0.449144
+    loss_baseline_zero                 0.448093
+    bat_la_baseline                    NON
+    precision_directionnelle           50.11%
+  [COURBE]
+      époque      train        val  direction
+           1    0.47377    0.44680     51.5%
+           2    0.46221    0.44745     48.6%
+           3    0.45983    0.44540     47.1%
+           4    0.46224    0.44384     51.6%
+           5    0.46151    0.44755     51.6%
+           6    0.46109    0.44916     51.8%
+           7    0.46111    0.44510     51.6%
+           8    0.46155    0.44383     51.6%
+           9    0.46104    0.44505     47.1%
+          10    0.46057    0.44405     51.6%
+          11    0.46048    0.44515     47.1%
+          12    0.46066    0.44353     51.6%
+          13    0.45971    0.44349     52.0% <-- meilleur
+          14    0.45871    0.44547     50.2%
+          15    0.45775    0.44373     52.0%
+          16    0.45679    0.44495     51.8%
+          17    0.45565    0.44430     52.3%
+          18    0.45554    0.44354     52.0%
+          19    0.45518    0.44414     51.2%
+          20    0.45447    0.44430     51.0%
+
+==============================================================================
+RUN : NVDA_fenetre_120
+Date : 2026-07-29 01:07:23
+==============================================================================
+  [DONNÉES]
+    symbole                            NVDA
+    variante                           fenetre_120
+    modifications                      {'sequence_length': 120}
+    lignes_features                    47181
+    fenetres_train                     32907
+  [MODÈLE]
+    sequence_length                    120
+    hidden_size                        256
+    num_layers                         2
+    dropout                            0.200000
+    learning_rate                      0.001000
+    batch_size                         64
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+    weight_decay                       0.000100
+    loss_name                          huber
+    rolling_target_scale               True
+  [INDICATEURS]
+    sma_period                         140
+    stoch_k_period                     98
+    stoch_d_period                     21
+    rsi_period                         98
+    adx_period                         98
+  [RÉSULTATS]
+    epoques_effectuees                 19
+    meilleure_epoque                   12
+    meilleure_loss_val                 0.442591
+    loss_test                          0.455878
+    loss_baseline_zero                 0.447750
+    bat_la_baseline                    NON
+    precision_directionnelle           50.81%
+  [COURBE]
+      époque      train        val  direction
+           1    0.46958    0.44620     47.0%
+           2    0.46143    0.44473     50.4%
+           3    0.46031    0.44466     51.7%
+           4    0.45883    0.44492     50.0%
+           5    0.45733    0.44278     52.3%
+           6    0.45651    0.44281     52.4%
+           7    0.45537    0.44367     51.8%
+           8    0.45491    0.44336     51.8%
+           9    0.45406    0.44444     51.6%
+          10    0.45135    0.44270     52.0%
+          11    0.45028    0.44295     52.1%
+          12    0.44950    0.44259     52.3% <-- meilleur
+          13    0.44814    0.44509     50.1%
+          14    0.44586    0.44410     51.8%
+          15    0.44387    0.44631     51.3%
+          16    0.44185    0.45069     51.9%
+          17    0.43536    0.45078     51.5%
+          18    0.43042    0.45191     51.0%
+          19    0.42629    0.45307     51.4%
+
+==============================================================================
+RUN : NVDA_lr_1e4
+Date : 2026-07-29 01:12:45
+==============================================================================
+  [DONNÉES]
+    symbole                            NVDA
+    variante                           lr_1e4
+    modifications                      {'learning_rate': 0.0001}
+    lignes_features                    47181
+    fenetres_train                     32979
+  [MODÈLE]
+    sequence_length                    48
+    hidden_size                        256
+    num_layers                         2
+    dropout                            0.200000
+    learning_rate                      0.000100
+    batch_size                         64
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+    weight_decay                       0.000100
+    loss_name                          huber
+    rolling_target_scale               True
+  [INDICATEURS]
+    sma_period                         140
+    stoch_k_period                     98
+    stoch_d_period                     21
+    rsi_period                         98
+    adx_period                         98
+  [RÉSULTATS]
+    epoques_effectuees                 22
+    meilleure_epoque                   15
+    meilleure_loss_val                 0.443310
+    loss_test                          0.450661
+    loss_baseline_zero                 0.448137
+    bat_la_baseline                    NON
+    precision_directionnelle           50.72%
+  [COURBE]
+      époque      train        val  direction
+           1    0.47478    0.44435     51.6%
+           2    0.46227    0.44378     51.0%
+           3    0.46103    0.44493     50.7%
+           4    0.46083    0.44373     51.4%
+           5    0.46041    0.44405     52.0%
+           6    0.45939    0.44365     51.6%
+           7    0.45942    0.44363     52.0%
+           8    0.45947    0.44386     51.4%
+           9    0.45925    0.44353     52.0%
+          10    0.45869    0.44443     51.6%
+          11    0.45869    0.44509     50.7%
+          12    0.45806    0.44349     52.4%
+          13    0.45777    0.44375     52.6%
+          14    0.45666    0.44369     52.6%
+          15    0.45625    0.44331     52.7% <-- meilleur
+          16    0.45617    0.44450     52.3%
+          17    0.45597    0.44368     53.0%
+          18    0.45558    0.44410     53.0%
+          19    0.45558    0.44392     53.0%
+          20    0.45495    0.44384     53.0%
+          21    0.45512    0.44399     53.4%
+          22    0.45462    0.44385     53.1%
+
+==============================================================================
+RUN : NVDA_lr_3e4
+Date : 2026-07-29 01:18:07
+==============================================================================
+  [DONNÉES]
+    symbole                            NVDA
+    variante                           lr_3e4
+    modifications                      {'learning_rate': 0.0003}
+    lignes_features                    47181
+    fenetres_train                     32979
+  [MODÈLE]
+    sequence_length                    48
+    hidden_size                        256
+    num_layers                         2
+    dropout                            0.200000
+    learning_rate                      0.000300
+    batch_size                         64
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+    weight_decay                       0.000100
+    loss_name                          huber
+    rolling_target_scale               True
+  [INDICATEURS]
+    sma_period                         140
+    stoch_k_period                     98
+    stoch_d_period                     21
+    rsi_period                         98
+    adx_period                         98
+  [RÉSULTATS]
+    epoques_effectuees                 22
+    meilleure_epoque                   15
+    meilleure_loss_val                 0.442859
+    loss_test                          0.449913
+    loss_baseline_zero                 0.448137
+    bat_la_baseline                    NON
+    precision_directionnelle           50.62%
+  [COURBE]
+      époque      train        val  direction
+           1    0.47137    0.45294     47.3%
+           2    0.46232    0.44549     51.5%
+           3    0.46058    0.44435     51.5%
+           4    0.46019    0.44527     51.6%
+           5    0.45966    0.44378     51.8%
+           6    0.45820    0.44375     51.9%
+           7    0.45706    0.44998     48.7%
+           8    0.45625    0.44461     51.7%
+           9    0.45563    0.44411     52.1%
+          10    0.45429    0.44505     52.1%
+          11    0.45384    0.44356     52.7%
+          12    0.45393    0.44343     52.9%
+          13    0.45364    0.44312     52.5%
+          14    0.45265    0.44380     52.6%
+          15    0.45224    0.44286     52.4% <-- meilleur
+          16    0.45238    0.44287     52.5%
+          17    0.45222    0.44357     52.8%
+          18    0.45155    0.44374     52.7%
+          19    0.45082    0.44433     52.3%
+          20    0.45004    0.44345     52.7%
+          21    0.44961    0.44396     52.4%
+          22    0.44926    0.44329     53.1%
+
+==============================================================================
+RUN : NVDA_lr_3e3
+Date : 2026-07-29 01:20:50
+==============================================================================
+  [DONNÉES]
+    symbole                            NVDA
+    variante                           lr_3e3
+    modifications                      {'learning_rate': 0.003}
+    lignes_features                    47181
+    fenetres_train                     32979
+  [MODÈLE]
+    sequence_length                    48
+    hidden_size                        256
+    num_layers                         2
+    dropout                            0.200000
+    learning_rate                      0.003000
+    batch_size                         64
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+    weight_decay                       0.000100
+    loss_name                          huber
+    rolling_target_scale               True
+  [INDICATEURS]
+    sma_period                         140
+    stoch_k_period                     98
+    stoch_d_period                     21
+    rsi_period                         98
+    adx_period                         98
+  [RÉSULTATS]
+    epoques_effectuees                 11
+    meilleure_epoque                   4
+    meilleure_loss_val                 0.443813
+    loss_test                          0.447943
+    loss_baseline_zero                 0.448137
+    bat_la_baseline                    OUI
+    precision_directionnelle           51.17%
+  [COURBE]
+      époque      train        val  direction
+           1    0.47910    0.44410     48.7%
+           2    0.46472    0.44463     51.6%
+           3    0.46239    0.44602     47.1%
+           4    0.46094    0.44381     51.6% <-- meilleur
+           5    0.46064    0.44384     51.6%
+           6    0.46060    0.44381     51.6%
+           7    0.46063    0.44566     47.1%
+           8    0.46032    0.44395     51.6%
+           9    0.46036    0.44406     51.6%
+          10    0.46028    0.44387     51.6%
+          11    0.46047    0.44413     51.6%
+
+==============================================================================
+RUN : NVDA_batch_16
+Date : 2026-07-29 01:32:18
+==============================================================================
+  [DONNÉES]
+    symbole                            NVDA
+    variante                           batch_16
+    modifications                      {'batch_size': 16}
+    lignes_features                    47181
+    fenetres_train                     32979
+  [MODÈLE]
+    sequence_length                    48
+    hidden_size                        256
+    num_layers                         2
+    dropout                            0.200000
+    learning_rate                      0.001000
+    batch_size                         16
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+    weight_decay                       0.000100
+    loss_name                          huber
+    rolling_target_scale               True
+  [INDICATEURS]
+    sma_period                         140
+    stoch_k_period                     98
+    stoch_d_period                     21
+    rsi_period                         98
+    adx_period                         98
+  [RÉSULTATS]
+    epoques_effectuees                 18
+    meilleure_epoque                   11
+    meilleure_loss_val                 0.443104
+    loss_test                          0.449533
+    loss_baseline_zero                 0.448137
+    bat_la_baseline                    NON
+    precision_directionnelle           50.62%
+  [COURBE]
+      époque      train        val  direction
+           1    0.47017    0.45946     51.6%
+           2    0.46286    0.44560     51.6%
+           3    0.46027    0.44520     50.2%
+           4    0.45879    0.44716     47.8%
+           5    0.45679    0.44333     51.7%
+           6    0.46358    0.44390     51.2%
+           7    0.46265    0.44730     51.5%
+           8    0.46189    0.44630     51.7%
+           9    0.46007    0.44659     48.2%
+          10    0.46007    0.44545     49.9%
+          11    0.45798    0.44310     51.4% <-- meilleur
+          12    0.45578    0.44422     51.5%
+          13    0.45307    0.44452     50.9%
+          14    0.45068    0.44354     52.4%
+          15    0.44914    0.44333     51.9%
+          16    0.44575    0.44536     52.3%
+          17    0.44335    0.44476     50.9%
+          18    0.44193    0.44499     52.6%
+
+==============================================================================
+RUN : NVDA_batch_32
+Date : 2026-07-29 01:36:39
+==============================================================================
+  [DONNÉES]
+    symbole                            NVDA
+    variante                           batch_32
+    modifications                      {'batch_size': 32}
+    lignes_features                    47181
+    fenetres_train                     32979
+  [MODÈLE]
+    sequence_length                    48
+    hidden_size                        256
+    num_layers                         2
+    dropout                            0.200000
+    learning_rate                      0.001000
+    batch_size                         32
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+    weight_decay                       0.000100
+    loss_name                          huber
+    rolling_target_scale               True
+  [INDICATEURS]
+    sma_period                         140
+    stoch_k_period                     98
+    stoch_d_period                     21
+    rsi_period                         98
+    adx_period                         98
+  [RÉSULTATS]
+    epoques_effectuees                 13
+    meilleure_epoque                   6
+    meilleure_loss_val                 0.443469
+    loss_test                          0.449035
+    loss_baseline_zero                 0.448137
+    bat_la_baseline                    NON
+    precision_directionnelle           51.07%
+  [COURBE]
+      époque      train        val  direction
+           1    0.46910    0.44471     51.8%
+           2    0.46141    0.44990     51.6%
+           3    0.45985    0.44419     51.5%
+           4    0.45797    0.44964     47.6%
+           5    0.45892    0.45048     51.9%
+           6    0.45861    0.44347     51.5% <-- meilleur
+           7    0.45926    0.44445     51.7%
+           8    0.45771    0.44774     52.1%
+           9    0.45676    0.44479     51.8%
+          10    0.45773    0.44518     48.5%
+          11    0.45686    0.44406     51.1%
+          12    0.45527    0.44531     52.1%
+          13    0.45461    0.44357     51.8%
+
+==============================================================================
+RUN : NVDA_batch_128
+Date : 2026-07-29 01:40:35
+==============================================================================
+  [DONNÉES]
+    symbole                            NVDA
+    variante                           batch_128
+    modifications                      {'batch_size': 128}
+    lignes_features                    47181
+    fenetres_train                     32979
+  [MODÈLE]
+    sequence_length                    48
+    hidden_size                        256
+    num_layers                         2
+    dropout                            0.200000
+    learning_rate                      0.001000
+    batch_size                         128
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+    weight_decay                       0.000100
+    loss_name                          huber
+    rolling_target_scale               True
+  [INDICATEURS]
+    sma_period                         140
+    stoch_k_period                     98
+    stoch_d_period                     21
+    rsi_period                         98
+    adx_period                         98
+  [RÉSULTATS]
+    epoques_effectuees                 18
+    meilleure_epoque                   11
+    meilleure_loss_val                 0.443076
+    loss_test                          0.451847
+    loss_baseline_zero                 0.448137
+    bat_la_baseline                    NON
+    precision_directionnelle           50.70%
+  [COURBE]
+      époque      train        val  direction
+           1    0.47354    0.44673     48.2%
+           2    0.46158    0.44494     50.0%
+           3    0.45961    0.44565     50.3%
+           4    0.45921    0.45574     51.6%
+           5    0.45879    0.44336     52.3%
+           6    0.45580    0.45027     51.8%
+           7    0.45620    0.44527     51.9%
+           8    0.45514    0.44413     51.0%
+           9    0.45348    0.44433     50.0%
+          10    0.45300    0.44341     52.8%
+          11    0.45174    0.44308     53.0% <-- meilleur
+          12    0.45136    0.44399     53.4%
+          13    0.45093    0.44349     52.8%
+          14    0.44900    0.44409     52.8%
+          15    0.44846    0.44426     52.1%
+          16    0.44585    0.44519     52.7%
+          17    0.44390    0.44620     52.3%
+          18    0.44252    0.44773     52.2%
+
+==============================================================================
+RUN : NVDA_batch_256
+Date : 2026-07-29 01:43:07
+==============================================================================
+  [DONNÉES]
+    symbole                            NVDA
+    variante                           batch_256
+    modifications                      {'batch_size': 256}
+    lignes_features                    47181
+    fenetres_train                     32979
+  [MODÈLE]
+    sequence_length                    48
+    hidden_size                        256
+    num_layers                         2
+    dropout                            0.200000
+    learning_rate                      0.001000
+    batch_size                         256
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+    weight_decay                       0.000100
+    loss_name                          huber
+    rolling_target_scale               True
+  [INDICATEURS]
+    sma_period                         140
+    stoch_k_period                     98
+    stoch_d_period                     21
+    rsi_period                         98
+    adx_period                         98
+  [RÉSULTATS]
+    epoques_effectuees                 13
+    meilleure_epoque                   6
+    meilleure_loss_val                 0.443528
+    loss_test                          0.449831
+    loss_baseline_zero                 0.448137
+    bat_la_baseline                    NON
+    precision_directionnelle           50.78%
+  [COURBE]
+      époque      train        val  direction
+           1    0.48618    0.44588     48.9%
+           2    0.46279    0.44375     51.1%
+           3    0.46107    0.44388     51.2%
+           4    0.45951    0.44467     51.6%
+           5    0.45770    0.44498     52.2%
+           6    0.45670    0.44353     52.4% <-- meilleur
+           7    0.45635    0.44432     52.2%
+           8    0.45587    0.44527     51.2%
+           9    0.45549    0.44510     52.2%
+          10    0.45471    0.44400     52.6%
+          11    0.45280    0.44474     51.5%
+          12    0.45206    0.44363     52.5%
+          13    0.45100    0.44393     53.3%
+
+==============================================================================
+RUN : NVDA_patience_15
+Date : 2026-07-29 01:49:12
+==============================================================================
+  [DONNÉES]
+    symbole                            NVDA
+    variante                           patience_15
+    modifications                      {'patience': 15}
+    lignes_features                    47181
+    fenetres_train                     32979
+  [MODÈLE]
+    sequence_length                    48
+    hidden_size                        256
+    num_layers                         2
+    dropout                            0.200000
+    learning_rate                      0.001000
+    batch_size                         64
+    num_epochs                         50
+    patience                           15
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+    weight_decay                       0.000100
+    loss_name                          huber
+    rolling_target_scale               True
+  [INDICATEURS]
+    sma_period                         140
+    stoch_k_period                     98
+    stoch_d_period                     21
+    rsi_period                         98
+    adx_period                         98
+  [RÉSULTATS]
+    epoques_effectuees                 25
+    meilleure_epoque                   10
+    meilleure_loss_val                 0.442420
+    loss_test                          0.451226
+    loss_baseline_zero                 0.448137
+    bat_la_baseline                    NON
+    precision_directionnelle           50.21%
+  [COURBE]
+      époque      train        val  direction
+           1    0.47277    0.44886     47.4%
+           2    0.46133    0.44368     51.6%
+           3    0.45933    0.44456     51.7%
+           4    0.45805    0.44392     51.7%
+           5    0.45692    0.44578     51.7%
+           6    0.45619    0.44335     52.0%
+           7    0.45523    0.44350     51.9%
+           8    0.45459    0.44416     51.8%
+           9    0.45343    0.44592     52.2%
+          10    0.45246    0.44242     53.1% <-- meilleur
+          11    0.45141    0.44299     52.3%
+          12    0.45074    0.44608     50.9%
+          13    0.44858    0.44365     52.6%
+          14    0.44679    0.44474     52.1%
+          15    0.44105    0.44900     52.4%
+          16    0.43751    0.44689     52.3%
+          17    0.43234    0.45109     52.2%
+          18    0.42821    0.45138     52.0%
+          19    0.41793    0.45614     51.9%
+          20    0.41233    0.45550     52.5%
+          21    0.40712    0.45942     52.2%
+          22    0.40154    0.46730     52.3%
+          23    0.39287    0.46767     52.1%
+          24    0.38884    0.47359     52.1%
+          25    0.38493    0.47484     52.1%
+
+==============================================================================
+RUN : NVDA_perte_mse
+Date : 2026-07-29 01:54:19
+==============================================================================
+  [DONNÉES]
+    symbole                            NVDA
+    variante                           perte_mse
+    modifications                      {'loss_name': 'mse'}
+    lignes_features                    47181
+    fenetres_train                     32979
+  [MODÈLE]
+    sequence_length                    48
+    hidden_size                        256
+    num_layers                         2
+    dropout                            0.200000
+    learning_rate                      0.001000
+    batch_size                         64
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+    weight_decay                       0.000100
+    loss_name                          mse
+    rolling_target_scale               True
+  [INDICATEURS]
+    sma_period                         140
+    stoch_k_period                     98
+    stoch_d_period                     21
+    rsi_period                         98
+    adx_period                         98
+  [RÉSULTATS]
+    epoques_effectuees                 21
+    meilleure_epoque                   14
+    meilleure_loss_val                 1.463359
+    loss_test                          1.768030
+    loss_baseline_zero                 1.756927
+    bat_la_baseline                    NON
+    precision_directionnelle           49.94%
+  [COURBE]
+      époque      train        val  direction
+           1    1.68518    1.47979     47.7%
+           2    1.63340    1.48925     48.5%
+           3    1.62890    1.49246     51.5%
+           4    1.62528    1.48324     51.6%
+           5    1.61648    1.46920     49.6%
+           6    1.61680    1.47292     51.2%
+           7    1.62141    1.48232     49.9%
+           8    1.61473    1.46880     51.8%
+           9    1.60959    1.46831     51.6%
+          10    1.60530    1.46601     52.7%
+          11    1.60175    1.46955     51.9%
+          12    1.59808    1.46567     52.5%
+          13    1.59029    1.47089     51.7%
+          14    1.58640    1.46336     51.9% <-- meilleur
+          15    1.57639    1.46662     51.6%
+          16    1.56405    1.48536     51.9%
+          17    1.54769    1.47859     51.7%
+          18    1.52851    1.50898     50.4%
+          19    1.47896    1.51102     51.9%
+          20    1.44046    1.53668     51.7%
+          21    1.41240    1.56420     51.7%
+
+==============================================================================
+RUN : NVDA_perte_l1
+Date : 2026-07-29 01:57:45
+==============================================================================
+  [DONNÉES]
+    symbole                            NVDA
+    variante                           perte_l1
+    modifications                      {'loss_name': 'l1'}
+    lignes_features                    47181
+    fenetres_train                     32979
+  [MODÈLE]
+    sequence_length                    48
+    hidden_size                        256
+    num_layers                         2
+    dropout                            0.200000
+    learning_rate                      0.001000
+    batch_size                         64
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+    weight_decay                       0.000100
+    loss_name                          l1
+    rolling_target_scale               True
+  [INDICATEURS]
+    sma_period                         140
+    stoch_k_period                     98
+    stoch_d_period                     21
+    rsi_period                         98
+    adx_period                         98
+  [RÉSULTATS]
+    epoques_effectuees                 14
+    meilleure_epoque                   7
+    meilleure_loss_val                 0.758953
+    loss_test                          0.761724
+    loss_baseline_zero                 0.760243
+    bat_la_baseline                    NON
+    precision_directionnelle           50.62%
+  [COURBE]
+      époque      train        val  direction
+           1    0.79768    0.77411     51.6%
+           2    0.78396    0.76881     51.5%
+           3    0.78208    0.76618     51.6%
+           4    0.78016    0.76586     51.5%
+           5    0.77901    0.75899     51.6%
+           6    0.77926    0.76086     52.4%
+           7    0.77747    0.75895     51.6% <-- meilleur
+           8    0.77656    0.76216     50.5%
+           9    0.77557    0.77198     51.7%
+          10    0.77293    0.76074     51.6%
+          11    0.77179    0.75947     51.9%
+          12    0.77057    0.76089     51.5%
+          13    0.76901    0.76010     51.9%
+          14    0.76564    0.76363     52.3%
+
+==============================================================================
+RUN : NVDA_echelle_fixe
+Date : 2026-07-29 02:01:10
+==============================================================================
+  [DONNÉES]
+    symbole                            NVDA
+    variante                           echelle_fixe
+    modifications                      {'rolling_target_scale': False}
+    lignes_features                    47181
+    fenetres_train                     32979
+  [MODÈLE]
+    sequence_length                    48
+    hidden_size                        256
+    num_layers                         2
+    dropout                            0.200000
+    learning_rate                      0.001000
+    batch_size                         64
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+    weight_decay                       0.000100
+    loss_name                          huber
+    rolling_target_scale               False
+  [INDICATEURS]
+    sma_period                         140
+    stoch_k_period                     98
+    stoch_d_period                     21
+    rsi_period                         98
+    adx_period                         98
+  [RÉSULTATS]
+    epoques_effectuees                 14
+    meilleure_epoque                   7
+    meilleure_loss_val                 0.306172
+    loss_test                          0.341220
+    loss_baseline_zero                 0.339821
+    bat_la_baseline                    NON
+    precision_directionnelle           50.85%
+  [COURBE]
+      époque      train        val  direction
+           1    0.32269    0.31081     47.1%
+           2    0.31021    0.31242     47.8%
+           3    0.30937    0.30821     50.8%
+           4    0.30776    0.30942     49.6%
+           5    0.30706    0.30825     50.0%
+           6    0.30632    0.30734     51.8%
+           7    0.30615    0.30617     52.0% <-- meilleur
+           8    0.30510    0.30769     51.9%
+           9    0.30444    0.30813     49.4%
+          10    0.30348    0.30755     51.8%
+          11    0.30205    0.30676     51.5%
+          12    0.29891    0.30836     51.9%
+          13    0.29679    0.30734     52.9%
+          14    0.29498    0.30929     52.4%
+
+==============================================================================
+RUN : NVDA_split_60_20
+Date : 2026-07-29 02:04:02
+==============================================================================
+  [DONNÉES]
+    symbole                            NVDA
+    variante                           split_60_20
+    modifications                      {'train_ratio': 0.6, 'val_ratio': 0.2}
+    lignes_features                    47181
+    fenetres_train                     28261
+  [MODÈLE]
+    sequence_length                    48
+    hidden_size                        256
+    num_layers                         2
+    dropout                            0.200000
+    learning_rate                      0.001000
+    batch_size                         64
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.600000
+    val_ratio                          0.200000
+    weight_decay                       0.000100
+    loss_name                          huber
+    rolling_target_scale               True
+  [INDICATEURS]
+    sma_period                         140
+    stoch_k_period                     98
+    stoch_d_period                     21
+    rsi_period                         98
+    adx_period                         98
+  [RÉSULTATS]
+    epoques_effectuees                 13
+    meilleure_epoque                   6
+    meilleure_loss_val                 0.448843
+    loss_test                          0.450583
+    loss_baseline_zero                 0.447593
+    bat_la_baseline                    NON
+    precision_directionnelle           51.10%
+  [COURBE]
+      époque      train        val  direction
+           1    0.47233    0.45024     51.5%
+           2    0.46309    0.45958     47.5%
+           3    0.46071    0.45044     52.0%
+           4    0.45941    0.45185     50.6%
+           5    0.45773    0.45059     51.3%
+           6    0.45566    0.44884     51.6% <-- meilleur
+           7    0.45382    0.44998     51.5%
+           8    0.45329    0.45052     51.7%
+           9    0.45242    0.44998     51.4%
+          10    0.45221    0.45264     51.5%
+          11    0.44966    0.45076     51.6%
+          12    0.44878    0.45116     51.1%
+          13    0.44695    0.45553     51.3%
+
+==============================================================================
+RUN : NVDA_split_80_10
+Date : 2026-07-29 02:06:43
+==============================================================================
+  [DONNÉES]
+    symbole                            NVDA
+    variante                           split_80_10
+    modifications                      {'train_ratio': 0.8, 'val_ratio': 0.1}
+    lignes_features                    47181
+    fenetres_train                     37697
+  [MODÈLE]
+    sequence_length                    48
+    hidden_size                        256
+    num_layers                         2
+    dropout                            0.200000
+    learning_rate                      0.001000
+    batch_size                         64
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.800000
+    val_ratio                          0.100000
+    weight_decay                       0.000100
+    loss_name                          huber
+    rolling_target_scale               True
+  [INDICATEURS]
+    sma_period                         140
+    stoch_k_period                     98
+    stoch_d_period                     21
+    rsi_period                         98
+    adx_period                         98
+  [RÉSULTATS]
+    epoques_effectuees                 10
+    meilleure_epoque                   3
+    meilleure_loss_val                 0.445220
+    loss_test                          0.451544
+    loss_baseline_zero                 0.450822
+    bat_la_baseline                    NON
+    precision_directionnelle           51.54%
+  [COURBE]
+      époque      train        val  direction
+           1    0.46968    0.44578     50.0%
+           2    0.45962    0.45029     48.1%
+           3    0.45766    0.44522     50.3% <-- meilleur
+           4    0.45649    0.44642     49.3%
+           5    0.45476    0.44755     50.1%
+           6    0.45398    0.44881     50.8%
+           7    0.45295    0.44663     50.7%
+           8    0.45122    0.44668     50.1%
+           9    0.44976    0.44642     51.1%
+          10    0.44906    0.44773     51.5%
+

@@ -1,0 +1,83 @@
+{
+  "run_name": "XAU_1h_ctx_4h+1d+1w",
+  "best_val_loss": 0.47746328062565313,
+  "test_loss": 0.4877511554598157,
+  "test_direction_accuracy": 0.5169398907103825,
+  "baseline_loss_zero_prediction": 0.48800051125020927,
+  "beats_baseline": true,
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 0.48107116595300703,
+      "val_loss": 0.47831650537652093,
+      "val_direction": 0.49882507240832835
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.47737201976972277,
+      "val_loss": 0.47768194496035543,
+      "val_direction": 0.5130334990983114
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.4763563452100433,
+      "val_loss": 0.4779464696279555,
+      "val_direction": 0.5234165801409913
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.4756653969557141,
+      "val_loss": 0.47754452451538326,
+      "val_direction": 0.5180064484398055
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.4750752324989329,
+      "val_loss": 0.47746328062565313,
+      "val_direction": 0.52707798240341
+    },
+    {
+      "epoch": 6,
+      "train_loss": 0.47447617321916724,
+      "val_loss": 0.47823460239277193,
+      "val_direction": 0.5204109514181103
+    },
+    {
+      "epoch": 7,
+      "train_loss": 0.47365563910624475,
+      "val_loss": 0.4778225494640187,
+      "val_direction": 0.5201377124433029
+    },
+    {
+      "epoch": 8,
+      "train_loss": 0.47269412889664264,
+      "val_loss": 0.47973952350593524,
+      "val_direction": 0.515875184436308
+    },
+    {
+      "epoch": 9,
+      "train_loss": 0.47155330751980074,
+      "val_loss": 0.4788615637264901,
+      "val_direction": 0.5145636373572327
+    },
+    {
+      "epoch": 10,
+      "train_loss": 0.46777207258929937,
+      "val_loss": 0.4824834399174078,
+      "val_direction": 0.5139625116126564
+    },
+    {
+      "epoch": 11,
+      "train_loss": 0.46373437356173147,
+      "val_loss": 0.48404122582289216,
+      "val_direction": 0.5103011093502378
+    },
+    {
+      "epoch": 12,
+      "train_loss": 0.4590991761203836,
+      "val_loss": 0.48794376577495313,
+      "val_direction": 0.5079512541668944
+    }
+  ],
+  "target_scale": 0.001967375241059176
+}

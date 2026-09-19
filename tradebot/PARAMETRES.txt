@@ -1,0 +1,486 @@
+================================================================================
+                    TRADEBOT — RÉFÉRENCE DES PARAMÈTRES
+================================================================================
+
+Ce fichier recense TOUT ce qui est modifiable dans le projet : où le trouver,
+ce que ça fait, dans quel sens le pousser, et les valeurs raisonnables.
+
+MÉTHODE DE TRAVAIL — à lire avant de toucher quoi que ce soit
+--------------------------------------------------------------------------------
+1. UN SEUL PARAMÈTRE À LA FOIS. Si vous changez le hidden_size et le dropout
+   ensemble et que le résultat s'améliore, vous ne savez pas lequel a aidé.
+   Vous risquez même d'avoir un gain et une perte qui se compensent.
+
+2. COMPAREZ TOUJOURS À VOTRE RÉFÉRENCE. Votre run de base est consigné dans
+   historique_runs.txt. Un changement "améliore" seulement s'il fait mieux que
+   cette ligne-là, pas mieux que votre impression.
+
+3. UNE DIFFÉRENCE DE MOINS DE 0,005 SUR LA LOSS EST DU BRUIT. L'initialisation
+   des poids est aléatoire : deux runs identiques ne donnent pas exactement le
+   même résultat. Ne concluez pas sur un écart minuscule.
+
+4. LA PRÉCISION DIRECTIONNELLE A UNE MARGE D'ERREUR. Sur ~7000 échantillons de
+   test, l'écart-type est de 0,6 %. Tout ce qui est entre 48,8 % et 51,2 % est
+   indiscernable du hasard. Il faut dépasser 51,8 % pour affirmer quelque chose.
+
+================================================================================
+SECTION 1 — HYPERPARAMÈTRES DU MODÈLE
+Fichier : config/settings.py, classe ModelConfig (lignes 78 à 87)
+================================================================================
+
+--------------------------------------------------------------------------------
+sequence_length        défaut : 48
+--------------------------------------------------------------------------------
+QUOI    Nombre de bougies que le LSTM voit avant de prédire. 48 bougies H1 =
+        environ une semaine de séance.
+
+EFFET   Plus grand -> le modèle peut capter des motifs longs, mais chaque
+        échantillon coûte plus cher en calcul et le nombre de fenêtres
+        d'entraînement diminue légèrement.
+        Plus petit -> entraînement plus rapide, moins de contexte, moins de
+        risque de sur-apprentissage.
+
+PLAGE   12 à 120. En dessous de 12, autant ne pas utiliser de LSTM.
+        Au-delà de 120, le LSTM oublie de toute façon le début de la séquence.
+
+QUAND   Réduisez-le si vous sur-apprenez. Augmentez-le seulement si vous pensez
+        que le signal recherché s'étale sur plusieurs jours.
+
+NOTE    Ce paramètre doit rester cohérent avec les périodes d'indicateurs. Une
+        SMA sur 140 bougies dans une fenêtre de 24 bougies : le modèle voit une
+        moyenne dont il n'a jamais vu la matière première. Ce n'est pas faux,
+        mais c'est une information "de l'extérieur" de sa fenêtre.
+
+--------------------------------------------------------------------------------
+hidden_size            défaut : 256
+--------------------------------------------------------------------------------
+QUOI    Taille de la mémoire interne du LSTM. C'est le principal levier sur la
+        CAPACITÉ du modèle — sa faculté à mémoriser des choses compliquées.
+
+EFFET   Plus grand -> plus de capacité, mais sur-apprentissage beaucoup plus
+        rapide et entraînement plus lent.
+        Plus petit -> le modèle est forcé de ne retenir que ce qui est général.
+
+PLAGE   32 à 512.
+
+QUAND   C'EST LE PREMIER PARAMÈTRE À RÉDUIRE quand la loss de validation
+        remonte alors que la loss d'entraînement descend.
+
+REPÈRE  Nombre approximatif de paramètres d'un LSTM :
+            4 * num_layers * hidden_size * (hidden_size + input_size + 1)
+        Avec hidden_size=256, num_layers=2, 11 features : ~800 000 paramètres.
+        Avec hidden_size=64,  num_layers=1, 11 features : ~20 000 paramètres.
+        Règle de pouce : visez moins de paramètres que d'échantillons
+        d'entraînement. Vous avez ~33 000 fenêtres. 800 000 est 24 fois trop.
+
+--------------------------------------------------------------------------------
+num_layers             défaut : 2
+--------------------------------------------------------------------------------
+QUOI    Nombre de LSTM empilés. La sortie du premier alimente le second.
+
+EFFET   Plus de couches -> représentations plus abstraites, mais coût et
+        sur-apprentissage qui explosent. Les gains sont rarement là.
+
+PLAGE   1 à 3. Au-delà, sur des données financières, c'est du gaspillage.
+
+QUAND   Passez à 1 en même temps que vous réduisez hidden_size.
+
+PIÈGE   PyTorch IGNORE le dropout si num_layers vaut 1 (le dropout du LSTM
+        s'applique ENTRE les couches). Le code gère déjà ce cas, mais sachez
+        qu'avec num_layers=1, seul le dropout de la tête linéaire agit.
+
+--------------------------------------------------------------------------------
+dropout                défaut : 0.2
+--------------------------------------------------------------------------------
+QUOI    Fraction de neurones désactivés au hasard à chaque passage
+        d'entraînement. Empêche le réseau de dépendre d'un seul chemin.
+
+EFFET   Plus haut -> régularisation plus forte, apprentissage plus lent et plus
+        bruité, moins de sur-apprentissage.
+        Plus bas -> le modèle apprend plus vite... et mémorise plus vite.
+
+PLAGE   0.0 à 0.5. Au-delà de 0.5, le signal ne passe plus.
+
+QUAND   Augmentez-le si vous sur-apprenez ET que vous ne voulez pas réduire la
+        taille du modèle.
+
+--------------------------------------------------------------------------------
+learning_rate          défaut : 0.001
+--------------------------------------------------------------------------------
+QUOI    Taille des pas de la descente de gradient.
+
+EFFET   Trop grand -> la loss oscille, part en NaN, ou stagne haut.
+        Trop petit -> convergence interminable, coincé dans un minimum local.
+
+PLAGE   1e-5 à 1e-2. 1e-3 est le défaut standard d'Adam et convient presque
+        toujours.
+
+QUAND   Baissez à 3e-4 si la loss de validation est très instable d'une époque
+        à l'autre. Montez à 3e-3 si rien ne bouge après dix époques.
+
+NOTE    Le scheduler ReduceLROnPlateau divise déjà ce taux par 2 après 3
+        époques sans progrès. Vous n'avez donc pas à le baisser à la main
+        pour la fin de l'entraînement.
+
+--------------------------------------------------------------------------------
+batch_size             défaut : 64
+--------------------------------------------------------------------------------
+QUOI    Nombre de fenêtres traitées ensemble avant chaque mise à jour des poids.
+
+EFFET   Plus grand -> gradients plus stables, entraînement plus rapide sur GPU,
+        mais moins de bruit — or un peu de bruit aide à généraliser.
+        Plus petit -> plus bruité, souvent meilleure généralisation, plus lent.
+
+PLAGE   16 à 256.
+
+QUAND   Rarement le bon levier. Touchez-y en dernier.
+
+--------------------------------------------------------------------------------
+num_epochs             défaut : 50
+--------------------------------------------------------------------------------
+QUOI    Nombre maximal de passages sur le jeu d'entraînement.
+
+EFFET   C'est un PLAFOND, pas une cible. L'arrêt anticipé coupe généralement
+        bien avant (votre run s'est arrêté à l'époque 11).
+
+PLAGE   20 à 200.
+
+QUAND   Augmentez si vos runs atteignent systématiquement la limite sans que
+        l'arrêt anticipé se déclenche — cela signifie que la validation
+        s'améliorait encore.
+
+--------------------------------------------------------------------------------
+patience               défaut : 7
+--------------------------------------------------------------------------------
+QUOI    Nombre d'époques sans amélioration de la validation avant d'arrêter.
+
+EFFET   Plus grand -> on laisse plus de chances à une amélioration tardive, au
+        prix de temps de calcul.
+        Plus petit -> arrêt agressif, risque de couper une remontée réelle.
+
+PLAGE   3 à 15.
+
+RAPPEL  Ce sont TOUJOURS les poids de la meilleure époque qui sont conservés,
+        pas ceux de la dernière. Une patience élevée ne dégrade donc jamais le
+        modèle final, elle coûte seulement du temps.
+
+--------------------------------------------------------------------------------
+train_ratio / val_ratio      défauts : 0.70 / 0.15
+--------------------------------------------------------------------------------
+QUOI    Découpage CHRONOLOGIQUE. Train = le passé, validation = le milieu,
+        test = la période la plus récente (le reste, soit 15 %).
+
+EFFET   Plus de train -> plus de données pour apprendre, mais validation et
+        test plus courts donc métriques plus bruitées.
+
+PLAGE   train 0.6 à 0.8, val 0.1 à 0.2.
+
+ATTENTION  NE PASSEZ JAMAIS À UN DÉCOUPAGE ALÉATOIRE. Sur une série temporelle,
+        mélanger revient à mettre du futur dans l'entraînement. Le modèle
+        afficherait des scores magnifiques et ne vaudrait rien.
+
+================================================================================
+SECTION 2 — PÉRIODES DES INDICATEURS
+Fichier : config/settings.py, classe IndicatorConfig (lignes 66 à 70)
+================================================================================
+
+Toutes les périodes sont en NOMBRE DE BOUGIES, exprimées en multiples de
+BARS_PER_DAY (ligne 62, valeur 7 — le NASDAQ est ouvert 6,5 h/jour).
+
+--------------------------------------------------------------------------------
+BARS_PER_DAY           défaut : 7
+--------------------------------------------------------------------------------
+QUOI    Facteur de conversion jours -> bougies. Modifier cette seule ligne
+        rééchelonne TOUS les indicateurs d'un coup.
+
+QUAND   Changez-le si vous passez à un autre timeframe. En 15 minutes, une
+        journée fait 26 bougies, donc BARS_PER_DAY = 26.
+
+--------------------------------------------------------------------------------
+sma_period             défaut : 140  (20 jours)
+--------------------------------------------------------------------------------
+QUOI    Période de la SMA et de l'EMA du prix de clôture. Alimente les features
+        close_over_sma, close_over_ema et sma_slope.
+
+EFFET   Plus long -> tendance de fond, features plus lisses, moins réactives.
+        Plus court -> plus réactif, plus bruité.
+
+PLAGE   20 à 400.
+
+COÛT    Attention : le pipeline ne produit AUCUNE ligne tant que l'indicateur
+        le plus lent n'est pas disponible. Passer de 140 à 400 vous fait perdre
+        260 bougies de données au début.
+
+--------------------------------------------------------------------------------
+stoch_k_period         défaut : 98  (14 jours)
+stoch_d_period         défaut : 21  (3 jours)
+--------------------------------------------------------------------------------
+QUOI    %K situe la clôture dans le range [plus bas, plus haut] de la période.
+        %D est la moyenne mobile de %K, c'est la ligne de signal.
+
+EFFET   %K court -> oscillateur nerveux, saturé à 0 ou 100 en permanence.
+        %K long -> plus lisse, moins de signaux.
+
+PLAGE   K : 20 à 200. D : 3 à 30. Gardez D nettement plus court que K.
+
+--------------------------------------------------------------------------------
+rsi_period             défaut : 98  (14 jours)
+--------------------------------------------------------------------------------
+QUOI    Rapport gains moyens / pertes moyennes, ramené sur 0-100.
+        Au-dessus de 70 : suracheté. En dessous de 30 : survendu.
+
+PLAGE   14 à 200. Le standard de Wilder est 14 PÉRIODES — soit 14 bougies si
+        vous travaillez en H1 pur, ou 98 si vous raisonnez en jours. Les deux
+        lectures se défendent, testez.
+
+--------------------------------------------------------------------------------
+adx_period             défaut : 98  (14 jours)
+--------------------------------------------------------------------------------
+QUOI    Force de la tendance, indépendamment de son sens. Au-dessus de 25 :
+        tendance établie. En dessous de 20 : marché sans direction.
+
+PLAGE   14 à 200.
+
+NOTE    L'ADX est calculé avec le lissage de Wilder (alpha = 1/period), pas
+        avec une EMA classique. C'est ce qui rend vos valeurs comparables à
+        celles de TradingView. Ne changez pas ce lissage.
+
+================================================================================
+SECTION 3 — PARAMÈTRES DANS LE CODE (pas dans settings.py)
+================================================================================
+
+--------------------------------------------------------------------------------
+Fonction de perte              src/ai/train.py, ligne 130
+--------------------------------------------------------------------------------
+ACTUEL  nn.SmoothL1Loss()  — perte de Huber
+
+ALTERNATIVES
+    nn.MSELoss()   Pénalise fortement les grosses erreurs. Sur des données
+                   financières pleines de valeurs extrêmes, quelques bougies
+                   aberrantes dominent alors tout le gradient. Déconseillé ici.
+    nn.L1Loss()    Erreur absolue. Très robuste aux extrêmes, mais gradient
+                   constant : convergence plus lente.
+
+POURQUOI HUBER  Quadratique près de zéro (gradient fin quand on est proche),
+                linéaire au loin (les krachs ne font pas tout dérailler).
+
+ATTENTION  Si vous changez de perte, votre baseline change d'échelle aussi.
+           Les runs ne sont plus comparables entre eux. Notez-le.
+
+--------------------------------------------------------------------------------
+weight_decay                   src/ai/train.py, ligne 132
+--------------------------------------------------------------------------------
+ACTUEL  1e-4
+
+QUOI    Régularisation L2 : pénalise les poids de grande amplitude.
+
+EFFET   Plus grand -> modèle plus contraint, moins de sur-apprentissage.
+
+PLAGE   0 à 1e-2. Essayez 1e-3 si vous sur-apprenez malgré un modèle réduit.
+
+--------------------------------------------------------------------------------
+Optimiseur                     src/ai/train.py, ligne 131
+--------------------------------------------------------------------------------
+ACTUEL  torch.optim.AdamW
+
+ALTERNATIVES
+    Adam    Presque identique ; AdamW gère mieux le weight_decay.
+    SGD     Avec momentum, généralise parfois mieux, mais demande un réglage
+            fin du learning_rate. Ne commencez pas par là.
+
+--------------------------------------------------------------------------------
+Scheduler                      src/ai/train.py, lignes 133-135
+--------------------------------------------------------------------------------
+ACTUEL  ReduceLROnPlateau(factor=0.5, patience=3)
+
+QUOI    Divise le learning_rate par 2 après 3 époques sans progrès en
+        validation.
+
+RÉGLAGES
+    factor    0.1 à 0.5. Plus bas = réduction plus brutale.
+    patience  1 à 5. Doit rester INFÉRIEURE à la patience de l'arrêt anticipé,
+              sinon l'entraînement s'arrête avant que le taux ne baisse jamais.
+
+--------------------------------------------------------------------------------
+Clipping du gradient           src/ai/train.py, ligne 86
+--------------------------------------------------------------------------------
+ACTUEL  max_norm=1.0
+
+QUOI    Plafonne la norme du gradient. Sans cela, les LSTM subissent des
+        "exploding gradients" qui envoient la loss à NaN.
+
+PLAGE   0.5 à 5.0. Ne mettez pas à zéro, ne supprimez pas la ligne.
+
+--------------------------------------------------------------------------------
+Mélange des fenêtres           src/ai/train.py, ligne 116
+--------------------------------------------------------------------------------
+ACTUEL  shuffle=True sur le train uniquement
+
+QUOI    Mélange les FENÊTRES entre elles. Chaque fenêtre reste ordonnée en
+        interne — c'est légitime et cela décorrèle les batches.
+
+ATTENTION  Ne mettez jamais shuffle=True sur validation ou test : vous ne
+        pourriez plus tracer les prédictions dans l'ordre chronologique.
+
+================================================================================
+SECTION 4 — FEATURES
+Fichier : src/ai/features.py
+================================================================================
+
+Les 11 features actuelles (liste FEATURE_COLUMNS, ligne 43) :
+
+    log_return          ln(close_t / close_t-1)          rendement de la bougie
+    high_over_close     high/close - 1                   amplitude haussière
+    low_over_close      low/close - 1                    amplitude baissière
+    close_over_sma      close/SMA - 1                    position vs tendance
+    close_over_ema      close/EMA - 1                    position vs tendance
+    sma_slope           SMA_t/SMA_t-1 - 1                direction de la tendance
+    rsi                 RSI/100                          momentum borné
+    stoch_k             %K/100                            position dans le range
+    stoch_d             %D/100                            signal du stochastique
+    adx                 ADX/100                           force de la tendance
+    log_volume_ratio    log volume vs moyenne 20          activité relative
+    realized_vol        écart-type des 20 derniers        RÉGIME de marché :
+                        log_return                        calme ou agité
+
+POUR AJOUTER UNE FEATURE — trois endroits, sinon KeyError :
+    1. Ajouter son nom dans FEATURE_COLUMNS (ligne 43)
+    2. La calculer dans la boucle de build_feature_frame
+    3. L'ajouter au dictionnaire records.append (ligne 114)
+
+POUR RETIRER UNE FEATURE : il suffit de la commenter dans FEATURE_COLUMNS.
+La colonne continuera d'être calculée mais ne sera pas donnée au modèle.
+C'est le moyen le plus simple de tester si une feature apporte quelque chose.
+
+CIBLE  next_log_return — le rendement de la bougie SUIVANTE.
+       Pour prédire plus loin, remplacez quotes[k+1] par quotes[k+n] dans le
+       calcul de la cible. Attention : il faut alors aussi ajuster la borne de
+       la boucle (range(total - n) au lieu de range(total - 1)).
+
+FILTRES DE QUALITÉ  lignes 91 à 97, les instructions "continue".
+       C'est là qu'on écarte les bougies. Filtres recommandés à ajouter,
+       vu vos statistiques :
+
+           if abs(quote.high_price / quote.close_price - 1) > 0.10:
+               continue
+           if abs(quote.low_price / quote.close_price - 1) > 0.10:
+               continue
+
+       Vos données contiennent des bougies horaires dont le plus bas est 66 %
+       sous la clôture. Ce ne sont pas des mouvements de marché, ce sont des
+       erreurs de flux.
+
+--------------------------------------------------------------------------------
+rolling_target_scale           src/ai/dataset.py, argument de build_splits
+--------------------------------------------------------------------------------
+ACTUEL  True
+
+QUOI    Détermine par quoi la cible est divisée avant l'entraînement.
+
+    True  -> NORMALISATION GLISSANTE. Chaque cible est divisée par la
+             volatilité réalisée à cet instant (20 bougies passées). La cible
+             devient « ce mouvement fait combien d'écarts-types LOCAUX ».
+             Comparable entre 2010 et 2023 malgré le changement de régime.
+
+    False -> ANCIEN COMPORTEMENT. Une constante unique calculée sur le train.
+             Les mouvements de 2023 sont mesurés avec la règle de 2010-2019.
+
+QUAND   Mettez False uniquement pour reproduire un run antérieur. La
+        normalisation glissante devrait être meilleure dès que vos périodes
+        d'entraînement et de test ont des volatilités différentes — ce qui est
+        votre cas.
+
+ATTENTION  Les losses obtenues avec True et avec False NE SONT PAS
+        COMPARABLES : les cibles n'ont pas la même échelle. Comparez toujours
+        au sein d'un même mode, et toujours à la baseline du même run.
+
+--------------------------------------------------------------------------------
+MIN_VOLATILITY                 src/ai/features.py
+--------------------------------------------------------------------------------
+ACTUEL  1e-4
+
+QUOI    Plancher appliqué à la volatilité réalisée avant division.
+
+POURQUOI  Sans plancher, une période anormalement calme (volatilité proche de
+        zéro) transformerait un mouvement insignifiant en valeur énorme après
+        division. Le gradient partirait avec.
+
+PLAGE   1e-5 à 1e-3.
+
+================================================================================
+SECTION 5 — RECETTES SELON LE SYMPTÔME
+================================================================================
+
+--------------------------------------------------------------------------------
+SYMPTÔME : train descend, val remonte  (= sur-apprentissage)
+--------------------------------------------------------------------------------
+C'est votre cas actuel : val minimale à l'époque 4, puis remontée.
+
+Dans l'ordre de rentabilité :
+    1. hidden_size      256 -> 64
+    2. num_layers       2 -> 1
+    3. dropout          0.2 -> 0.3
+    4. sequence_length  48 -> 24
+    5. weight_decay     1e-4 -> 1e-3
+
+--------------------------------------------------------------------------------
+SYMPTÔME : loss test >> loss validation  (= changement de régime)
+--------------------------------------------------------------------------------
+Votre cas également : val 0.307, test 0.341, soit +11 %.
+
+Le marché du test (2022-2023, bulle IA) ne ressemble pas à celui du train
+(2010-2019, moyenne capitalisation). Options :
+    1. Restreindre la période aux années récentes (2018+)
+    2. Normaliser la cible par une volatilité GLISSANTE plutôt que par une
+       constante calculée sur le train (dataset.py, ligne 95)
+    3. Entraîner sur plusieurs symboles à la fois — vous avez déjà AAPL, MSFT
+       et INTC dans data/dataframe/
+
+--------------------------------------------------------------------------------
+SYMPTÔME : la loss ne bouge pas du tout
+--------------------------------------------------------------------------------
+    1. learning_rate trop bas -> montez à 3e-3
+    2. Features mal normalisées -> vérifiez les std dans le dry-run
+    3. Modèle trop petit -> augmentez hidden_size
+
+--------------------------------------------------------------------------------
+SYMPTÔME : loss = NaN
+--------------------------------------------------------------------------------
+    1. learning_rate trop haut -> divisez par 10
+    2. Une feature contient un inf -> le dry-run le montre dans min/max
+    3. Vérifiez que le clipping du gradient est toujours en place
+
+--------------------------------------------------------------------------------
+SYMPTÔME : précision directionnelle > 58 %
+--------------------------------------------------------------------------------
+NE VOUS RÉJOUISSEZ PAS. Cherchez la fuite de données.
+
+Avec une corrélation maximale feature/cible de 0,042, il est mathématiquement
+impossible d'atteindre 58 % honnêtement. Vérifiez :
+    - la cible n'utilise-t-elle que quotes[k+1] et rien d'autre du futur ?
+    - le scaler est-il bien ajusté sur le train seul (dataset.py ligne 87) ?
+    - le découpage est-il toujours chronologique ?
+
+================================================================================
+SECTION 6 — LE JOURNAL DES RUNS
+================================================================================
+
+Chaque entraînement ajoute un bloc à historique_runs.txt (racine du projet).
+Le fichier n'est jamais écrasé.
+
+Chaque bloc contient : la date, le contexte des données, tous les
+hyperparamètres, tous les résultats, et la courbe d'apprentissage complète.
+
+POUR COMPARER VOS RUNS :
+
+    grep -A2 "RÉSULTATS" historique_runs.txt | grep loss_test
+    grep "precision_directionnelle" historique_runs.txt
+    grep "bat_la_baseline" historique_runs.txt
+
+POUR VOIR OÙ COMMENCE LE SUR-APPRENTISSAGE : la ligne marquée "<-- meilleur"
+dans le bloc COURBE. Si elle est très tôt (époque 1 à 4), votre modèle est
+trop gros pour vos données.
+
+================================================================================
+FIN
+================================================================================

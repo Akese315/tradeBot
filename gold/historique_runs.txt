@@ -1,0 +1,2500 @@
+==============================================================================
+RUN : XAU_1h_ctx_4h+1d
+Date : 2026-07-29 15:56:25
+==============================================================================
+  [DONNÉES]
+    symbole                            XAU
+    profil_actif                       gold
+    timeframe_base                     1h
+    timeframes_contexte                4h+1d
+    features_base                      11
+    features_contexte                  10
+    lignes                             124562
+  [MODÈLE]
+    sequence_length                    48
+    hidden_size                        256
+    num_layers                         2
+    dropout                            0.200000
+    learning_rate                      0.001000
+    batch_size                         64
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+    weight_decay                       0.000100
+    loss_name                          huber
+    rolling_target_scale               True
+  [INDICATEURS]
+    sma_period                         460
+    stoch_k_period                     322
+    stoch_d_period                     69
+    rsi_period                         322
+    adx_period                         322
+  [RÉSULTATS]
+    epoques_effectuees                 10
+    meilleure_epoque                   3
+    meilleure_loss_val                 0.477038
+    loss_test                          0.487822
+    loss_baseline_zero                 0.488066
+    bat_la_baseline                    OUI
+    precision_directionnelle           51.49%
+  [COURBE]
+      époque      train        val  direction
+           1    0.48148    0.48118     49.5%
+           2    0.47674    0.47739     51.4%
+           3    0.47621    0.47704     52.5% <-- meilleur
+           4    0.47542    0.47802     52.1%
+           5    0.47520    0.47884     49.1%
+           6    0.47551    0.47820     50.8%
+           7    0.47506    0.47772     52.6%
+           8    0.47466    0.47708     52.5%
+           9    0.47445    0.47719     52.2%
+          10    0.47442    0.47785     51.0%
+
+==============================================================================
+RUN : XAU_1h_ctx_4h+1d+1w
+Date : 2026-07-29 16:08:11
+==============================================================================
+  [DONNÉES]
+    symbole                            XAU
+    profil_actif                       gold
+    timeframe_base                     1h
+    timeframes_contexte                4h+1d+1w
+    features_base                      11
+    features_contexte                  15
+    lignes                             122310
+  [MODÈLE]
+    sequence_length                    48
+    hidden_size                        256
+    num_layers                         2
+    dropout                            0.200000
+    learning_rate                      0.001000
+    batch_size                         64
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+    weight_decay                       0.000100
+    loss_name                          huber
+    rolling_target_scale               True
+  [INDICATEURS]
+    sma_period                         460
+    stoch_k_period                     322
+    stoch_d_period                     69
+    rsi_period                         322
+    adx_period                         322
+  [RÉSULTATS]
+    epoques_effectuees                 12
+    meilleure_epoque                   5
+    meilleure_loss_val                 0.477463
+    loss_test                          0.487751
+    loss_baseline_zero                 0.488001
+    bat_la_baseline                    OUI
+    precision_directionnelle           51.69%
+  [COURBE]
+      époque      train        val  direction
+           1    0.48107    0.47832     49.9%
+           2    0.47737    0.47768     51.3%
+           3    0.47636    0.47795     52.3%
+           4    0.47567    0.47754     51.8%
+           5    0.47508    0.47746     52.7% <-- meilleur
+           6    0.47448    0.47823     52.0%
+           7    0.47366    0.47782     52.0%
+           8    0.47269    0.47974     51.6%
+           9    0.47155    0.47886     51.5%
+          10    0.46777    0.48248     51.4%
+          11    0.46373    0.48404     51.0%
+          12    0.45910    0.48794     50.8%
+
+==============================================================================
+RUN : XAU_4h_ctx_1d+1w
+Date : 2026-07-29 17:13:35
+==============================================================================
+  [DONNÉES]
+    symbole                            XAU
+    profil_actif                       gold
+    timeframe_base                     4h
+    timeframes_contexte                1d+1w
+    features_base                      11
+    features_contexte                  10
+    lignes                             32187
+  [MODÈLE]
+    sequence_length                    48
+    hidden_size                        256
+    num_layers                         2
+    dropout                            0.200000
+    learning_rate                      0.001000
+    batch_size                         64
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+    weight_decay                       0.000100
+    loss_name                          huber
+    rolling_target_scale               True
+  [INDICATEURS]
+    sma_period                         120
+    stoch_k_period                     84
+    stoch_d_period                     18
+    rsi_period                         84
+    adx_period                         84
+  [RÉSULTATS]
+    epoques_effectuees                 21
+    meilleure_epoque                   14
+    meilleure_loss_val                 0.457462
+    loss_test                          0.467435
+    loss_baseline_zero                 0.468250
+    bat_la_baseline                    OUI
+    precision_directionnelle           52.38%
+  [COURBE]
+      époque      train        val  direction
+           1    0.47162    0.46326     51.2%
+           2    0.45697    0.46149     51.2%
+           3    0.45527    0.45852     51.2%
+           4    0.45503    0.45993     51.2%
+           5    0.45471    0.45807     51.2%
+           6    0.45548    0.45771     51.2%
+           7    0.45484    0.45820     51.2%
+           8    0.45458    0.45751     51.2%
+           9    0.45385    0.45792     48.7%
+          10    0.45450    0.45756     51.2%
+          11    0.45442    0.45797     51.2%
+          12    0.45457    0.45932     48.7%
+          13    0.45367    0.45787     51.2%
+          14    0.45337    0.45746     51.3% <-- meilleur
+          15    0.45284    0.45807     51.2%
+          16    0.45270    0.45763     51.1%
+          17    0.45254    0.45885     51.1%
+          18    0.45206    0.45839     51.1%
+          19    0.45125    0.45805     51.4%
+          20    0.45069    0.45854     51.0%
+          21    0.45035    0.45968     50.8%
+
+==============================================================================
+RUN : XAU_4h_ctx_1d+1w_s0
+Date : 2026-07-29 17:33:11
+==============================================================================
+  [DONNÉES]
+    symbole                            XAU
+    profil_actif                       gold
+    timeframe_base                     4h
+    timeframes_contexte                1d+1w
+    features_base                      11
+    features_contexte                  10
+    lignes                             32187
+    fenetres_test                      4782
+    graine                             0
+  [MODÈLE]
+    sequence_length                    48
+    hidden_size                        256
+    num_layers                         2
+    dropout                            0.200000
+    learning_rate                      0.001000
+    batch_size                         64
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+    weight_decay                       0.000100
+    loss_name                          huber
+    rolling_target_scale               True
+    seed                               0
+  [INDICATEURS]
+    sma_period                         120
+    stoch_k_period                     84
+    stoch_d_period                     18
+    rsi_period                         84
+    adx_period                         84
+  [RÉSULTATS]
+    epoques_effectuees                 16
+    meilleure_epoque                   9
+    meilleure_loss_val                 0.457080
+    loss_test                          0.467486
+    loss_baseline_zero                 0.468250
+    bat_la_baseline                    OUI
+    precision_directionnelle           51.25%
+  [COURBE]
+      époque      train        val  direction
+           1    0.46811    0.46070     51.2%
+           2    0.45673    0.45739     51.2%
+           3    0.45546    0.45877     48.7%
+           4    0.45550    0.45801     49.0%
+           5    0.45604    0.45799     48.9%
+           6    0.45570    0.45756     51.2%
+           7    0.45386    0.45920     51.2%
+           8    0.45400    0.45724     51.3%
+           9    0.45310    0.45708     51.0% <-- meilleur
+          10    0.45334    0.45891     50.6%
+          11    0.45306    0.45753     51.6%
+          12    0.45249    0.45995     49.8%
+          13    0.45194    0.45897     50.3%
+          14    0.45013    0.45868     51.6%
+          15    0.44902    0.46003     50.6%
+          16    0.44828    0.45940     50.8%
+
+==============================================================================
+RUN : XAU_4h_ctx_1d+1w_s1
+Date : 2026-07-29 17:35:35
+==============================================================================
+  [DONNÉES]
+    symbole                            XAU
+    profil_actif                       gold
+    timeframe_base                     4h
+    timeframes_contexte                1d+1w
+    features_base                      11
+    features_contexte                  10
+    lignes                             32187
+    fenetres_test                      4782
+    graine                             1
+  [MODÈLE]
+    sequence_length                    48
+    hidden_size                        256
+    num_layers                         2
+    dropout                            0.200000
+    learning_rate                      0.001000
+    batch_size                         64
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+    weight_decay                       0.000100
+    loss_name                          huber
+    rolling_target_scale               True
+    seed                               1
+  [INDICATEURS]
+    sma_period                         120
+    stoch_k_period                     84
+    stoch_d_period                     18
+    rsi_period                         84
+    adx_period                         84
+  [RÉSULTATS]
+    epoques_effectuees                 14
+    meilleure_epoque                   7
+    meilleure_loss_val                 0.457342
+    loss_test                          0.467715
+    loss_baseline_zero                 0.468250
+    bat_la_baseline                    OUI
+    precision_directionnelle           51.80%
+  [COURBE]
+      époque      train        val  direction
+           1    0.47049    0.46046     48.7%
+           2    0.45724    0.45745     51.2%
+           3    0.45637    0.45750     51.5%
+           4    0.45478    0.45743     51.2%
+           5    0.45453    0.46110     51.2%
+           6    0.45502    0.45819     49.4%
+           7    0.45425    0.45734     51.2% <-- meilleur
+           8    0.45364    0.45747     51.2%
+           9    0.45394    0.45765     51.2%
+          10    0.45405    0.45750     51.2%
+          11    0.45396    0.45750     51.2%
+          12    0.45388    0.45763     51.2%
+          13    0.45343    0.45784     48.7%
+          14    0.45362    0.45756     51.2%
+
+==============================================================================
+RUN : XAU_4h_ctx_1d+1w_s2
+Date : 2026-07-29 17:38:19
+==============================================================================
+  [DONNÉES]
+    symbole                            XAU
+    profil_actif                       gold
+    timeframe_base                     4h
+    timeframes_contexte                1d+1w
+    features_base                      11
+    features_contexte                  10
+    lignes                             32187
+    fenetres_test                      4782
+    graine                             2
+  [MODÈLE]
+    sequence_length                    48
+    hidden_size                        256
+    num_layers                         2
+    dropout                            0.200000
+    learning_rate                      0.001000
+    batch_size                         64
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+    weight_decay                       0.000100
+    loss_name                          huber
+    rolling_target_scale               True
+    seed                               2
+  [INDICATEURS]
+    sma_period                         120
+    stoch_k_period                     84
+    stoch_d_period                     18
+    rsi_period                         84
+    adx_period                         84
+  [RÉSULTATS]
+    epoques_effectuees                 16
+    meilleure_epoque                   9
+    meilleure_loss_val                 0.457288
+    loss_test                          0.467926
+    loss_baseline_zero                 0.468250
+    bat_la_baseline                    OUI
+    precision_directionnelle           51.46%
+  [COURBE]
+      époque      train        val  direction
+           1    0.46963    0.45939     51.2%
+           2    0.45630    0.45743     51.3%
+           3    0.45554    0.46040     51.2%
+           4    0.45549    0.46225     48.7%
+           5    0.45498    0.46246     48.7%
+           6    0.45522    0.45743     51.3%
+           7    0.45365    0.45776     50.4%
+           8    0.45342    0.45758     51.4%
+           9    0.45271    0.45729     51.0% <-- meilleur
+          10    0.45232    0.45981     51.2%
+          11    0.45192    0.46286     49.5%
+          12    0.45109    0.45987     51.4%
+          13    0.45086    0.45940     49.7%
+          14    0.44809    0.46188     51.0%
+          15    0.44670    0.46276     50.4%
+          16    0.44477    0.46118     51.0%
+
+==============================================================================
+RUN : XAU_4h_ctx_1d+1w_s3
+Date : 2026-07-29 17:40:13
+==============================================================================
+  [DONNÉES]
+    symbole                            XAU
+    profil_actif                       gold
+    timeframe_base                     4h
+    timeframes_contexte                1d+1w
+    features_base                      11
+    features_contexte                  10
+    lignes                             32187
+    fenetres_test                      4782
+    graine                             3
+  [MODÈLE]
+    sequence_length                    48
+    hidden_size                        256
+    num_layers                         2
+    dropout                            0.200000
+    learning_rate                      0.001000
+    batch_size                         64
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+    weight_decay                       0.000100
+    loss_name                          huber
+    rolling_target_scale               True
+    seed                               3
+  [INDICATEURS]
+    sma_period                         120
+    stoch_k_period                     84
+    stoch_d_period                     18
+    rsi_period                         84
+    adx_period                         84
+  [RÉSULTATS]
+    epoques_effectuees                 11
+    meilleure_epoque                   4
+    meilleure_loss_val                 0.457392
+    loss_test                          0.467382
+    loss_baseline_zero                 0.468250
+    bat_la_baseline                    OUI
+    precision_directionnelle           52.38%
+  [COURBE]
+      époque      train        val  direction
+           1    0.47147    0.45763     51.2%
+           2    0.45606    0.45940     51.2%
+           3    0.45587    0.46018     48.7%
+           4    0.45567    0.45739     51.6% <-- meilleur
+           5    0.45549    0.46018     48.7%
+           6    0.45482    0.46113     48.7%
+           7    0.45568    0.45836     49.3%
+           8    0.45534    0.45773     51.2%
+           9    0.45463    0.45868     51.2%
+          10    0.45393    0.45744     51.2%
+          11    0.45396    0.45769     51.1%
+
+==============================================================================
+RUN : XAU_4h_ctx_1d+1w_s4
+Date : 2026-07-29 17:41:57
+==============================================================================
+  [DONNÉES]
+    symbole                            XAU
+    profil_actif                       gold
+    timeframe_base                     4h
+    timeframes_contexte                1d+1w
+    features_base                      11
+    features_contexte                  10
+    lignes                             32187
+    fenetres_test                      4782
+    graine                             4
+  [MODÈLE]
+    sequence_length                    48
+    hidden_size                        256
+    num_layers                         2
+    dropout                            0.200000
+    learning_rate                      0.001000
+    batch_size                         64
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+    weight_decay                       0.000100
+    loss_name                          huber
+    rolling_target_scale               True
+    seed                               4
+  [INDICATEURS]
+    sma_period                         120
+    stoch_k_period                     84
+    stoch_d_period                     18
+    rsi_period                         84
+    adx_period                         84
+  [RÉSULTATS]
+    epoques_effectuees                 10
+    meilleure_epoque                   3
+    meilleure_loss_val                 0.457323
+    loss_test                          0.467108
+    loss_baseline_zero                 0.468250
+    bat_la_baseline                    OUI
+    precision_directionnelle           52.55%
+  [COURBE]
+      époque      train        val  direction
+           1    0.47147    0.45772     49.6%
+           2    0.45700    0.45967     48.7%
+           3    0.45542    0.45732     51.0% <-- meilleur
+           4    0.45541    0.45793     48.7%
+           5    0.45455    0.45756     50.3%
+           6    0.45542    0.45825     49.6%
+           7    0.45483    0.45735     51.5%
+           8    0.45352    0.45747     51.6%
+           9    0.45370    0.45883     49.7%
+          10    0.45242    0.45751     50.6%
+
+==============================================================================
+RUN : XAU_4h_wf1_rolling
+Date : 2026-07-29 23:13:25
+==============================================================================
+  [DONNÉES]
+    symbole                            XAU
+    timeframe_base                     4h
+    timeframes_contexte                1d+1w
+    mode_walkforward                   rolling
+    pli                                1/8
+    periode_test                       2013-06→2015-01
+    lignes_train                       11667
+    fenetres_test                      2367
+  [MODÈLE]
+    sequence_length                    48
+    hidden_size                        256
+    num_layers                         2
+    dropout                            0.200000
+    learning_rate                      0.001000
+    batch_size                         64
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+    weight_decay                       0.000100
+    loss_name                          huber
+    rolling_target_scale               True
+    seed                               0
+  [INDICATEURS]
+    sma_period                         120
+    stoch_k_period                     84
+    stoch_d_period                     18
+    rsi_period                         84
+    adx_period                         84
+  [RÉSULTATS]
+    epoques_effectuees                 8
+    meilleure_epoque                   1
+    meilleure_loss_val                 0.456376
+    loss_test                          0.447413
+    loss_baseline_zero                 0.446652
+    bat_la_baseline                    NON
+    precision_directionnelle           50.44%
+  [COURBE]
+      époque      train        val  direction
+           1    0.47411    0.45638     49.8% <-- meilleur
+           2    0.45433    0.46083     49.5%
+           3    0.45366    0.45664     47.8%
+           4    0.45222    0.45656     49.5%
+           5    0.45400    0.47640     50.5%
+           6    0.45183    0.45662     47.8%
+           7    0.45071    0.46341     50.3%
+           8    0.45004    0.45755     49.6%
+
+==============================================================================
+RUN : XAU_4h_wf2_rolling
+Date : 2026-07-29 23:15:07
+==============================================================================
+  [DONNÉES]
+    symbole                            XAU
+    timeframe_base                     4h
+    timeframes_contexte                1d+1w
+    mode_walkforward                   rolling
+    pli                                2/8
+    periode_test                       2015-01→2016-08
+    lignes_train                       11667
+    fenetres_test                      2367
+  [MODÈLE]
+    sequence_length                    48
+    hidden_size                        256
+    num_layers                         2
+    dropout                            0.200000
+    learning_rate                      0.001000
+    batch_size                         64
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+    weight_decay                       0.000100
+    loss_name                          huber
+    rolling_target_scale               True
+    seed                               0
+  [INDICATEURS]
+    sma_period                         120
+    stoch_k_period                     84
+    stoch_d_period                     18
+    rsi_period                         84
+    adx_period                         84
+  [RÉSULTATS]
+    epoques_effectuees                 10
+    meilleure_epoque                   3
+    meilleure_loss_val                 0.445430
+    loss_test                          0.457754
+    loss_baseline_zero                 0.457747
+    bat_la_baseline                    NON
+    precision_directionnelle           50.91%
+  [COURBE]
+      époque      train        val  direction
+           1    0.47405    0.45584     48.9%
+           2    0.45758    0.45050     48.9%
+           3    0.45628    0.44543     51.1% <-- meilleur
+           4    0.45549    0.44822     48.9%
+           5    0.45446    0.47148     48.9%
+           6    0.45426    0.44870     48.9%
+           7    0.45308    0.44669     51.0%
+           8    0.45294    0.45237     48.9%
+           9    0.45188    0.44786     49.2%
+          10    0.45161    0.44544     51.5%
+
+==============================================================================
+RUN : XAU_4h_wf3_rolling
+Date : 2026-07-29 23:17:31
+==============================================================================
+  [DONNÉES]
+    symbole                            XAU
+    timeframe_base                     4h
+    timeframes_contexte                1d+1w
+    mode_walkforward                   rolling
+    pli                                3/8
+    periode_test                       2016-08→2018-02
+    lignes_train                       11667
+    fenetres_test                      2367
+  [MODÈLE]
+    sequence_length                    48
+    hidden_size                        256
+    num_layers                         2
+    dropout                            0.200000
+    learning_rate                      0.001000
+    batch_size                         64
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+    weight_decay                       0.000100
+    loss_name                          huber
+    rolling_target_scale               True
+    seed                               0
+  [INDICATEURS]
+    sma_period                         120
+    stoch_k_period                     84
+    stoch_d_period                     18
+    rsi_period                         84
+    adx_period                         84
+  [RÉSULTATS]
+    epoques_effectuees                 14
+    meilleure_epoque                   7
+    meilleure_loss_val                 0.463099
+    loss_test                          0.455398
+    loss_baseline_zero                 0.453878
+    bat_la_baseline                    NON
+    precision_directionnelle           49.13%
+  [COURBE]
+      époque      train        val  direction
+           1    0.47040    0.46390     51.8%
+           2    0.45490    0.46332     51.8%
+           3    0.45177    0.46397     51.8%
+           4    0.45172    0.46352     51.8%
+           5    0.45434    0.46403     51.4%
+           6    0.45333    0.46917     51.8%
+           7    0.45096    0.46310     52.1% <-- meilleur
+           8    0.45135    0.46734     47.9%
+           9    0.44991    0.46551     49.2%
+          10    0.45133    0.46318     52.7%
+          11    0.45014    0.46447     51.8%
+          12    0.44975    0.46324     52.8%
+          13    0.45019    0.46313     52.6%
+          14    0.44868    0.46331     53.7%
+
+==============================================================================
+RUN : XAU_4h_wf4_rolling
+Date : 2026-07-29 23:19:16
+==============================================================================
+  [DONNÉES]
+    symbole                            XAU
+    timeframe_base                     4h
+    timeframes_contexte                1d+1w
+    mode_walkforward                   rolling
+    pli                                4/8
+    periode_test                       2018-02→2019-09
+    lignes_train                       11667
+    fenetres_test                      2367
+  [MODÈLE]
+    sequence_length                    48
+    hidden_size                        256
+    num_layers                         2
+    dropout                            0.200000
+    learning_rate                      0.001000
+    batch_size                         64
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+    weight_decay                       0.000100
+    loss_name                          huber
+    rolling_target_scale               True
+    seed                               0
+  [INDICATEURS]
+    sma_period                         120
+    stoch_k_period                     84
+    stoch_d_period                     18
+    rsi_period                         84
+    adx_period                         84
+  [RÉSULTATS]
+    epoques_effectuees                 11
+    meilleure_epoque                   4
+    meilleure_loss_val                 0.453023
+    loss_test                          0.462799
+    loss_baseline_zero                 0.462566
+    bat_la_baseline                    NON
+    precision_directionnelle           50.36%
+  [COURBE]
+      époque      train        val  direction
+           1    0.47732    0.45503     48.4%
+           2    0.45908    0.45456     51.2%
+           3    0.45573    0.45367     51.2%
+           4    0.45569    0.45302     51.0% <-- meilleur
+           5    0.45452    0.45372     50.1%
+           6    0.45509    0.45592     51.2%
+           7    0.45722    0.45399     48.4%
+           8    0.45427    0.45410     51.2%
+           9    0.45278    0.45568     48.6%
+          10    0.45369    0.45457     46.9%
+          11    0.45116    0.45587     47.8%
+
+==============================================================================
+RUN : XAU_4h_wf5_rolling
+Date : 2026-07-29 23:21:32
+==============================================================================
+  [DONNÉES]
+    symbole                            XAU
+    timeframe_base                     4h
+    timeframes_contexte                1d+1w
+    mode_walkforward                   rolling
+    pli                                5/8
+    periode_test                       2019-09→2021-04
+    lignes_train                       11667
+    fenetres_test                      2367
+  [MODÈLE]
+    sequence_length                    48
+    hidden_size                        256
+    num_layers                         2
+    dropout                            0.200000
+    learning_rate                      0.001000
+    batch_size                         64
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+    weight_decay                       0.000100
+    loss_name                          huber
+    rolling_target_scale               True
+    seed                               0
+  [INDICATEURS]
+    sma_period                         120
+    stoch_k_period                     84
+    stoch_d_period                     18
+    rsi_period                         84
+    adx_period                         84
+  [RÉSULTATS]
+    epoques_effectuees                 13
+    meilleure_epoque                   6
+    meilleure_loss_val                 0.467035
+    loss_test                          0.459364
+    loss_baseline_zero                 0.460513
+    bat_la_baseline                    OUI
+    precision_directionnelle           52.13%
+  [COURBE]
+      époque      train        val  direction
+           1    0.47431    0.46829     48.4%
+           2    0.45936    0.46865     51.3%
+           3    0.45857    0.47268     51.3%
+           4    0.45917    0.46871     48.6%
+           5    0.45769    0.46713     51.3%
+           6    0.45730    0.46704     51.3% <-- meilleur
+           7    0.45586    0.46723     51.3%
+           8    0.45587    0.46794     51.3%
+           9    0.45750    0.46863     49.7%
+          10    0.45598    0.46901     49.2%
+          11    0.45485    0.46801     49.1%
+          12    0.45475    0.46745     50.0%
+          13    0.45449    0.46771     51.4%
+
+==============================================================================
+RUN : XAU_4h_wf6_rolling
+Date : 2026-07-29 23:23:12
+==============================================================================
+  [DONNÉES]
+    symbole                            XAU
+    timeframe_base                     4h
+    timeframes_contexte                1d+1w
+    mode_walkforward                   rolling
+    pli                                6/8
+    periode_test                       2021-04→2022-11
+    lignes_train                       11667
+    fenetres_test                      2367
+  [MODÈLE]
+    sequence_length                    48
+    hidden_size                        256
+    num_layers                         2
+    dropout                            0.200000
+    learning_rate                      0.001000
+    batch_size                         64
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+    weight_decay                       0.000100
+    loss_name                          huber
+    rolling_target_scale               True
+    seed                               0
+  [INDICATEURS]
+    sma_period                         120
+    stoch_k_period                     84
+    stoch_d_period                     18
+    rsi_period                         84
+    adx_period                         84
+  [RÉSULTATS]
+    epoques_effectuees                 12
+    meilleure_epoque                   5
+    meilleure_loss_val                 0.466307
+    loss_test                          0.457250
+    loss_baseline_zero                 0.457152
+    bat_la_baseline                    NON
+    precision_directionnelle           51.50%
+  [COURBE]
+      époque      train        val  direction
+           1    0.48318    0.46664     49.9%
+           2    0.46290    0.46766     50.4%
+           3    0.46028    0.46743     49.7%
+           4    0.46037    0.46662     50.3%
+           5    0.45969    0.46631     50.7% <-- meilleur
+           6    0.46053    0.46675     50.5%
+           7    0.45792    0.46753     49.6%
+           8    0.45963    0.47032     50.4%
+           9    0.45855    0.46769     48.6%
+          10    0.45812    0.46889     49.1%
+          11    0.45732    0.46812     48.7%
+          12    0.45672    0.47011     49.1%
+
+==============================================================================
+RUN : XAU_4h_wf7_rolling
+Date : 2026-07-29 23:24:47
+==============================================================================
+  [DONNÉES]
+    symbole                            XAU
+    timeframe_base                     4h
+    timeframes_contexte                1d+1w
+    mode_walkforward                   rolling
+    pli                                7/8
+    periode_test                       2022-11→2024-05
+    lignes_train                       11667
+    fenetres_test                      2367
+  [MODÈLE]
+    sequence_length                    48
+    hidden_size                        256
+    num_layers                         2
+    dropout                            0.200000
+    learning_rate                      0.001000
+    batch_size                         64
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+    weight_decay                       0.000100
+    loss_name                          huber
+    rolling_target_scale               True
+    seed                               0
+  [INDICATEURS]
+    sma_period                         120
+    stoch_k_period                     84
+    stoch_d_period                     18
+    rsi_period                         84
+    adx_period                         84
+  [RÉSULTATS]
+    epoques_effectuees                 15
+    meilleure_epoque                   8
+    meilleure_loss_val                 0.468954
+    loss_test                          0.451249
+    loss_baseline_zero                 0.450880
+    bat_la_baseline                    NON
+    precision_directionnelle           51.50%
+  [COURBE]
+      époque      train        val  direction
+           1    0.48036    0.47266     49.1%
+           2    0.46239    0.47208     49.1%
+           3    0.45886    0.47267     49.1%
+           4    0.46290    0.47577     49.1%
+           5    0.45853    0.46953     49.1%
+           6    0.45853    0.46968     50.0%
+           7    0.45915    0.46932     51.6%
+           8    0.45953    0.46895     51.0% <-- meilleur
+           9    0.45800    0.47028     51.7%
+          10    0.45707    0.47147     49.1%
+          11    0.45784    0.46899     51.7%
+          12    0.45776    0.46943     51.5%
+          13    0.45784    0.47090     49.1%
+          14    0.45626    0.47179     51.6%
+          15    0.45522    0.47277     50.3%
+
+==============================================================================
+RUN : XAU_4h_wf8_rolling
+Date : 2026-07-29 23:25:39
+==============================================================================
+  [DONNÉES]
+    symbole                            XAU
+    timeframe_base                     4h
+    timeframes_contexte                1d+1w
+    mode_walkforward                   rolling
+    pli                                8/8
+    periode_test                       2024-05→2026-01
+    lignes_train                       11667
+    fenetres_test                      2368
+  [MODÈLE]
+    sequence_length                    48
+    hidden_size                        256
+    num_layers                         2
+    dropout                            0.200000
+    learning_rate                      0.001000
+    batch_size                         64
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+    weight_decay                       0.000100
+    loss_name                          huber
+    rolling_target_scale               True
+    seed                               0
+  [INDICATEURS]
+    sma_period                         120
+    stoch_k_period                     84
+    stoch_d_period                     18
+    rsi_period                         84
+    adx_period                         84
+  [RÉSULTATS]
+    epoques_effectuees                 9
+    meilleure_epoque                   2
+    meilleure_loss_val                 0.460560
+    loss_test                          0.480390
+    loss_baseline_zero                 0.483372
+    bat_la_baseline                    OUI
+    precision_directionnelle           54.48%
+  [COURBE]
+      époque      train        val  direction
+           1    0.48369    0.46137     52.2%
+           2    0.46267    0.46056     52.8% <-- meilleur
+           3    0.45930    0.46144     49.2%
+           4    0.45996    0.46500     52.2%
+           5    0.45988    0.46836     47.8%
+           6    0.45954    0.46170     52.2%
+           7    0.45781    0.46406     52.2%
+           8    0.45630    0.46086     52.0%
+           9    0.45701    0.46106     53.1%
+
+==============================================================================
+RUN : XAU_4h_wf1_rolling
+Date : 2026-07-30 00:49:36
+==============================================================================
+  [DONNÉES]
+    symbole                            XAU
+    timeframe_base                     4h
+    timeframes_contexte                1d+1w
+    mode_walkforward                   rolling
+    pli                                1/8
+    periode_test                       2013-06→2015-01
+    lignes_train                       11667
+    fenetres_test                      2367
+  [MODÈLE]
+    sequence_length                    48
+    hidden_size                        256
+    num_layers                         2
+    dropout                            0.200000
+    learning_rate                      0.001000
+    batch_size                         64
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+    weight_decay                       0.000100
+    loss_name                          huber
+    rolling_target_scale               True
+    seed                               0
+  [INDICATEURS]
+    sma_period                         120
+    stoch_k_period                     84
+    stoch_d_period                     18
+    rsi_period                         84
+    adx_period                         84
+  [RÉSULTATS]
+    epoques_effectuees                 8
+    meilleure_epoque                   1
+    meilleure_loss_val                 0.456376
+    loss_test                          0.447413
+    loss_baseline_zero                 0.446652
+    bat_la_baseline                    NON
+    precision_directionnelle           50.44%
+  [COURBE]
+      époque      train        val  direction
+           1    0.47411    0.45638     49.8% <-- meilleur
+           2    0.45433    0.46083     49.5%
+           3    0.45366    0.45664     47.8%
+           4    0.45222    0.45656     49.5%
+           5    0.45400    0.47640     50.5%
+           6    0.45183    0.45662     47.8%
+           7    0.45071    0.46341     50.3%
+           8    0.45004    0.45755     49.6%
+
+==============================================================================
+RUN : XAU_4h_wf2_rolling
+Date : 2026-07-30 00:50:55
+==============================================================================
+  [DONNÉES]
+    symbole                            XAU
+    timeframe_base                     4h
+    timeframes_contexte                1d+1w
+    mode_walkforward                   rolling
+    pli                                2/8
+    periode_test                       2015-01→2016-08
+    lignes_train                       11667
+    fenetres_test                      2367
+  [MODÈLE]
+    sequence_length                    48
+    hidden_size                        256
+    num_layers                         2
+    dropout                            0.200000
+    learning_rate                      0.001000
+    batch_size                         64
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+    weight_decay                       0.000100
+    loss_name                          huber
+    rolling_target_scale               True
+    seed                               0
+  [INDICATEURS]
+    sma_period                         120
+    stoch_k_period                     84
+    stoch_d_period                     18
+    rsi_period                         84
+    adx_period                         84
+  [RÉSULTATS]
+    epoques_effectuees                 10
+    meilleure_epoque                   3
+    meilleure_loss_val                 0.445430
+    loss_test                          0.457754
+    loss_baseline_zero                 0.457747
+    bat_la_baseline                    NON
+    precision_directionnelle           50.91%
+  [COURBE]
+      époque      train        val  direction
+           1    0.47405    0.45584     48.9%
+           2    0.45758    0.45050     48.9%
+           3    0.45628    0.44543     51.1% <-- meilleur
+           4    0.45549    0.44822     48.9%
+           5    0.45446    0.47148     48.9%
+           6    0.45426    0.44870     48.9%
+           7    0.45308    0.44669     51.0%
+           8    0.45294    0.45237     48.9%
+           9    0.45188    0.44786     49.2%
+          10    0.45161    0.44544     51.5%
+
+==============================================================================
+RUN : XAU_4h_wf3_rolling
+Date : 2026-07-30 00:53:16
+==============================================================================
+  [DONNÉES]
+    symbole                            XAU
+    timeframe_base                     4h
+    timeframes_contexte                1d+1w
+    mode_walkforward                   rolling
+    pli                                3/8
+    periode_test                       2016-08→2018-02
+    lignes_train                       11667
+    fenetres_test                      2367
+  [MODÈLE]
+    sequence_length                    48
+    hidden_size                        256
+    num_layers                         2
+    dropout                            0.200000
+    learning_rate                      0.001000
+    batch_size                         64
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+    weight_decay                       0.000100
+    loss_name                          huber
+    rolling_target_scale               True
+    seed                               0
+  [INDICATEURS]
+    sma_period                         120
+    stoch_k_period                     84
+    stoch_d_period                     18
+    rsi_period                         84
+    adx_period                         84
+  [RÉSULTATS]
+    epoques_effectuees                 14
+    meilleure_epoque                   7
+    meilleure_loss_val                 0.463099
+    loss_test                          0.455398
+    loss_baseline_zero                 0.453878
+    bat_la_baseline                    NON
+    precision_directionnelle           49.13%
+  [COURBE]
+      époque      train        val  direction
+           1    0.47040    0.46390     51.8%
+           2    0.45490    0.46332     51.8%
+           3    0.45177    0.46397     51.8%
+           4    0.45172    0.46352     51.8%
+           5    0.45434    0.46403     51.4%
+           6    0.45333    0.46917     51.8%
+           7    0.45096    0.46310     52.1% <-- meilleur
+           8    0.45135    0.46734     47.9%
+           9    0.44991    0.46551     49.2%
+          10    0.45133    0.46318     52.7%
+          11    0.45014    0.46447     51.8%
+          12    0.44975    0.46324     52.8%
+          13    0.45019    0.46313     52.6%
+          14    0.44868    0.46331     53.7%
+
+==============================================================================
+RUN : XAU_4h_wf4_rolling
+Date : 2026-07-30 00:55:31
+==============================================================================
+  [DONNÉES]
+    symbole                            XAU
+    timeframe_base                     4h
+    timeframes_contexte                1d+1w
+    mode_walkforward                   rolling
+    pli                                4/8
+    periode_test                       2018-02→2019-09
+    lignes_train                       11667
+    fenetres_test                      2367
+  [MODÈLE]
+    sequence_length                    48
+    hidden_size                        256
+    num_layers                         2
+    dropout                            0.200000
+    learning_rate                      0.001000
+    batch_size                         64
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+    weight_decay                       0.000100
+    loss_name                          huber
+    rolling_target_scale               True
+    seed                               0
+  [INDICATEURS]
+    sma_period                         120
+    stoch_k_period                     84
+    stoch_d_period                     18
+    rsi_period                         84
+    adx_period                         84
+  [RÉSULTATS]
+    epoques_effectuees                 11
+    meilleure_epoque                   4
+    meilleure_loss_val                 0.453023
+    loss_test                          0.462799
+    loss_baseline_zero                 0.462566
+    bat_la_baseline                    NON
+    precision_directionnelle           50.36%
+  [COURBE]
+      époque      train        val  direction
+           1    0.47732    0.45503     48.4%
+           2    0.45908    0.45456     51.2%
+           3    0.45573    0.45367     51.2%
+           4    0.45569    0.45302     51.0% <-- meilleur
+           5    0.45452    0.45372     50.1%
+           6    0.45509    0.45592     51.2%
+           7    0.45722    0.45399     48.4%
+           8    0.45427    0.45410     51.2%
+           9    0.45278    0.45568     48.6%
+          10    0.45369    0.45457     46.9%
+          11    0.45116    0.45587     47.8%
+
+==============================================================================
+RUN : XAU_4h_wf5_rolling
+Date : 2026-07-30 00:58:01
+==============================================================================
+  [DONNÉES]
+    symbole                            XAU
+    timeframe_base                     4h
+    timeframes_contexte                1d+1w
+    mode_walkforward                   rolling
+    pli                                5/8
+    periode_test                       2019-09→2021-04
+    lignes_train                       11667
+    fenetres_test                      2367
+  [MODÈLE]
+    sequence_length                    48
+    hidden_size                        256
+    num_layers                         2
+    dropout                            0.200000
+    learning_rate                      0.001000
+    batch_size                         64
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+    weight_decay                       0.000100
+    loss_name                          huber
+    rolling_target_scale               True
+    seed                               0
+  [INDICATEURS]
+    sma_period                         120
+    stoch_k_period                     84
+    stoch_d_period                     18
+    rsi_period                         84
+    adx_period                         84
+  [RÉSULTATS]
+    epoques_effectuees                 13
+    meilleure_epoque                   6
+    meilleure_loss_val                 0.467035
+    loss_test                          0.459364
+    loss_baseline_zero                 0.460513
+    bat_la_baseline                    OUI
+    precision_directionnelle           52.13%
+  [COURBE]
+      époque      train        val  direction
+           1    0.47431    0.46829     48.4%
+           2    0.45936    0.46865     51.3%
+           3    0.45857    0.47268     51.3%
+           4    0.45917    0.46871     48.6%
+           5    0.45769    0.46713     51.3%
+           6    0.45730    0.46704     51.3% <-- meilleur
+           7    0.45586    0.46723     51.3%
+           8    0.45587    0.46794     51.3%
+           9    0.45750    0.46863     49.7%
+          10    0.45598    0.46901     49.2%
+          11    0.45485    0.46801     49.1%
+          12    0.45475    0.46745     50.0%
+          13    0.45449    0.46771     51.4%
+
+==============================================================================
+RUN : XAU_4h_wf6_rolling
+Date : 2026-07-30 01:00:22
+==============================================================================
+  [DONNÉES]
+    symbole                            XAU
+    timeframe_base                     4h
+    timeframes_contexte                1d+1w
+    mode_walkforward                   rolling
+    pli                                6/8
+    periode_test                       2021-04→2022-11
+    lignes_train                       11667
+    fenetres_test                      2367
+  [MODÈLE]
+    sequence_length                    48
+    hidden_size                        256
+    num_layers                         2
+    dropout                            0.200000
+    learning_rate                      0.001000
+    batch_size                         64
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+    weight_decay                       0.000100
+    loss_name                          huber
+    rolling_target_scale               True
+    seed                               0
+  [INDICATEURS]
+    sma_period                         120
+    stoch_k_period                     84
+    stoch_d_period                     18
+    rsi_period                         84
+    adx_period                         84
+  [RÉSULTATS]
+    epoques_effectuees                 12
+    meilleure_epoque                   5
+    meilleure_loss_val                 0.466307
+    loss_test                          0.457250
+    loss_baseline_zero                 0.457152
+    bat_la_baseline                    NON
+    precision_directionnelle           51.50%
+  [COURBE]
+      époque      train        val  direction
+           1    0.48318    0.46664     49.9%
+           2    0.46290    0.46766     50.4%
+           3    0.46028    0.46743     49.7%
+           4    0.46037    0.46662     50.3%
+           5    0.45969    0.46631     50.7% <-- meilleur
+           6    0.46053    0.46675     50.5%
+           7    0.45792    0.46753     49.6%
+           8    0.45963    0.47032     50.4%
+           9    0.45855    0.46769     48.6%
+          10    0.45812    0.46889     49.1%
+          11    0.45732    0.46812     48.7%
+          12    0.45672    0.47011     49.1%
+
+==============================================================================
+RUN : XAU_4h_wf7_rolling
+Date : 2026-07-30 01:02:51
+==============================================================================
+  [DONNÉES]
+    symbole                            XAU
+    timeframe_base                     4h
+    timeframes_contexte                1d+1w
+    mode_walkforward                   rolling
+    pli                                7/8
+    periode_test                       2022-11→2024-05
+    lignes_train                       11667
+    fenetres_test                      2367
+  [MODÈLE]
+    sequence_length                    48
+    hidden_size                        256
+    num_layers                         2
+    dropout                            0.200000
+    learning_rate                      0.001000
+    batch_size                         64
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+    weight_decay                       0.000100
+    loss_name                          huber
+    rolling_target_scale               True
+    seed                               0
+  [INDICATEURS]
+    sma_period                         120
+    stoch_k_period                     84
+    stoch_d_period                     18
+    rsi_period                         84
+    adx_period                         84
+  [RÉSULTATS]
+    epoques_effectuees                 15
+    meilleure_epoque                   8
+    meilleure_loss_val                 0.468954
+    loss_test                          0.451249
+    loss_baseline_zero                 0.450880
+    bat_la_baseline                    NON
+    precision_directionnelle           51.50%
+  [COURBE]
+      époque      train        val  direction
+           1    0.48036    0.47266     49.1%
+           2    0.46239    0.47208     49.1%
+           3    0.45886    0.47267     49.1%
+           4    0.46290    0.47577     49.1%
+           5    0.45853    0.46953     49.1%
+           6    0.45853    0.46968     50.0%
+           7    0.45915    0.46932     51.6%
+           8    0.45953    0.46895     51.0% <-- meilleur
+           9    0.45800    0.47028     51.7%
+          10    0.45707    0.47147     49.1%
+          11    0.45784    0.46899     51.7%
+          12    0.45776    0.46943     51.5%
+          13    0.45784    0.47090     49.1%
+          14    0.45626    0.47179     51.6%
+          15    0.45522    0.47277     50.3%
+
+==============================================================================
+RUN : XAU_4h_wf8_rolling
+Date : 2026-07-30 01:03:41
+==============================================================================
+  [DONNÉES]
+    symbole                            XAU
+    timeframe_base                     4h
+    timeframes_contexte                1d+1w
+    mode_walkforward                   rolling
+    pli                                8/8
+    periode_test                       2024-05→2026-01
+    lignes_train                       11667
+    fenetres_test                      2368
+  [MODÈLE]
+    sequence_length                    48
+    hidden_size                        256
+    num_layers                         2
+    dropout                            0.200000
+    learning_rate                      0.001000
+    batch_size                         64
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+    weight_decay                       0.000100
+    loss_name                          huber
+    rolling_target_scale               True
+    seed                               0
+  [INDICATEURS]
+    sma_period                         120
+    stoch_k_period                     84
+    stoch_d_period                     18
+    rsi_period                         84
+    adx_period                         84
+  [RÉSULTATS]
+    epoques_effectuees                 9
+    meilleure_epoque                   2
+    meilleure_loss_val                 0.460560
+    loss_test                          0.480390
+    loss_baseline_zero                 0.483372
+    bat_la_baseline                    OUI
+    precision_directionnelle           54.48%
+  [COURBE]
+      époque      train        val  direction
+           1    0.48369    0.46137     52.2%
+           2    0.46267    0.46056     52.8% <-- meilleur
+           3    0.45930    0.46144     49.2%
+           4    0.45996    0.46500     52.2%
+           5    0.45988    0.46836     47.8%
+           6    0.45954    0.46170     52.2%
+           7    0.45781    0.46406     52.2%
+           8    0.45630    0.46086     52.0%
+           9    0.45701    0.46106     53.1%
+
+==============================================================================
+RUN : XAU_4h_wf1_rolling
+Date : 2026-07-30 01:25:59
+==============================================================================
+  [DONNÉES]
+    symbole                            XAU
+    timeframe_base                     4h
+    timeframes_contexte                1d+1w
+    mode_walkforward                   rolling
+    pli                                1/8
+    periode_test                       2013-06→2015-01
+    lignes_train                       11667
+    fenetres_test                      2367
+  [MODÈLE]
+    sequence_length                    48
+    hidden_size                        256
+    num_layers                         2
+    dropout                            0.200000
+    learning_rate                      0.001000
+    batch_size                         64
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+    weight_decay                       0.000100
+    loss_name                          huber
+    rolling_target_scale               True
+    seed                               0
+  [INDICATEURS]
+    sma_period                         120
+    stoch_k_period                     84
+    stoch_d_period                     18
+    rsi_period                         84
+    adx_period                         84
+  [RÉSULTATS]
+    epoques_effectuees                 8
+    meilleure_epoque                   1
+    meilleure_loss_val                 0.456376
+    loss_test                          0.447413
+    loss_baseline_zero                 0.446652
+    bat_la_baseline                    NON
+    precision_directionnelle           50.44%
+  [COURBE]
+      époque      train        val  direction
+           1    0.47411    0.45638     49.8% <-- meilleur
+           2    0.45433    0.46083     49.5%
+           3    0.45366    0.45664     47.8%
+           4    0.45222    0.45656     49.5%
+           5    0.45400    0.47640     50.5%
+           6    0.45183    0.45662     47.8%
+           7    0.45071    0.46341     50.3%
+           8    0.45004    0.45755     49.6%
+
+==============================================================================
+RUN : XAU_4h_wf2_rolling
+Date : 2026-07-30 04:28:16
+==============================================================================
+  [DONNÉES]
+    symbole                            XAU
+    timeframe_base                     4h
+    timeframes_contexte                1d+1w
+    mode_walkforward                   rolling
+    pli                                2/8
+    periode_test                       2015-01→2016-08
+    lignes_train                       11667
+    fenetres_test                      2367
+  [MODÈLE]
+    sequence_length                    48
+    hidden_size                        256
+    num_layers                         2
+    dropout                            0.200000
+    learning_rate                      0.001000
+    batch_size                         64
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+    weight_decay                       0.000100
+    loss_name                          huber
+    rolling_target_scale               True
+    seed                               0
+  [INDICATEURS]
+    sma_period                         120
+    stoch_k_period                     84
+    stoch_d_period                     18
+    rsi_period                         84
+    adx_period                         84
+  [RÉSULTATS]
+    epoques_effectuees                 10
+    meilleure_epoque                   3
+    meilleure_loss_val                 0.445430
+    loss_test                          0.457754
+    loss_baseline_zero                 0.457747
+    bat_la_baseline                    NON
+    precision_directionnelle           50.91%
+  [COURBE]
+      époque      train        val  direction
+           1    0.47405    0.45584     48.9%
+           2    0.45758    0.45050     48.9%
+           3    0.45628    0.44543     51.1% <-- meilleur
+           4    0.45549    0.44822     48.9%
+           5    0.45446    0.47148     48.9%
+           6    0.45426    0.44870     48.9%
+           7    0.45308    0.44669     51.0%
+           8    0.45294    0.45237     48.9%
+           9    0.45188    0.44786     49.2%
+          10    0.45161    0.44544     51.5%
+
+==============================================================================
+RUN : XAU_4h_wf3_rolling
+Date : 2026-07-30 09:46:04
+==============================================================================
+  [DONNÉES]
+    symbole                            XAU
+    timeframe_base                     4h
+    timeframes_contexte                1d+1w
+    mode_walkforward                   rolling
+    pli                                3/8
+    periode_test                       2016-08→2018-02
+    lignes_train                       11667
+    fenetres_test                      2367
+  [MODÈLE]
+    sequence_length                    48
+    hidden_size                        256
+    num_layers                         2
+    dropout                            0.200000
+    learning_rate                      0.001000
+    batch_size                         64
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+    weight_decay                       0.000100
+    loss_name                          huber
+    rolling_target_scale               True
+    seed                               0
+  [INDICATEURS]
+    sma_period                         120
+    stoch_k_period                     84
+    stoch_d_period                     18
+    rsi_period                         84
+    adx_period                         84
+  [RÉSULTATS]
+    epoques_effectuees                 14
+    meilleure_epoque                   7
+    meilleure_loss_val                 0.463099
+    loss_test                          0.455398
+    loss_baseline_zero                 0.453878
+    bat_la_baseline                    NON
+    precision_directionnelle           49.13%
+  [COURBE]
+      époque      train        val  direction
+           1    0.47040    0.46390     51.8%
+           2    0.45490    0.46332     51.8%
+           3    0.45177    0.46397     51.8%
+           4    0.45172    0.46352     51.8%
+           5    0.45434    0.46403     51.4%
+           6    0.45333    0.46917     51.8%
+           7    0.45096    0.46310     52.1% <-- meilleur
+           8    0.45135    0.46734     47.9%
+           9    0.44991    0.46551     49.2%
+          10    0.45133    0.46318     52.7%
+          11    0.45014    0.46447     51.8%
+          12    0.44975    0.46324     52.8%
+          13    0.45019    0.46313     52.6%
+          14    0.44868    0.46331     53.7%
+
+==============================================================================
+RUN : XAU_4h_wf4_rolling
+Date : 2026-07-30 09:47:03
+==============================================================================
+  [DONNÉES]
+    symbole                            XAU
+    timeframe_base                     4h
+    timeframes_contexte                1d+1w
+    mode_walkforward                   rolling
+    pli                                4/8
+    periode_test                       2018-02→2019-09
+    lignes_train                       11667
+    fenetres_test                      2367
+  [MODÈLE]
+    sequence_length                    48
+    hidden_size                        256
+    num_layers                         2
+    dropout                            0.200000
+    learning_rate                      0.001000
+    batch_size                         64
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+    weight_decay                       0.000100
+    loss_name                          huber
+    rolling_target_scale               True
+    seed                               0
+  [INDICATEURS]
+    sma_period                         120
+    stoch_k_period                     84
+    stoch_d_period                     18
+    rsi_period                         84
+    adx_period                         84
+  [RÉSULTATS]
+    epoques_effectuees                 11
+    meilleure_epoque                   4
+    meilleure_loss_val                 0.453023
+    loss_test                          0.462799
+    loss_baseline_zero                 0.462566
+    bat_la_baseline                    NON
+    precision_directionnelle           50.36%
+  [COURBE]
+      époque      train        val  direction
+           1    0.47732    0.45503     48.4%
+           2    0.45908    0.45456     51.2%
+           3    0.45573    0.45367     51.2%
+           4    0.45569    0.45302     51.0% <-- meilleur
+           5    0.45452    0.45372     50.1%
+           6    0.45509    0.45592     51.2%
+           7    0.45722    0.45399     48.4%
+           8    0.45427    0.45410     51.2%
+           9    0.45278    0.45568     48.6%
+          10    0.45369    0.45457     46.9%
+          11    0.45116    0.45587     47.8%
+
+==============================================================================
+RUN : XAU_4h_wf5_rolling
+Date : 2026-07-30 09:48:11
+==============================================================================
+  [DONNÉES]
+    symbole                            XAU
+    timeframe_base                     4h
+    timeframes_contexte                1d+1w
+    mode_walkforward                   rolling
+    pli                                5/8
+    periode_test                       2019-09→2021-04
+    lignes_train                       11667
+    fenetres_test                      2367
+  [MODÈLE]
+    sequence_length                    48
+    hidden_size                        256
+    num_layers                         2
+    dropout                            0.200000
+    learning_rate                      0.001000
+    batch_size                         64
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+    weight_decay                       0.000100
+    loss_name                          huber
+    rolling_target_scale               True
+    seed                               0
+  [INDICATEURS]
+    sma_period                         120
+    stoch_k_period                     84
+    stoch_d_period                     18
+    rsi_period                         84
+    adx_period                         84
+  [RÉSULTATS]
+    epoques_effectuees                 13
+    meilleure_epoque                   6
+    meilleure_loss_val                 0.467035
+    loss_test                          0.459364
+    loss_baseline_zero                 0.460513
+    bat_la_baseline                    OUI
+    precision_directionnelle           52.13%
+  [COURBE]
+      époque      train        val  direction
+           1    0.47431    0.46829     48.4%
+           2    0.45936    0.46865     51.3%
+           3    0.45857    0.47268     51.3%
+           4    0.45917    0.46871     48.6%
+           5    0.45769    0.46713     51.3%
+           6    0.45730    0.46704     51.3% <-- meilleur
+           7    0.45586    0.46723     51.3%
+           8    0.45587    0.46794     51.3%
+           9    0.45750    0.46863     49.7%
+          10    0.45598    0.46901     49.2%
+          11    0.45485    0.46801     49.1%
+          12    0.45475    0.46745     50.0%
+          13    0.45449    0.46771     51.4%
+
+==============================================================================
+RUN : XAU_4h_wf6_rolling
+Date : 2026-07-30 09:49:15
+==============================================================================
+  [DONNÉES]
+    symbole                            XAU
+    timeframe_base                     4h
+    timeframes_contexte                1d+1w
+    mode_walkforward                   rolling
+    pli                                6/8
+    periode_test                       2021-04→2022-11
+    lignes_train                       11667
+    fenetres_test                      2367
+  [MODÈLE]
+    sequence_length                    48
+    hidden_size                        256
+    num_layers                         2
+    dropout                            0.200000
+    learning_rate                      0.001000
+    batch_size                         64
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+    weight_decay                       0.000100
+    loss_name                          huber
+    rolling_target_scale               True
+    seed                               0
+  [INDICATEURS]
+    sma_period                         120
+    stoch_k_period                     84
+    stoch_d_period                     18
+    rsi_period                         84
+    adx_period                         84
+  [RÉSULTATS]
+    epoques_effectuees                 12
+    meilleure_epoque                   5
+    meilleure_loss_val                 0.466307
+    loss_test                          0.457250
+    loss_baseline_zero                 0.457152
+    bat_la_baseline                    NON
+    precision_directionnelle           51.50%
+  [COURBE]
+      époque      train        val  direction
+           1    0.48318    0.46664     49.9%
+           2    0.46290    0.46766     50.4%
+           3    0.46028    0.46743     49.7%
+           4    0.46037    0.46662     50.3%
+           5    0.45969    0.46631     50.7% <-- meilleur
+           6    0.46053    0.46675     50.5%
+           7    0.45792    0.46753     49.6%
+           8    0.45963    0.47032     50.4%
+           9    0.45855    0.46769     48.6%
+          10    0.45812    0.46889     49.1%
+          11    0.45732    0.46812     48.7%
+          12    0.45672    0.47011     49.1%
+
+==============================================================================
+RUN : XAU_4h_wf7_rolling
+Date : 2026-07-30 09:50:33
+==============================================================================
+  [DONNÉES]
+    symbole                            XAU
+    timeframe_base                     4h
+    timeframes_contexte                1d+1w
+    mode_walkforward                   rolling
+    pli                                7/8
+    periode_test                       2022-11→2024-05
+    lignes_train                       11667
+    fenetres_test                      2367
+  [MODÈLE]
+    sequence_length                    48
+    hidden_size                        256
+    num_layers                         2
+    dropout                            0.200000
+    learning_rate                      0.001000
+    batch_size                         64
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+    weight_decay                       0.000100
+    loss_name                          huber
+    rolling_target_scale               True
+    seed                               0
+  [INDICATEURS]
+    sma_period                         120
+    stoch_k_period                     84
+    stoch_d_period                     18
+    rsi_period                         84
+    adx_period                         84
+  [RÉSULTATS]
+    epoques_effectuees                 15
+    meilleure_epoque                   8
+    meilleure_loss_val                 0.468954
+    loss_test                          0.451249
+    loss_baseline_zero                 0.450880
+    bat_la_baseline                    NON
+    precision_directionnelle           51.50%
+  [COURBE]
+      époque      train        val  direction
+           1    0.48036    0.47266     49.1%
+           2    0.46239    0.47208     49.1%
+           3    0.45886    0.47267     49.1%
+           4    0.46290    0.47577     49.1%
+           5    0.45853    0.46953     49.1%
+           6    0.45853    0.46968     50.0%
+           7    0.45915    0.46932     51.6%
+           8    0.45953    0.46895     51.0% <-- meilleur
+           9    0.45800    0.47028     51.7%
+          10    0.45707    0.47147     49.1%
+          11    0.45784    0.46899     51.7%
+          12    0.45776    0.46943     51.5%
+          13    0.45784    0.47090     49.1%
+          14    0.45626    0.47179     51.6%
+          15    0.45522    0.47277     50.3%
+
+==============================================================================
+RUN : XAU_4h_wf8_rolling
+Date : 2026-07-30 09:51:22
+==============================================================================
+  [DONNÉES]
+    symbole                            XAU
+    timeframe_base                     4h
+    timeframes_contexte                1d+1w
+    mode_walkforward                   rolling
+    pli                                8/8
+    periode_test                       2024-05→2026-01
+    lignes_train                       11667
+    fenetres_test                      2368
+  [MODÈLE]
+    sequence_length                    48
+    hidden_size                        256
+    num_layers                         2
+    dropout                            0.200000
+    learning_rate                      0.001000
+    batch_size                         64
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+    weight_decay                       0.000100
+    loss_name                          huber
+    rolling_target_scale               True
+    seed                               0
+  [INDICATEURS]
+    sma_period                         120
+    stoch_k_period                     84
+    stoch_d_period                     18
+    rsi_period                         84
+    adx_period                         84
+  [RÉSULTATS]
+    epoques_effectuees                 9
+    meilleure_epoque                   2
+    meilleure_loss_val                 0.460560
+    loss_test                          0.480390
+    loss_baseline_zero                 0.483372
+    bat_la_baseline                    OUI
+    precision_directionnelle           54.48%
+  [COURBE]
+      époque      train        val  direction
+           1    0.48369    0.46137     52.2%
+           2    0.46267    0.46056     52.8% <-- meilleur
+           3    0.45930    0.46144     49.2%
+           4    0.45996    0.46500     52.2%
+           5    0.45988    0.46836     47.8%
+           6    0.45954    0.46170     52.2%
+           7    0.45781    0.46406     52.2%
+           8    0.45630    0.46086     52.0%
+           9    0.45701    0.46106     53.1%
+
+==============================================================================
+RUN : XAU_4h_wf1_rolling
+Date : 2026-07-30 11:42:03
+==============================================================================
+  [DONNÉES]
+    symbole                            XAU
+    timeframe_base                     4h
+    timeframes_contexte                1d+1w
+    mode_walkforward                   rolling
+    pli                                1/8
+    periode_test                       2013-06→2015-01
+    lignes_train                       11667
+    fenetres_test                      2367
+  [MODÈLE]
+    sequence_length                    48
+    hidden_size                        256
+    num_layers                         2
+    dropout                            0.200000
+    learning_rate                      0.001000
+    batch_size                         64
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+    weight_decay                       0.000100
+    loss_name                          huber
+    rolling_target_scale               True
+    seed                               0
+  [INDICATEURS]
+    sma_period                         120
+    stoch_k_period                     84
+    stoch_d_period                     18
+    rsi_period                         84
+    adx_period                         84
+  [RÉSULTATS]
+    epoques_effectuees                 8
+    meilleure_epoque                   1
+    meilleure_loss_val                 0.456376
+    loss_test                          0.447413
+    loss_baseline_zero                 0.446652
+    bat_la_baseline                    NON
+    precision_directionnelle           50.44%
+  [COURBE]
+      époque      train        val  direction
+           1    0.47411    0.45638     49.8% <-- meilleur
+           2    0.45433    0.46083     49.5%
+           3    0.45366    0.45664     47.8%
+           4    0.45222    0.45656     49.5%
+           5    0.45400    0.47640     50.5%
+           6    0.45183    0.45662     47.8%
+           7    0.45071    0.46341     50.3%
+           8    0.45004    0.45755     49.6%
+
+==============================================================================
+RUN : XAU_4h_wf2_rolling
+Date : 2026-07-30 11:42:52
+==============================================================================
+  [DONNÉES]
+    symbole                            XAU
+    timeframe_base                     4h
+    timeframes_contexte                1d+1w
+    mode_walkforward                   rolling
+    pli                                2/8
+    periode_test                       2015-01→2016-08
+    lignes_train                       11667
+    fenetres_test                      2367
+  [MODÈLE]
+    sequence_length                    48
+    hidden_size                        256
+    num_layers                         2
+    dropout                            0.200000
+    learning_rate                      0.001000
+    batch_size                         64
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+    weight_decay                       0.000100
+    loss_name                          huber
+    rolling_target_scale               True
+    seed                               0
+  [INDICATEURS]
+    sma_period                         120
+    stoch_k_period                     84
+    stoch_d_period                     18
+    rsi_period                         84
+    adx_period                         84
+  [RÉSULTATS]
+    epoques_effectuees                 10
+    meilleure_epoque                   3
+    meilleure_loss_val                 0.445430
+    loss_test                          0.457754
+    loss_baseline_zero                 0.457747
+    bat_la_baseline                    NON
+    precision_directionnelle           50.91%
+  [COURBE]
+      époque      train        val  direction
+           1    0.47405    0.45584     48.9%
+           2    0.45758    0.45050     48.9%
+           3    0.45628    0.44543     51.1% <-- meilleur
+           4    0.45549    0.44822     48.9%
+           5    0.45446    0.47148     48.9%
+           6    0.45426    0.44870     48.9%
+           7    0.45308    0.44669     51.0%
+           8    0.45294    0.45237     48.9%
+           9    0.45188    0.44786     49.2%
+          10    0.45161    0.44544     51.5%
+
+==============================================================================
+RUN : XAU_4h_wf3_rolling
+Date : 2026-07-30 11:44:00
+==============================================================================
+  [DONNÉES]
+    symbole                            XAU
+    timeframe_base                     4h
+    timeframes_contexte                1d+1w
+    mode_walkforward                   rolling
+    pli                                3/8
+    periode_test                       2016-08→2018-02
+    lignes_train                       11667
+    fenetres_test                      2367
+  [MODÈLE]
+    sequence_length                    48
+    hidden_size                        256
+    num_layers                         2
+    dropout                            0.200000
+    learning_rate                      0.001000
+    batch_size                         64
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+    weight_decay                       0.000100
+    loss_name                          huber
+    rolling_target_scale               True
+    seed                               0
+  [INDICATEURS]
+    sma_period                         120
+    stoch_k_period                     84
+    stoch_d_period                     18
+    rsi_period                         84
+    adx_period                         84
+  [RÉSULTATS]
+    epoques_effectuees                 14
+    meilleure_epoque                   7
+    meilleure_loss_val                 0.463099
+    loss_test                          0.455398
+    loss_baseline_zero                 0.453878
+    bat_la_baseline                    NON
+    precision_directionnelle           49.13%
+  [COURBE]
+      époque      train        val  direction
+           1    0.47040    0.46390     51.8%
+           2    0.45490    0.46332     51.8%
+           3    0.45177    0.46397     51.8%
+           4    0.45172    0.46352     51.8%
+           5    0.45434    0.46403     51.4%
+           6    0.45333    0.46917     51.8%
+           7    0.45096    0.46310     52.1% <-- meilleur
+           8    0.45135    0.46734     47.9%
+           9    0.44991    0.46551     49.2%
+          10    0.45133    0.46318     52.7%
+          11    0.45014    0.46447     51.8%
+          12    0.44975    0.46324     52.8%
+          13    0.45019    0.46313     52.6%
+          14    0.44868    0.46331     53.7%
+
+==============================================================================
+RUN : XAU_4h_wf4_rolling
+Date : 2026-07-30 11:44:53
+==============================================================================
+  [DONNÉES]
+    symbole                            XAU
+    timeframe_base                     4h
+    timeframes_contexte                1d+1w
+    mode_walkforward                   rolling
+    pli                                4/8
+    periode_test                       2018-02→2019-09
+    lignes_train                       11667
+    fenetres_test                      2367
+  [MODÈLE]
+    sequence_length                    48
+    hidden_size                        256
+    num_layers                         2
+    dropout                            0.200000
+    learning_rate                      0.001000
+    batch_size                         64
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+    weight_decay                       0.000100
+    loss_name                          huber
+    rolling_target_scale               True
+    seed                               0
+  [INDICATEURS]
+    sma_period                         120
+    stoch_k_period                     84
+    stoch_d_period                     18
+    rsi_period                         84
+    adx_period                         84
+  [RÉSULTATS]
+    epoques_effectuees                 11
+    meilleure_epoque                   4
+    meilleure_loss_val                 0.453023
+    loss_test                          0.462799
+    loss_baseline_zero                 0.462566
+    bat_la_baseline                    NON
+    precision_directionnelle           50.36%
+  [COURBE]
+      époque      train        val  direction
+           1    0.47732    0.45503     48.4%
+           2    0.45908    0.45456     51.2%
+           3    0.45573    0.45367     51.2%
+           4    0.45569    0.45302     51.0% <-- meilleur
+           5    0.45452    0.45372     50.1%
+           6    0.45509    0.45592     51.2%
+           7    0.45722    0.45399     48.4%
+           8    0.45427    0.45410     51.2%
+           9    0.45278    0.45568     48.6%
+          10    0.45369    0.45457     46.9%
+          11    0.45116    0.45587     47.8%
+
+==============================================================================
+RUN : XAU_4h_wf1_rolling
+Date : 2026-07-30 11:47:15
+==============================================================================
+  [DONNÉES]
+    symbole                            XAU
+    timeframe_base                     4h
+    timeframes_contexte                1d+1w
+    mode_walkforward                   rolling
+    pli                                1/8
+    periode_test                       2013-06→2015-01
+    lignes_train                       11667
+    fenetres_test                      2367
+  [MODÈLE]
+    sequence_length                    48
+    hidden_size                        256
+    num_layers                         2
+    dropout                            0.200000
+    learning_rate                      0.001000
+    batch_size                         64
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+    weight_decay                       0.000100
+    loss_name                          huber
+    rolling_target_scale               True
+    seed                               0
+  [INDICATEURS]
+    sma_period                         120
+    stoch_k_period                     84
+    stoch_d_period                     18
+    rsi_period                         84
+    adx_period                         84
+  [RÉSULTATS]
+    epoques_effectuees                 8
+    meilleure_epoque                   1
+    meilleure_loss_val                 0.456376
+    loss_test                          0.447413
+    loss_baseline_zero                 0.446652
+    bat_la_baseline                    NON
+    precision_directionnelle           50.44%
+  [COURBE]
+      époque      train        val  direction
+           1    0.47411    0.45638     49.8% <-- meilleur
+           2    0.45433    0.46083     49.5%
+           3    0.45366    0.45664     47.8%
+           4    0.45222    0.45656     49.5%
+           5    0.45400    0.47640     50.5%
+           6    0.45183    0.45662     47.8%
+           7    0.45071    0.46341     50.3%
+           8    0.45004    0.45755     49.6%
+
+==============================================================================
+RUN : XAU_4h_wf2_rolling
+Date : 2026-07-30 11:48:06
+==============================================================================
+  [DONNÉES]
+    symbole                            XAU
+    timeframe_base                     4h
+    timeframes_contexte                1d+1w
+    mode_walkforward                   rolling
+    pli                                2/8
+    periode_test                       2015-01→2016-08
+    lignes_train                       11667
+    fenetres_test                      2367
+  [MODÈLE]
+    sequence_length                    48
+    hidden_size                        256
+    num_layers                         2
+    dropout                            0.200000
+    learning_rate                      0.001000
+    batch_size                         64
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+    weight_decay                       0.000100
+    loss_name                          huber
+    rolling_target_scale               True
+    seed                               0
+  [INDICATEURS]
+    sma_period                         120
+    stoch_k_period                     84
+    stoch_d_period                     18
+    rsi_period                         84
+    adx_period                         84
+  [RÉSULTATS]
+    epoques_effectuees                 10
+    meilleure_epoque                   3
+    meilleure_loss_val                 0.445430
+    loss_test                          0.457754
+    loss_baseline_zero                 0.457747
+    bat_la_baseline                    NON
+    precision_directionnelle           50.91%
+  [COURBE]
+      époque      train        val  direction
+           1    0.47405    0.45584     48.9%
+           2    0.45758    0.45050     48.9%
+           3    0.45628    0.44543     51.1% <-- meilleur
+           4    0.45549    0.44822     48.9%
+           5    0.45446    0.47148     48.9%
+           6    0.45426    0.44870     48.9%
+           7    0.45308    0.44669     51.0%
+           8    0.45294    0.45237     48.9%
+           9    0.45188    0.44786     49.2%
+          10    0.45161    0.44544     51.5%
+
+==============================================================================
+RUN : XAU_4h_wf3_rolling
+Date : 2026-07-30 11:49:17
+==============================================================================
+  [DONNÉES]
+    symbole                            XAU
+    timeframe_base                     4h
+    timeframes_contexte                1d+1w
+    mode_walkforward                   rolling
+    pli                                3/8
+    periode_test                       2016-08→2018-02
+    lignes_train                       11667
+    fenetres_test                      2367
+  [MODÈLE]
+    sequence_length                    48
+    hidden_size                        256
+    num_layers                         2
+    dropout                            0.200000
+    learning_rate                      0.001000
+    batch_size                         64
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+    weight_decay                       0.000100
+    loss_name                          huber
+    rolling_target_scale               True
+    seed                               0
+  [INDICATEURS]
+    sma_period                         120
+    stoch_k_period                     84
+    stoch_d_period                     18
+    rsi_period                         84
+    adx_period                         84
+  [RÉSULTATS]
+    epoques_effectuees                 14
+    meilleure_epoque                   7
+    meilleure_loss_val                 0.463099
+    loss_test                          0.455398
+    loss_baseline_zero                 0.453878
+    bat_la_baseline                    NON
+    precision_directionnelle           49.13%
+  [COURBE]
+      époque      train        val  direction
+           1    0.47040    0.46390     51.8%
+           2    0.45490    0.46332     51.8%
+           3    0.45177    0.46397     51.8%
+           4    0.45172    0.46352     51.8%
+           5    0.45434    0.46403     51.4%
+           6    0.45333    0.46917     51.8%
+           7    0.45096    0.46310     52.1% <-- meilleur
+           8    0.45135    0.46734     47.9%
+           9    0.44991    0.46551     49.2%
+          10    0.45133    0.46318     52.7%
+          11    0.45014    0.46447     51.8%
+          12    0.44975    0.46324     52.8%
+          13    0.45019    0.46313     52.6%
+          14    0.44868    0.46331     53.7%
+
+==============================================================================
+RUN : XAU_4h_wf4_rolling
+Date : 2026-07-30 11:50:13
+==============================================================================
+  [DONNÉES]
+    symbole                            XAU
+    timeframe_base                     4h
+    timeframes_contexte                1d+1w
+    mode_walkforward                   rolling
+    pli                                4/8
+    periode_test                       2018-02→2019-09
+    lignes_train                       11667
+    fenetres_test                      2367
+  [MODÈLE]
+    sequence_length                    48
+    hidden_size                        256
+    num_layers                         2
+    dropout                            0.200000
+    learning_rate                      0.001000
+    batch_size                         64
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+    weight_decay                       0.000100
+    loss_name                          huber
+    rolling_target_scale               True
+    seed                               0
+  [INDICATEURS]
+    sma_period                         120
+    stoch_k_period                     84
+    stoch_d_period                     18
+    rsi_period                         84
+    adx_period                         84
+  [RÉSULTATS]
+    epoques_effectuees                 11
+    meilleure_epoque                   4
+    meilleure_loss_val                 0.453023
+    loss_test                          0.462799
+    loss_baseline_zero                 0.462566
+    bat_la_baseline                    NON
+    precision_directionnelle           50.36%
+  [COURBE]
+      époque      train        val  direction
+           1    0.47732    0.45503     48.4%
+           2    0.45908    0.45456     51.2%
+           3    0.45573    0.45367     51.2%
+           4    0.45569    0.45302     51.0% <-- meilleur
+           5    0.45452    0.45372     50.1%
+           6    0.45509    0.45592     51.2%
+           7    0.45722    0.45399     48.4%
+           8    0.45427    0.45410     51.2%
+           9    0.45278    0.45568     48.6%
+          10    0.45369    0.45457     46.9%
+          11    0.45116    0.45587     47.8%
+
+==============================================================================
+RUN : XAU_4h_wf5_rolling
+Date : 2026-07-30 11:51:19
+==============================================================================
+  [DONNÉES]
+    symbole                            XAU
+    timeframe_base                     4h
+    timeframes_contexte                1d+1w
+    mode_walkforward                   rolling
+    pli                                5/8
+    periode_test                       2019-09→2021-04
+    lignes_train                       11667
+    fenetres_test                      2367
+  [MODÈLE]
+    sequence_length                    48
+    hidden_size                        256
+    num_layers                         2
+    dropout                            0.200000
+    learning_rate                      0.001000
+    batch_size                         64
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+    weight_decay                       0.000100
+    loss_name                          huber
+    rolling_target_scale               True
+    seed                               0
+  [INDICATEURS]
+    sma_period                         120
+    stoch_k_period                     84
+    stoch_d_period                     18
+    rsi_period                         84
+    adx_period                         84
+  [RÉSULTATS]
+    epoques_effectuees                 13
+    meilleure_epoque                   6
+    meilleure_loss_val                 0.467035
+    loss_test                          0.459364
+    loss_baseline_zero                 0.460513
+    bat_la_baseline                    OUI
+    precision_directionnelle           52.13%
+  [COURBE]
+      époque      train        val  direction
+           1    0.47431    0.46829     48.4%
+           2    0.45936    0.46865     51.3%
+           3    0.45857    0.47268     51.3%
+           4    0.45917    0.46871     48.6%
+           5    0.45769    0.46713     51.3%
+           6    0.45730    0.46704     51.3% <-- meilleur
+           7    0.45586    0.46723     51.3%
+           8    0.45587    0.46794     51.3%
+           9    0.45750    0.46863     49.7%
+          10    0.45598    0.46901     49.2%
+          11    0.45485    0.46801     49.1%
+          12    0.45475    0.46745     50.0%
+          13    0.45449    0.46771     51.4%
+
+==============================================================================
+RUN : XAU_4h_wf6_rolling
+Date : 2026-07-30 11:52:20
+==============================================================================
+  [DONNÉES]
+    symbole                            XAU
+    timeframe_base                     4h
+    timeframes_contexte                1d+1w
+    mode_walkforward                   rolling
+    pli                                6/8
+    periode_test                       2021-04→2022-11
+    lignes_train                       11667
+    fenetres_test                      2367
+  [MODÈLE]
+    sequence_length                    48
+    hidden_size                        256
+    num_layers                         2
+    dropout                            0.200000
+    learning_rate                      0.001000
+    batch_size                         64
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+    weight_decay                       0.000100
+    loss_name                          huber
+    rolling_target_scale               True
+    seed                               0
+  [INDICATEURS]
+    sma_period                         120
+    stoch_k_period                     84
+    stoch_d_period                     18
+    rsi_period                         84
+    adx_period                         84
+  [RÉSULTATS]
+    epoques_effectuees                 12
+    meilleure_epoque                   5
+    meilleure_loss_val                 0.466307
+    loss_test                          0.457250
+    loss_baseline_zero                 0.457152
+    bat_la_baseline                    NON
+    precision_directionnelle           51.50%
+  [COURBE]
+      époque      train        val  direction
+           1    0.48318    0.46664     49.9%
+           2    0.46290    0.46766     50.4%
+           3    0.46028    0.46743     49.7%
+           4    0.46037    0.46662     50.3%
+           5    0.45969    0.46631     50.7% <-- meilleur
+           6    0.46053    0.46675     50.5%
+           7    0.45792    0.46753     49.6%
+           8    0.45963    0.47032     50.4%
+           9    0.45855    0.46769     48.6%
+          10    0.45812    0.46889     49.1%
+          11    0.45732    0.46812     48.7%
+          12    0.45672    0.47011     49.1%
+
+==============================================================================
+RUN : XAU_4h_wf7_rolling
+Date : 2026-07-30 11:53:36
+==============================================================================
+  [DONNÉES]
+    symbole                            XAU
+    timeframe_base                     4h
+    timeframes_contexte                1d+1w
+    mode_walkforward                   rolling
+    pli                                7/8
+    periode_test                       2022-11→2024-05
+    lignes_train                       11667
+    fenetres_test                      2367
+  [MODÈLE]
+    sequence_length                    48
+    hidden_size                        256
+    num_layers                         2
+    dropout                            0.200000
+    learning_rate                      0.001000
+    batch_size                         64
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+    weight_decay                       0.000100
+    loss_name                          huber
+    rolling_target_scale               True
+    seed                               0
+  [INDICATEURS]
+    sma_period                         120
+    stoch_k_period                     84
+    stoch_d_period                     18
+    rsi_period                         84
+    adx_period                         84
+  [RÉSULTATS]
+    epoques_effectuees                 15
+    meilleure_epoque                   8
+    meilleure_loss_val                 0.468954
+    loss_test                          0.451249
+    loss_baseline_zero                 0.450880
+    bat_la_baseline                    NON
+    precision_directionnelle           51.50%
+  [COURBE]
+      époque      train        val  direction
+           1    0.48036    0.47266     49.1%
+           2    0.46239    0.47208     49.1%
+           3    0.45886    0.47267     49.1%
+           4    0.46290    0.47577     49.1%
+           5    0.45853    0.46953     49.1%
+           6    0.45853    0.46968     50.0%
+           7    0.45915    0.46932     51.6%
+           8    0.45953    0.46895     51.0% <-- meilleur
+           9    0.45800    0.47028     51.7%
+          10    0.45707    0.47147     49.1%
+          11    0.45784    0.46899     51.7%
+          12    0.45776    0.46943     51.5%
+          13    0.45784    0.47090     49.1%
+          14    0.45626    0.47179     51.6%
+          15    0.45522    0.47277     50.3%
+
+==============================================================================
+RUN : XAU_4h_wf8_rolling
+Date : 2026-07-30 11:54:22
+==============================================================================
+  [DONNÉES]
+    symbole                            XAU
+    timeframe_base                     4h
+    timeframes_contexte                1d+1w
+    mode_walkforward                   rolling
+    pli                                8/8
+    periode_test                       2024-05→2026-01
+    lignes_train                       11667
+    fenetres_test                      2368
+  [MODÈLE]
+    sequence_length                    48
+    hidden_size                        256
+    num_layers                         2
+    dropout                            0.200000
+    learning_rate                      0.001000
+    batch_size                         64
+    num_epochs                         50
+    patience                           7
+    train_ratio                        0.700000
+    val_ratio                          0.150000
+    weight_decay                       0.000100
+    loss_name                          huber
+    rolling_target_scale               True
+    seed                               0
+  [INDICATEURS]
+    sma_period                         120
+    stoch_k_period                     84
+    stoch_d_period                     18
+    rsi_period                         84
+    adx_period                         84
+  [RÉSULTATS]
+    epoques_effectuees                 9
+    meilleure_epoque                   2
+    meilleure_loss_val                 0.460560
+    loss_test                          0.480390
+    loss_baseline_zero                 0.483372
+    bat_la_baseline                    OUI
+    precision_directionnelle           54.48%
+  [COURBE]
+      époque      train        val  direction
+           1    0.48369    0.46137     52.2%
+           2    0.46267    0.46056     52.8% <-- meilleur
+           3    0.45930    0.46144     49.2%
+           4    0.45996    0.46500     52.2%
+           5    0.45988    0.46836     47.8%
+           6    0.45954    0.46170     52.2%
+           7    0.45781    0.46406     52.2%
+           8    0.45630    0.46086     52.0%
+           9    0.45701    0.46106     53.1%
+

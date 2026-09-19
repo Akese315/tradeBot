@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Comprendre l'IA — à travers votre TradeBot</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#EDEFEA;
+  --paper-2:#E4E7E0;
+  --ink:#14202B;
+  --ink-soft:#4A5A63;
+  --signal:#1F6F6B;
+  --warn:#A8324A;
+  --rule:#C9CFC6;
+  --maxw:760px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:"Inter",system-ui,sans-serif;font-size:17px;line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+
+/* ---------- en-tête ---------- */
+header{padding:88px 0 56px;border-bottom:1px solid var(--rule)}
+.eyebrow{
+  font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--signal);margin:0 0 20px
+}
+h1{
+  font-family:"Fraunces",Georgia,serif;font-weight:800;
+  font-size:clamp(38px,7vw,64px);line-height:1.02;margin:0 0 20px;
+  letter-spacing:-.02em;
+}
+h1 em{font-style:italic;font-weight:400;color:var(--signal)}
+.lede{font-size:20px;line-height:1.55;color:var(--ink-soft);max-width:56ch;margin:0}
+
+.origin{
+  margin-top:36px;padding:18px 20px;background:var(--paper-2);
+  border-left:3px solid var(--rule);font-size:14.5px;color:var(--ink-soft);
+  line-height:1.6;
+}
+
+/* ---------- sommaire ---------- */
+nav{padding:44px 0;border-bottom:1px solid var(--rule)}
+nav h2{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink-soft);font-weight:600;margin:0 0 20px}
+nav ol{margin:0;padding:0;list-style:none;counter-reset:toc}
+nav li{counter-increment:toc;border-bottom:1px solid var(--rule)}
+nav li:last-child{border-bottom:none}
+nav a{
+  display:flex;gap:16px;align-items:baseline;padding:11px 0;
+  color:var(--ink);text-decoration:none;
+}
+nav a::before{
+  content:counter(toc,decimal-leading-zero);
+  font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--signal);
+  flex:0 0 26px;
+}
+nav a:hover{color:var(--signal)}
+
+/* ---------- sections ---------- */
+section{padding:64px 0;border-bottom:1px solid var(--rule)}
+section > .num{
+  font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.14em;
+  color:var(--signal);margin:0 0 12px
+}
+h2{
+  font-family:"Fraunces",Georgia,serif;font-weight:600;
+  font-size:clamp(27px,4.4vw,38px);line-height:1.12;margin:0 0 24px;
+  letter-spacing:-.015em;
+}
+h3{
+  font-family:"Inter",sans-serif;font-weight:600;font-size:18px;
+  margin:38px 0 12px;letter-spacing:-.01em;
+}
+p{margin:0 0 18px}
+strong{font-weight:600}
+ul,ol.body{margin:0 0 18px;padding-left:22px}
+li{margin-bottom:8px}
+
+/* ---------- formules ---------- */
+.formula{
+  font-family:"JetBrains Mono",monospace;font-size:15px;
+  background:var(--paper-2);padding:16px 20px;margin:22px 0;
+  border-left:3px solid var(--signal);overflow-x:auto;line-height:1.9;
+}
+code{
+  font-family:"JetBrains Mono",monospace;font-size:.88em;
+  background:var(--paper-2);padding:1px 5px;
+}
+
+/* ---------- encadré « dans votre code » ---------- */
+.yours{
+  margin:28px 0;border:1px solid var(--rule);background:rgba(31,111,107,.05);
+}
+.yours .tag{
+  font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--signal);font-weight:600;
+  padding:11px 20px 0;
+}
+.yours .body{padding:8px 20px 18px;font-size:15.5px;line-height:1.65}
+.yours .body p{margin:0 0 10px}
+.yours .body p:last-child{margin:0}
+.yours .file{font-family:"JetBrains Mono",monospace;font-size:.86em;color:var(--ink)}
+
+/* ---------- avertissement ---------- */
+.warn{
+  margin:28px 0;border-left:3px solid var(--warn);background:rgba(168,50,74,.05);
+  padding:16px 20px;font-size:15.5px;line-height:1.65;
+}
+.warn strong{color:var(--warn)}
+
+/* ---------- tableaux ---------- */
+table{width:100%;border-collapse:collapse;margin:24px 0;font-size:15px}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--rule);vertical-align:top}
+th{font-weight:600;font-size:12.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-soft)}
+td.n{font-family:"JetBrains Mono",monospace;white-space:nowrap}
+
+/* ---------- figures ---------- */
+figure{margin:32px 0}
+figure svg{width:100%;height:auto;display:block}
+figcaption{font-size:14px;color:var(--ink-soft);margin-top:12px;line-height:1.55}
+
+/* ---------- carte de lecture ---------- */
+.map td:first-child{font-family:"JetBrains Mono",monospace;white-space:nowrap;color:var(--signal)}
+
+footer{padding:56px 0 88px;color:var(--ink-soft);font-size:14.5px;line-height:1.65}
+
+@media (max-width:600px){
+  body{font-size:16px}
+  header{padding:56px 0 40px}
+  section{padding:48px 0}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <p class="eyebrow">Cours — réseaux de neurones et séries temporelles</p>
+    <h1>Comment votre IA<br>fonctionne <em>vraiment</em></h1>
+    <p class="lede">Un parcours complet des réseaux de neurones, expliqué à travers le code que vous avez sous les yeux : votre LSTM, vos 47 000 bougies, et les 50,86 % qu'il obtient.</p>
+    <div class="origin">
+      Ce document est un cours original. Il n'est pas un résumé de <em>Dive into Deep Learning</em> — ce livre est protégé par le droit d'auteur et mérite d'être lu dans le texte. Une carte de lecture vers ses chapitres figure à la fin, pour aller plus loin sur chaque point.
+    </div>
+  </div>
+</header>
+
+<nav>
+  <div class="wrap">
+    <h2>Sommaire</h2>
+    <ol>
+      <li><a href="#s1">Ce qu'est un neurone</a></li>
+      <li><a href="#s2">Comment un réseau apprend</a></li>
+      <li><a href="#s3">La rétropropagation</a></li>
+      <li><a href="#s4">La descente de gradient, et Adam</a></li>
+      <li><a href="#s5">Généraliser, ou mémoriser</a></li>
+      <li><a href="#s6">Pourquoi les séquences changent tout</a></li>
+      <li><a href="#s7">Le RNN et sa mémoire courte</a></li>
+      <li><a href="#s8">Le LSTM, porte par porte</a></li>
+      <li><a href="#s9">Gradients qui explosent, gradients qui meurent</a></li>
+      <li><a href="#s10">La normalisation, et pourquoi elle décide de tout</a></li>
+      <li><a href="#s11">Pourquoi les marchés résistent</a></li>
+      <li><a href="#s12">Carte de lecture</a></li>
+    </ol>
+  </div>
+</nav>
+
+<!-- ===================== 1 ===================== -->
+<section id="s1">
+  <div class="wrap">
+    <p class="num">01</p>
+    <h2>Ce qu'est un neurone</h2>
+
+    <p>Un neurone artificiel est une opération d'une simplicité décevante. Il reçoit des nombres, les multiplie chacun par un poids, additionne le tout, ajoute une constante, et fait passer le résultat dans une fonction non linéaire.</p>
+
+    <div class="formula">sortie = f( w₁·x₁ + w₂·x₂ + … + wₙ·xₙ + b )</div>
+
+    <p>Les <strong>w</strong> sont les poids, <strong>b</strong> le biais, et <strong>f</strong> la fonction d'activation. C'est tout. Un neurone seul ne sait faire qu'une chose : tracer une frontière droite dans l'espace de ses entrées.</p>
+
+    <p>La puissance ne vient pas du neurone, elle vient de <em>l'empilement</em>. Sans la fonction non linéaire <strong>f</strong>, empiler deux couches ne servirait à rien : la composition de deux fonctions linéaires reste linéaire, et un réseau de cent couches se réduirait algébriquement à une seule. C'est <strong>f</strong> qui casse cette réduction et permet à chaque couche d'ajouter quelque chose.</p>
+
+    <p>Les activations courantes sont ReLU (garde le positif, écrase le négatif à zéro), la sigmoïde (comprime tout entre 0 et 1), et la tangente hyperbolique (entre −1 et 1). Les deux dernières jouent un rôle central dans votre LSTM — nous y reviendrons.</p>
+
+    <div class="yours">
+      <p class="tag">Dans votre code</p>
+      <div class="body">
+        <p><span class="file">src/ai/model.py</span> — la ligne <code>self.head = nn.Linear(hidden_size, output_size)</code> crée exactement ce type de couche : 256 entrées, 1 sortie, donc 256 poids et 1 biais. Elle produit votre prédiction finale.</p>
+        <p>Notez qu'elle n'a <em>pas</em> d'activation derrière. C'est volontaire : vous faites de la régression, la sortie doit pouvoir prendre n'importe quelle valeur réelle. Une sigmoïde ici brimerait le modèle en le contraignant entre 0 et 1.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 2 ===================== -->
+<section id="s2">
+  <div class="wrap">
+    <p class="num">02</p>
+    <h2>Comment un réseau apprend</h2>
+
+    <p>Un réseau neuf a des poids tirés au hasard. Ses prédictions sont du bruit. L'apprentissage est une boucle qui répète quatre gestes, des milliers de fois.</p>
+
+    <ol class="body">
+      <li><strong>Propagation avant.</strong> Les données traversent le réseau, une prédiction sort.</li>
+      <li><strong>Calcul de la perte.</strong> On mesure l'écart entre la prédiction et la vérité.</li>
+      <li><strong>Rétropropagation.</strong> On calcule, pour chaque poids, dans quel sens le bouger pour réduire cet écart.</li>
+      <li><strong>Mise à jour.</strong> On déplace chaque poids d'un petit pas dans ce sens.</li>
+    </ol>
+
+    <p>La <strong>perte</strong> est la boussole. Elle transforme « le modèle s'est trompé » en un nombre unique, dérivable, que l'on peut minimiser. Le choix de cette fonction n'est pas cosmétique : il définit ce que le modèle considère comme une erreur grave.</p>
+
+    <table>
+      <tr><th>Perte</th><th>Formule</th><th>Comportement</th></tr>
+      <tr><td>MSE</td><td class="n">(y − ŷ)²</td><td>Punit sévèrement les grosses erreurs. Une valeur aberrante domine tout le gradient.</td></tr>
+      <tr><td>L1</td><td class="n">|y − ŷ|</td><td>Insensible aux extrêmes. Gradient constant, convergence lente.</td></tr>
+      <tr><td>Huber</td><td class="n">mixte</td><td>Quadratique près de zéro, linéaire au loin. Le compromis.</td></tr>
+    </table>
+
+    <p>Sur des données financières, ce choix a des conséquences directes. Un krach produit un rendement dix fois supérieur à la normale ; avec la MSE, l'erreur sur cette seule bougie pèse cent fois celle d'une bougie ordinaire. Le réseau passerait son temps à s'excuser du krach au lieu d'apprendre le régime courant.</p>
+
+    <div class="yours">
+      <p class="tag">Dans votre code</p>
+      <div class="body">
+        <p><span class="file">src/ai/train.py</span> — <code>_build_loss()</code> fabrique la perte depuis <code>config.loss_name</code>. Le défaut est <code>"huber"</code>, précisément pour cette raison.</p>
+        <p>C'est aussi pourquoi les variantes du groupe <code>objectif</code> dans <span class="file">scripts/sweep.py</span> ne sont pas comparables entre elles : changer de perte change l'unité de mesure. Comparer une loss MSE à une loss Huber revient à comparer des mètres à des litres.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 3 ===================== -->
+<section id="s3">
+  <div class="wrap">
+    <p class="num">03</p>
+    <h2>La rétropropagation</h2>
+
+    <p>Voici le mécanisme central, et il est plus simple qu'on ne le raconte.</p>
+
+    <p>Un réseau est une longue composition de fonctions. Pour savoir de combien la perte varie quand on bouge un poids enfoui dans la première couche, on applique la règle de dérivation des fonctions composées — la règle de la chaîne, apprise en terminale.</p>
+
+    <div class="formula">∂L/∂w  =  ∂L/∂sortie · ∂sortie/∂couche₃ · ∂couche₃/∂couche₂ · ∂couche₂/∂w</div>
+
+    <p>On part de la fin, où l'erreur est connue, et on remonte couche par couche en multipliant les dérivées locales. D'où le nom : l'erreur se <em>propage à rebours</em>. Le résultat, pour chaque poids, est un nombre appelé <strong>gradient</strong> : sa grandeur dit combien ce poids compte, son signe dit dans quel sens le bouger.</p>
+
+    <p>L'intuition tient en une phrase : <em>chaque poids reçoit la part de responsabilité qui lui revient dans l'erreur finale</em>. Un poids sans influence reçoit un gradient nul et ne bouge pas.</p>
+
+    <p>PyTorch fait tout cela seul. Chaque opération sur un tenseur enregistre au passage comment se dériver, et <code>loss.backward()</code> parcourt ce graphe en sens inverse. Vous n'écrivez jamais une dérivée à la main — mais savoir ce qui se passe explique pourquoi certaines choses cassent.</p>
+
+    <div class="yours">
+      <p class="tag">Dans votre code</p>
+      <div class="body">
+        <p><span class="file">src/ai/train.py</span>, dans <code>_run_epoch()</code>, trois lignes exécutent tout le cycle :</p>
+        <p><code>optimizer.zero_grad()</code> — efface les gradients du tour précédent. Les oublier ferait s'accumuler les gradients de tous les batches, et le modèle divergerait.<br>
+        <code>loss.backward()</code> — la rétropropagation.<br>
+        <code>optimizer.step()</code> — applique la mise à jour.</p>
+        <p>L'ordre importe. Inverser les deux premières est une erreur classique et silencieuse : rien ne plante, le modèle apprend simplement mal.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 4 ===================== -->
+<section id="s4">
+  <div class="wrap">
+    <p class="num">04</p>
+    <h2>La descente de gradient, et Adam</h2>
+
+    <p>Le gradient donne la direction. Reste à choisir la longueur du pas.</p>
+
+    <div class="formula">w  ←  w  −  η · ∂L/∂w</div>
+
+    <p>η est le <strong>taux d'apprentissage</strong>. C'est le paramètre le plus délicat de tout l'apprentissage profond. Trop grand, on saute par-dessus le minimum et la perte oscille ou diverge. Trop petit, on met des jours à descendre une pente que l'on aurait pu dévaler.</p>
+
+    <p>L'image classique est celle d'une descente en montagne dans le brouillard : vous ne voyez que la pente sous vos pieds, et vous décidez de la taille du pas. Sauf que le terrain a ici des centaines de milliers de dimensions.</p>
+
+    <h3>Pourquoi Adam plutôt que la descente simple</h3>
+
+    <p>La descente de gradient classique applique le même pas à tous les poids. Or certains reçoivent des gradients énormes, d'autres minuscules — un taux unique ne peut pas convenir aux deux.</p>
+
+    <p>Adam maintient, pour chaque poids séparément, deux moyennes glissantes : celle des gradients récents (le <em>momentum</em>, qui donne de l'élan et traverse les petits creux) et celle de leurs carrés (qui mesure la volatilité du gradient). Il divise ensuite le pas par cette seconde quantité. Un poids au gradient erratique avance prudemment ; un poids au gradient stable avance franchement.</p>
+
+    <p><strong>AdamW</strong>, que vous utilisez, corrige un détail d'implémentation d'Adam sur la régularisation L2 — nous y venons à la section suivante.</p>
+
+    <div class="yours">
+      <p class="tag">Dans votre code</p>
+      <div class="body">
+        <p><span class="file">config/settings.py</span> — <code>learning_rate = 1e-3</code>, le défaut consacré d'Adam.</p>
+        <p><span class="file">src/ai/train.py</span> — le <code>ReduceLROnPlateau</code> divise ce taux par deux après trois époques sans progrès en validation. C'est ce qui vous permet de commencer par de grands pas, puis d'affiner : la stratégie du « descendre vite, se garer lentement ».</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 5 ===================== -->
+<section id="s5">
+  <div class="wrap">
+    <p class="num">05</p>
+    <h2>Généraliser, ou mémoriser</h2>
+
+    <p>Voici la tension fondamentale de tout apprentissage automatique, et la clé de lecture de vos propres résultats.</p>
+
+    <p>Un réseau assez gros peut mémoriser n'importe quoi, y compris des étiquettes tirées au hasard. Il atteindra une perte d'entraînement quasi nulle sans avoir rien compris. Ce que l'on veut n'est pas qu'il réussisse sur les données vues, mais sur celles qu'il n'a jamais vues.</p>
+
+    <p>D'où le découpage en trois. Le <strong>train</strong> sert à ajuster les poids. La <strong>validation</strong> sert à décider quand arrêter et quels réglages retenir. Le <strong>test</strong> ne sert qu'une fois, à la toute fin, pour une mesure honnête.</p>
+
+    <div class="warn">
+      <strong>Le test se contamine à l'usage.</strong> Si vous regardez le test, ajustez, regardez à nouveau, il devient une seconde validation et cesse d'être une mesure honnête. C'est aussi pourquoi tester 12 000 configurations est contre-productif : à force de tirer, le hasard finit par produire un excellent score qui ne se reproduira pas.
+    </div>
+
+    <h3>La signature du sur-apprentissage</h3>
+
+    <p>Elle est visible à l'œil nu dans les courbes : la perte d'entraînement continue de descendre, celle de validation remonte. Le point où elles divergent est le moment où le réseau cesse d'apprendre des régularités et commence à mémoriser du bruit.</p>
+
+    <table>
+      <tr><th>Votre run</th><th>Meilleure époque</th><th>Écart train / val final</th></tr>
+      <tr><td>Avant normalisation glissante</td><td class="n">4</td><td class="n">0,0077</td></tr>
+      <tr><td>Après</td><td class="n">13</td><td class="n">0,0014</td></tr>
+    </table>
+
+    <p>Le passage de l'époque 4 à l'époque 13, et la quasi-disparition de l'écart, montrent que le sur-apprentissage a été largement résorbé. C'est un vrai progrès, même si la précision finale n'a pas bougé.</p>
+
+    <h3>Les trois remèdes</h3>
+
+    <p><strong>Réduire la capacité.</strong> Moins de neurones, moins de couches. Un modèle qui n'a pas la place de mémoriser est forcé de généraliser. C'est le levier le plus direct.</p>
+
+    <p><strong>Dropout.</strong> À chaque passage d'entraînement, on éteint au hasard une fraction des neurones. Le réseau ne peut donc dépendre d'aucun chemin en particulier et doit répartir l'information. À l'inférence, tout est rallumé. Une façon de voir la chose : on entraîne un ensemble de sous-réseaux qui partagent leurs poids.</p>
+
+    <p><strong>Weight decay.</strong> On ajoute à la perte une pénalité proportionnelle à la taille des poids. Le réseau paie donc pour toute complexité inutile et préfère, à performance égale, la solution la plus simple.</p>
+
+    <p><strong>Arrêt anticipé.</strong> Le plus économique : on surveille la validation et on garde les poids de son minimum. Aucun coût, aucun réglage subtil.</p>
+
+    <div class="yours">
+      <p class="tag">Dans votre code</p>
+      <div class="body">
+        <p><span class="file">src/ai/train.py</span> conserve <code>best_state</code> à chaque amélioration de la validation, et recharge ces poids à la fin. Le modèle sauvegardé est donc celui de l'époque 13, pas celui de l'époque 20.</p>
+        <p>Sans ce mécanisme, votre run aurait enregistré un modèle mesurablement moins bon — et vous ne l'auriez jamais su.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 6 ===================== -->
+<section id="s6">
+  <div class="wrap">
+    <p class="num">06</p>
+    <h2>Pourquoi les séquences changent tout</h2>
+
+    <p>Un réseau classique traite chaque exemple isolément. Pour reconnaître un chiffre manuscrit, c'est adapté : l'image contient tout.</p>
+
+    <p>Une série temporelle est d'une autre nature. La bougie de 14 h n'a de sens que rapportée à celles de 13 h, 12 h, et à la semaine écoulée. L'ordre porte l'information. Mélanger les bougies détruirait le problème.</p>
+
+    <p>On pourrait aplatir : donner les 48 dernières bougies comme 48 × 11 = 528 entrées d'un réseau ordinaire. Ça fonctionne, mais mal. Le réseau devrait réapprendre séparément ce qu'est une hausse pour la position 1, pour la position 2, pour la position 3 — alors que c'est le même concept. Rien ne lui dit que ces entrées sont le même signal à des instants différents.</p>
+
+    <p>Les architectures récurrentes résolvent cela par le <strong>partage des poids dans le temps</strong> : la même petite fonction est appliquée à chaque pas, en transportant un état d'un pas au suivant. Ce qui a été appris à un instant vaut pour tous les autres.</p>
+
+    <div class="warn">
+      <strong>Votre ancien code annulait exactement ce mécanisme.</strong> La ligne <code>inputs.unsqueeze(1)</code> produisait des séquences de longueur 1. Le LSTM recevait une seule bougie à la fois, sans passé — donc sans mémoire, sans partage temporel, sans la moindre raison d'être un LSTM.
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 7 ===================== -->
+<section id="s7">
+  <div class="wrap">
+    <p class="num">07</p>
+    <h2>Le RNN et sa mémoire courte</h2>
+
+    <p>Le réseau récurrent est l'idée la plus simple qui marche. Il maintient un <strong>état caché</strong> <em>h</em>, un vecteur qui résume tout ce qu'il a vu. À chaque nouveau pas, il combine cet état avec l'entrée courante pour produire le nouvel état.</p>
+
+    <div class="formula">hₜ  =  tanh( W · xₜ  +  U · hₜ₋₁  +  b )</div>
+
+    <p>Les matrices W et U sont les mêmes à tous les pas. Le réseau lit sa séquence comme on lit une phrase : un mot après l'autre, en gardant en tête ce qui précède.</p>
+
+    <h3>Le défaut</h3>
+
+    <p>Regardez la formule : à chaque pas, l'état est multiplié par U puis écrasé par une tangente hyperbolique. Sur 48 pas, l'information de la première bougie a été multipliée 48 fois et comprimée 48 fois.</p>
+
+    <p>Deux issues, aucune bonne. Si les valeurs propres de U sont inférieures à 1, le signal ancien décroît géométriquement : il <strong>disparaît</strong>. Si elles dépassent 1, il croît géométriquement : il <strong>explose</strong>. Dans les deux cas, le RNN simple ne retient rien au-delà d'une dizaine de pas.</p>
+
+    <p>C'est un problème structurel, pas un défaut de réglage. Il a fallu une architecture différente pour le résoudre.</p>
+  </div>
+</section>
+
+<!-- ===================== 8 ===================== -->
+<section id="s8">
+  <div class="wrap">
+    <p class="num">08</p>
+    <h2>Le LSTM, porte par porte</h2>
+
+    <p>C'est votre modèle. Le LSTM — <em>Long Short-Term Memory</em>, proposé par Hochreiter et Schmidhuber en 1997 — règle le problème par une idée élégante : séparer la mémoire du calcul.</p>
+
+    <p>Il maintient <strong>deux</strong> vecteurs au lieu d'un. L'état caché <em>h</em>, qui sert à produire la sortie, et l'<strong>état de cellule</strong> <em>c</em>, qui est une mémoire longue durée. La clé tient dans la façon dont <em>c</em> se met à jour : par addition, pas par multiplication répétée. Un souvenir peut ainsi traverser cent pas sans être écrasé.</p>
+
+    <p>Trois portes contrôlent le trafic. Chacune est une petite couche à sortie sigmoïde, donc entre 0 et 1 — un robinet.</p>
+
+    <figure>
+      <svg viewBox="0 0 700 300" role="img" aria-label="Schéma d'une cellule LSTM montrant les trois portes">
+        <defs>
+          <marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M2 1L8 5L2 9" fill="none" stroke="#14202B" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </marker>
+        </defs>
+
+        <!-- autoroute de la memoire -->
+        <line x1="40" y1="60" x2="660" y2="60" stroke="#1F6F6B" stroke-width="2.5"/>
+        <text x="40" y="45" font-family="JetBrains Mono, monospace" font-size="13" fill="#1F6F6B">c(t−1)</text>
+        <text x="612" y="45" font-family="JetBrains Mono, monospace" font-size="13" fill="#1F6F6B">c(t)</text>
+
+        <!-- operations sur l autoroute -->
+        <circle cx="200" cy="60" r="15" fill="#EDEFEA" stroke="#1F6F6B" stroke-width="2"/>
+        <text x="200" y="66" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="15" fill="#1F6F6B">×</text>
+        <circle cx="400" cy="60" r="15" fill="#EDEFEA" stroke="#1F6F6B" stroke-width="2"/>
+        <text x="400" y="66" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="15" fill="#1F6F6B">+</text>
+
+        <!-- portes -->
+        <rect x="150" y="150" width="100" height="46" rx="6" fill="#EDEFEA" stroke="#14202B" stroke-width="1.5"/>
+        <text x="200" y="171" text-anchor="middle" font-family="Inter, sans-serif" font-size="13" font-weight="600" fill="#14202B">oubli</text>
+        <text x="200" y="187" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#4A5A63">sigmoïde</text>
+
+        <rect x="350" y="150" width="100" height="46" rx="6" fill="#EDEFEA" stroke="#14202B" stroke-width="1.5"/>
+        <text x="400" y="171" text-anchor="middle" font-family="Inter, sans-serif" font-size="13" font-weight="600" fill="#14202B">entrée</text>
+        <text x="400" y="187" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#4A5A63">sigmoïde</text>
+
+        <rect x="530" y="150" width="100" height="46" rx="6" fill="#EDEFEA" stroke="#14202B" stroke-width="1.5"/>
+        <text x="580" y="171" text-anchor="middle" font-family="Inter, sans-serif" font-size="13" font-weight="600" fill="#14202B">sortie</text>
+        <text x="580" y="187" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#4A5A63">sigmoïde</text>
+
+        <!-- fleches portes vers autoroute -->
+        <line x1="200" y1="148" x2="200" y2="78" stroke="#14202B" stroke-width="1.5" marker-end="url(#ar)"/>
+        <line x1="400" y1="148" x2="400" y2="78" stroke="#14202B" stroke-width="1.5" marker-end="url(#ar)"/>
+        <path d="M580 148 L580 60" stroke="#14202B" stroke-width="1.5" fill="none"/>
+        <circle cx="580" cy="60" r="4" fill="#1F6F6B"/>
+
+        <!-- entrees -->
+        <line x1="40" y1="250" x2="660" y2="250" stroke="#14202B" stroke-width="1.5"/>
+        <text x="40" y="275" font-family="JetBrains Mono, monospace" font-size="13" fill="#14202B">x(t), h(t−1)</text>
+        <line x1="200" y1="250" x2="200" y2="200" stroke="#14202B" stroke-width="1.5" marker-end="url(#ar)"/>
+        <line x1="400" y1="250" x2="400" y2="200" stroke="#14202B" stroke-width="1.5" marker-end="url(#ar)"/>
+        <line x1="580" y1="250" x2="580" y2="200" stroke="#14202B" stroke-width="1.5" marker-end="url(#ar)"/>
+
+        <!-- sortie h -->
+        <line x1="620" y1="60" x2="660" y2="60" stroke="#1F6F6B" stroke-width="2.5"/>
+        <text x="612" y="112" font-family="JetBrains Mono, monospace" font-size="13" fill="#14202B">h(t)</text>
+        <line x1="580" y1="60" x2="640" y2="105" stroke="#14202B" stroke-width="1.5" marker-end="url(#ar)" opacity="0"/>
+      </svg>
+      <figcaption>La ligne du haut est l'état de cellule : une voie rapide où l'information circule presque sans obstacle. Les portes, en bas, ne font que réguler ce qui y entre et ce qui en sort.</figcaption>
+    </figure>
+
+    <h3>La porte d'oubli</h3>
+    <p>Elle décide de ce que la mémoire conserve. Sa sortie multiplie l'état de cellule : proche de 0, elle efface ; proche de 1, elle préserve intact. C'est elle qui permet au réseau de dire « ce qui s'est passé la semaine dernière n'a plus d'importance ».</p>
+
+    <h3>La porte d'entrée</h3>
+    <p>Elle décide de ce qui s'écrit. Une couche parallèle à tangente hyperbolique propose un contenu candidat ; la porte d'entrée filtre la part qui sera effectivement ajoutée.</p>
+
+    <div class="formula">cₜ  =  f · cₜ₋₁  +  i · c̃ₜ</div>
+
+    <p>Cette ligne est le cœur du LSTM. L'ancien état est atténué, le nouveau contenu est <em>ajouté</em>. Quand la porte d'oubli vaut 1 et la porte d'entrée 0, l'état traverse le pas de temps inchangé — et le gradient aussi, lors de la rétropropagation. C'est précisément ce qui résout la disparition du gradient.</p>
+
+    <h3>La porte de sortie</h3>
+    <p>Elle décide de ce qui est révélé. La mémoire peut contenir beaucoup ; tout n'est pas pertinent maintenant. La sortie <em>h</em> est une vue filtrée de <em>c</em>.</p>
+
+    <div class="yours">
+      <p class="tag">Dans votre code</p>
+      <div class="body">
+        <p><span class="file">src/ai/model.py</span> — <code>nn.LSTM(input_size=11, hidden_size=256, num_layers=2)</code>. PyTorch implémente les trois portes et les deux états ; vous n'écrivez aucune de ces formules.</p>
+        <p><code>batch_first=True</code> impose l'ordre (lot, temps, features). Ce n'est pas le défaut de PyTorch, et l'oublier produit un modèle qui tourne sans erreur en confondant les dimensions du temps et du lot.</p>
+        <p><code>output[:, -1, :]</code> ne garde que le dernier pas : l'état caché qui a vu toute la séquence de 48 bougies.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 9 ===================== -->
+<section id="s9">
+  <div class="wrap">
+    <p class="num">09</p>
+    <h2>Gradients qui explosent, gradients qui meurent</h2>
+
+    <p>Entraîner un réseau récurrent, c'est le « dérouler » dans le temps : un LSTM sur 48 pas se comporte, pour la rétropropagation, comme un réseau de 48 couches. On appelle cela la rétropropagation à travers le temps.</p>
+
+    <p>Le gradient doit donc traverser 48 multiplications successives. Une multiplication répétée est instable par nature : 0,9⁴⁸ ≈ 0,006, tandis que 1,1⁴⁸ ≈ 97. Le même mécanisme produit l'effondrement ou l'explosion selon un écart minime.</p>
+
+    <p>Le LSTM traite le premier cas par construction, grâce à l'addition dans l'état de cellule. Le second se traite brutalement mais efficacement : on plafonne la norme du gradient avant la mise à jour.</p>
+
+    <div class="formula">si ‖g‖ > seuil :  g  ←  g · seuil / ‖g‖</div>
+
+    <p>La direction est conservée, seule la longueur est bornée. C'est une ligne de code qui évite des heures de perplexité devant une perte devenue NaN.</p>
+
+    <div class="yours">
+      <p class="tag">Dans votre code</p>
+      <div class="body">
+        <p><span class="file">src/ai/train.py</span> — <code>nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)</code>, juste après <code>loss.backward()</code> et avant <code>optimizer.step()</code>.</p>
+        <p>La position est impérative : après le calcul des gradients, avant leur application. Supprimez cette ligne et vous verrez, tôt ou tard, une perte partir à l'infini sans explication.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 10 ===================== -->
+<section id="s10">
+  <div class="wrap">
+    <p class="num">10</p>
+    <h2>La normalisation, et pourquoi elle décide de tout</h2>
+
+    <p>Un réseau n'a aucune notion d'unité. Si une entrée vaut 10 000 000 (un volume) et une autre 0,5 (un RSI), la première écrase la seconde dans le calcul du gradient, non parce qu'elle est plus informative, mais parce qu'elle est plus grande.</p>
+
+    <p>On standardise donc chaque colonne : soustraire la moyenne, diviser par l'écart-type. Toutes les features arrivent alors avec la même échelle, et le réseau décide lui-même de leur importance.</p>
+
+    <div class="warn">
+      <strong>Le piège :</strong> le scaler doit être ajusté sur le train <em>seul</em>. Calculer moyenne et écart-type sur l'ensemble des données fait entrer des statistiques du futur dans l'entraînement. La fuite est invisible, le modèle paraît meilleur, et le gain s'évapore en production.
+    </div>
+
+    <h3>Le cas particulier des séries financières</h3>
+
+    <p>Ici s'ajoute une difficulté que les manuels de deep learning n'abordent presque jamais : les données ne sont pas <strong>stationnaires</strong>. Leur distribution change avec le temps.</p>
+
+    <p>NVDA valait 2 $ en 2010 et 500 $ en 2023, avec une volatilité horaire multipliée par trois. Un modèle entraîné sur la première période et testé sur la seconde travaille, en pratique, sur deux actifs différents.</p>
+
+    <p>Les rendements logarithmiques règlent le problème d'échelle des prix. La normalisation glissante règle celui de la volatilité : au lieu de diviser toutes les cibles par une constante calculée sur 2010-2019, on divise chaque cible par la volatilité mesurée sur les 20 bougies qui la précèdent.</p>
+
+    <table>
+      <tr><th>Mouvement de +0,8 %</th><th>2015, vol. 0,004</th><th>2023, vol. 0,016</th></tr>
+      <tr><td>Échelle fixe</td><td class="n">1,01</td><td class="n">1,01</td></tr>
+      <tr><td>Échelle glissante</td><td class="n">2,00</td><td class="n">0,50</td></tr>
+    </table>
+
+    <p>Avec l'échelle fixe, deux situations sans rapport reçoivent la même étiquette. Avec l'échelle glissante, la question posée devient « ce mouvement est-il grand <em>pour l'époque</em> ? » — et cette question garde le même sens en 2015 et en 2023.</p>
+
+    <div class="yours">
+      <p class="tag">Dans votre code</p>
+      <div class="body">
+        <p><span class="file">src/ai/dataset.py</span> — <code>scaler.fit(features[:train_end])</code> ajuste sur le train seul, puis <code>scaler.transform(features)</code> applique partout.</p>
+        <p>Plus bas, <code>rolling_target_scale</code> bascule entre les deux modes de normalisation de la cible. C'est ce passage qui a fait reculer votre sur-apprentissage de l'époque 4 à l'époque 13.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 11 ===================== -->
+<section id="s11">
+  <div class="wrap">
+    <p class="num">11</p>
+    <h2>Pourquoi les marchés résistent</h2>
+
+    <p>Tout ce qui précède fonctionne remarquablement bien sur des images, du texte, de la parole. Sur les marchés financiers, non — et il faut comprendre pourquoi, sinon on cherche indéfiniment le réglage manquant.</p>
+
+    <h3>Le rapport signal sur bruit</h3>
+
+    <p>Sur une tâche de vision, l'information utile représente l'essentiel de l'image. Vos corrélations feature-cible plafonnent à 0,042, soit un R² de 0,0017 : <strong>99,83 % de ce qui se passera dans l'heure suivante est absent de vos données.</strong> Actualités, flux d'ordres institutionnels, décisions macroéconomiques, hasard.</p>
+
+    <p>Aucune architecture ne crée de l'information qui n'est pas là.</p>
+
+    <h3>L'adaptativité</h3>
+
+    <p>Un chat ne change pas d'apparence parce que des réseaux apprennent à le reconnaître. Un marché, si. Toute régularité exploitée est arbitrée, donc détruite. Vous n'affrontez pas une fonction fixe mais un adversaire qui s'adapte.</p>
+
+    <h3>Le changement de régime</h3>
+
+    <p>C'est le point que vous avez identifié vous-même, et il explique vos chiffres. En validation, votre modèle atteint 52,5 % de précision directionnelle — sur 7 030 échantillons, c'est quatre écarts-types au-dessus du hasard, donc un signal réel. En test, il retombe à 50,86 %, soit 1,4 écart-type : indiscernable du hasard.</p>
+
+    <p>Le modèle a bien trouvé quelque chose. Ce quelque chose n'a pas survécu au passage à la période suivante.</p>
+
+    <h3>Ce que cela implique</h3>
+
+    <p>Un modèle unique, entraîné une fois et figé, applique éternellement ce qu'il a appris de 2010-2019. La réponse standard des praticiens est le <strong>réentraînement glissant</strong> : entraîner sur 2010-2015, tester sur 2016 ; réentraîner sur 2010-2016, tester sur 2017 ; et ainsi de suite. Le modèle intègre continuellement les régimes récents, et vous obtenez une dizaine de mesures au lieu d'une — de quoi distinguer un résultat stable d'un coup de chance.</p>
+
+    <p>C'est la prochaine expérience qui vaut vraiment votre temps. Aucune valeur de <code>hidden_size</code> ne fera traverser un changement de régime à un modèle gelé.</p>
+
+    <div class="warn">
+      <strong>Un repère pour ne pas se tromper de joie :</strong> avec une corrélation maximale de 0,042, il est mathématiquement impossible d'atteindre 58 % de précision directionnelle honnêtement. Si un run y parvient, cherchez la fuite de données avant de célébrer.
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 12 ===================== -->
+<section id="s12">
+  <div class="wrap">
+    <p class="num">12</p>
+    <h2>Carte de lecture</h2>
+
+    <p>Le livre que vous avez téléchargé traite chacun de ces sujets en profondeur, avec les démonstrations et le code. Voici où aller pour chaque section de ce cours.</p>
+
+    <table class="map">
+      <tr><th>Chapitre</th><th>Sujet</th><th>Correspond à</th></tr>
+      <tr><td>3</td><td>Régression linéaire</td><td>Section 1</td></tr>
+      <tr><td>5.1–5.2</td><td>Perceptron multicouche</td><td>Sections 1 et 2</td></tr>
+      <tr><td>5.3</td><td>Propagation avant et arrière</td><td>Section 3</td></tr>
+      <tr><td>5.4</td><td>Stabilité numérique, initialisation</td><td>Section 9</td></tr>
+      <tr><td>5.5</td><td>Généralisation</td><td>Section 5</td></tr>
+      <tr><td>5.6</td><td>Dropout</td><td>Section 5</td></tr>
+      <tr><td>9.1</td><td>Travailler avec des séquences</td><td>Section 6</td></tr>
+      <tr><td>9.4</td><td>Réseaux récurrents</td><td>Section 7</td></tr>
+      <tr><td>9.7</td><td>Rétropropagation dans le temps</td><td>Section 9</td></tr>
+      <tr><td>10.1</td><td>LSTM</td><td>Section 8</td></tr>
+      <tr><td>10.2</td><td>GRU</td><td>Alternative au LSTM</td></tr>
+      <tr><td>11.7</td><td>Transformers</td><td>Au-delà du LSTM</td></tr>
+      <tr><td>12.3</td><td>Descente de gradient</td><td>Section 4</td></tr>
+      <tr><td>12.10</td><td>Adam</td><td>Section 4</td></tr>
+    </table>
+
+    <h3>Un ordre de lecture</h3>
+
+    <p>Ne le lisez pas linéairement, il fait 1 151 pages. Pour votre projet, l'itinéraire utile est : <strong>5.5 et 5.6</strong> (généralisation et dropout — votre problème du moment), puis <strong>9.1 et 9.4</strong> (séquences et RNN), puis <strong>10.1</strong> (LSTM, votre modèle), enfin <strong>12.3 et 12.10</strong> (optimisation).</p>
+
+    <p>Le chapitre 11 sur les Transformers est passionnant mais prématuré : ces architectures demandent beaucoup plus de données qu'un LSTM, et vos 33 000 fenêtres sont déjà limites pour ce que vous avez.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>Cours original rédigé pour le projet TradeBot. Les concepts exposés relèvent du domaine public scientifique ; leur formulation, les exemples et les liens vers votre code sont propres à ce document.</p>
+    <p><em>Dive into Deep Learning</em>, d'Aston Zhang, Zachary C. Lipton, Mu Li et Alexander J. Smola, est un ouvrage protégé. Ce document n'en reproduit aucun extrait : la carte de lecture ci-dessus se contente d'indiquer où trouver chaque sujet.</p>
+  </div>
+</footer>
+
+</body>
+</html>
